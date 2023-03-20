@@ -1,0 +1,75 @@
+.ticket {
+    margin: 3.6rem auto;
+    width: 100rem;
+    height: 27rem;
+    border-radius: 12px;
+    /* background-color: #fff3bf; */
+    position: relative;
+    border: 2.4px solid #AFAFAF;
+}
+
+.time-travel {
+    position: absolute;
+    top: 10%;
+    left: 2%;
+    font-size: 1.8rem;
+    display: flex;
+    gap: 1rem;
+    font-weight: 500;
+}
+
+.features {
+    position: absolute;
+    right: 2%;
+    top: 10%;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.ticket-details {
+    position: absolute;
+    top: 25%;
+    left: 2%;
+    padding: 0.5rem 1rem;
+    background-color: #EFF1F2;
+    border-radius: 8px;
+    display: flex;
+    gap: 3.2rem;
+}
+
+.ticket-details > .bus-type,
+.ticket-details > .left-slots {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.location {
+    position: absolute;
+    top: 50%;
+    left: 2%;
+    min-width: 30rem;
+}
+
+.location > .departure-place {
+    position: absolute;
+    left: 10%;
+    top: 2%;
+}
+
+.location > .arrival-place {
+    position: absolute;
+    bottom: 6%;
+    left: 10%;
+}
+
+
+.location > .distance {
+    position: absolute;
+    left: 10%;
+    top: 50%;
+    transform: translateY(-60%);
+    font-size: 1.4rem;
+    color: #417DD8;
+    font-weight: 500;
+}

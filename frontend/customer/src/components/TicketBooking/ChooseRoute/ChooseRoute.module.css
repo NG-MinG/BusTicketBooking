@@ -7,9 +7,8 @@
 .main-content {
     margin: 0 auto;
     margin-top: 4.6rem;
-    height: 30rem;
     width: 90%;
-    background-color:aquamarine;
+    /* background-color:aquamarine; */
 }
 
 .route-title {
@@ -26,7 +25,7 @@
 .step-line-container {
     margin-top: 6rem;   
     width: 100%;
-    background-color: #fff4e6;
+    /* background-color: #fff4e6; */
     display: flex;
     gap: 6.4rem;
     justify-content: space-between;
@@ -35,7 +34,7 @@
 
 
 .step-block {
-    background-color: aliceblue;
+    /* background-color: aliceblue; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -118,23 +117,23 @@
     height: 6px;   
     left: 8.55rem;
     bottom: 1.5rem;
-    min-width: 38rem;
+    min-width: 37.5rem;
     background-color: #417DD8;
 }
 
 .empty-line-1 {
     position: absolute;
     height: 6px;   
-    left: 50.4rem;
+    left: 49.90rem;
     bottom: 1.5rem;
-    min-width: 38.8rem;
+    min-width: 37.8rem;
     background-color: #DEE2E6;
 }
 
 .empty-line-2 {
     position: absolute;
     height: 6px;   
-    left: 91.41rem;
+    left: 90.41rem;
     bottom: 1.5rem;
     min-width: 38.8rem;
     background-color: #DEE2E6;

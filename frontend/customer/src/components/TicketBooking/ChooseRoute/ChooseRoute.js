@@ -1,4 +1,6 @@
 import styles from "./ChooseRoute.module.css"
+import Ticket from "../../Ticket/Ticket";
+
 
 const ChooseRoute = () => {
     return <>
@@ -57,7 +59,11 @@ const ChooseRoute = () => {
                 <option value="">18h-24h</option>
             </select>
             <div className={styles["reminder"]}>Vui lòng chọn giờ lên xe phù hợp</div>
+            <Ticket/>
+            <Ticket/>
+            <Ticket/>
         </div>
+        <div className = {styles["nav-bar"]}>This is footer</div>
     </> 
     
 }   
