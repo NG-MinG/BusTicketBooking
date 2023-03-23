@@ -1,0 +1,88 @@
+.MyTicketItem{
+  border-radius: 10px;
+  margin-bottom: 2.5rem;
+  overflow: hidden;
+}
+
+.top,.route, .date, .hour{
+  display: flex;
+  align-items: center;
+  color: white;
+  font-weight: 500;
+  gap: 1rem;
+}
+
+.top{
+  justify-content: space-between;
+  background-color: #083F73;
+  padding: 0.7rem 2rem;
+}
+
+.top p{
+  font-size: 1.7rem;
+}
+
+.content{
+  display: flex;
+  justify-content: space-between;
+  background-color: #417DD8;
+  padding: 1.4rem 2rem;
+  position: relative;
+}
+
+.left,.right{
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.content p{
+  font-size: 1.5rem;
+}
+
+.name, .seats, .seatName, .ticketPickUp{
+  display: flex;
+  align-items: center;
+  color: white;
+  gap: .5rem;
+}
+
+.name p:last-child, .seats p:last-child, .seatName p:last-child, .ticketPickUp p:last-child{
+  font-weight: 500;
+}
+
+.phoneNumber, .expense{
+  display: flex;
+  align-items: center;
+  color: white;
+  gap: .5rem;
+}
+
+.phoneNumber p:last-child,.expense p:last-child{
+  font-weight: 500;
+}
+
+.cancelButton{
+  cursor: pointer;
+  position: absolute;
+  background-color: #CD3E3E;
+  bottom: 1.5rem;
+  right: 2rem;
+  padding: 0.7rem 0.9rem;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap:0.5rem;
+  border-radius: 5px;
+}
+
+.cancelButton:hover{
+  background-color: #b22f2f;
+}
+
+.cancelButton p{
+  font-size: 1.4rem;
+  color: white;
+  text-transform: uppercase;
+  font-weight: 500;
+}

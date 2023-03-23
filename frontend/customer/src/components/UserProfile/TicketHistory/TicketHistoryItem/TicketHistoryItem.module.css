@@ -1,0 +1,43 @@
+.TicketHistoryItem{
+  /* padding: 1rem .5rem; */
+  display: flex;
+  align-items: center;
+  height: 4rem;
+  width: 100%;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.TicketHistoryItem p{
+  font-size: 1.3rem;
+  /* background-color: aqua; */
+  text-align: center;
+}
+
+.TicketHistoryItem p:nth-child(1){
+  width: 6rem;
+}
+
+.TicketHistoryItem p:nth-child(2){
+  margin-left: 1.5rem;
+  width: 16rem;
+}
+
+.TicketHistoryItem p:nth-child(3){
+  margin-left: 2rem;
+  width: 16rem;
+}
+
+.TicketHistoryItem p:nth-child(4){
+  margin-left: 2rem;
+  width: 11rem;
+}
+
+.TicketHistoryItem p:nth-child(5){
+  margin-left: .8rem;
+  width: 6rem;
+}
+
+.TicketHistoryItem p:nth-child(6){
+  margin-left: .9rem;
+  width: 11rem;
+}
