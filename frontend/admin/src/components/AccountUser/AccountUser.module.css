@@ -11,30 +11,34 @@
 }
 
 .menu-container {
-    margin: 5rem 3rem;
-    background: darkblue;
+    margin: 3rem 3rem;
 }
 
 .menu-content{
     color: white;
     text-decoration: none;
     padding: 0;
-    margin: 0;
+    margin: 4rem 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.sub-menu-content{
     display: flex;
 }
 
 .menu-icon{
-    padding: 2rem;
+    padding: 1rem;
     margin: 0;
     align-items: center;
 }
 
 .menu-text{
     align-items: top;
-    background: pink;
-    padding-top: 0.6rem;
-    margin: 0 2rem;
+    padding-top: 0.4rem;
+    margin: 0 1.5rem;
     font-weight: 600;
+    font-size: 1.8rem;
 }
 .content-container{
     background: greenyellow;
