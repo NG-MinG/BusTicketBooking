@@ -23,6 +23,9 @@
     justify-content: space-between;
 }
 
+.menu-content:hover{
+    font-weight: 600;
+}
 .sub-menu-content{
     display: flex;
 }
@@ -35,9 +38,9 @@
 
 .menu-text{
     align-items: top;
-    padding-top: 0.4rem;
+    padding-top: 0.5rem;
     margin: 0 1.5rem;
-    font-weight: 600;
+
     font-size: 1.8rem;
 }
 .content-container{
