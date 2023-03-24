@@ -1,0 +1,79 @@
+.EditInformation{
+  width: 75rem;
+  height: 39rem;
+  border-radius: 12px;
+  border: 3px solid #417DD8;
+  margin: 0 auto;
+  padding: 6rem;
+  display: flex;
+  gap:1rem;
+  position: relative;
+}
+
+.title,.content{
+  display: flex;
+  flex-direction: column;
+  gap:3rem;
+}
+
+.content{
+  margin-top: -0.2rem;
+  gap:2.35rem;
+}
+.EditInformation p{
+  font-size: 16px;
+  margin: 0;
+}
+.content p{
+  font-weight: 500;
+}
+
+.content input{
+  width: 26rem;
+  padding: .4rem .5rem;
+  border: 1px solid #646464;
+  border-radius: 3px;
+}
+
+.content input:focus{
+  outline: none;
+}
+
+.avatar{
+  position: absolute;
+  width: 18rem;
+  height: 18rem;
+  border-radius: 50%;
+  top: 12%;
+  right: 10%;
+  border: 3px solid #417DD8;
+}
+
+.avatar img{
+  width: 100%;
+}
+
+.addIcon{
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  background-color: #D9D9D9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.EditInformation button{
+  position: absolute;
+  top:78%;
+  right: 16%;
+  background-color: #083F73;
+  border: none;
+  color: white;
+  font-weight: 500;
+  text-transform: uppercase;
+  border-radius: 5px;
+  width: 8rem;
+  height: 2.6rem;
+}
+
