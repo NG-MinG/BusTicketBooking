@@ -72,6 +72,7 @@ const AdminPage = () => {
           ))}
         </div>
       </div>
+      <Outlet />
     </div>
   );
 };

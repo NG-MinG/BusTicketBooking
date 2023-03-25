@@ -9,17 +9,16 @@ import Ticket from "../components/Ticket/Ticket"
 
 const AppRoutes = () => {
     return (
-        <>
-            <AdminPage />
-            <Routes path="/admin">
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/account" element={<AccountUser />} />
-                <Route path="/bustype" element={<BusType />} />
-                <Route path="/busstation" element={<BusStation />} />
-                <Route path="/busroute" element={<BusRoute />} />
-                <Route path="/ticket" element={<Ticket />} />
-            </Routes>
-        </>
+        <Routes>
+            <Route path="/admin" element={<AdminPage />}>
+                <Route path="dashboard" element={<Dashboard />} />
+                <Route path="account" element={<AccountUser />} />
+                <Route path="bustype" element={<BusType />} />
+                <Route path="busstation" element={<BusStation />} />
+                <Route path="busroute" element={<BusRoute />} />
+                <Route path="ticket" element={<Ticket />} />
+            </Route>
+        </Routes>
     )
 }
 
