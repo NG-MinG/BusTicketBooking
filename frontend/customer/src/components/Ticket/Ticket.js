@@ -7,12 +7,15 @@ import {ReactComponent as DotIcon} from "../../assets/svg/TicketBooking/dot.svg"
 import {ReactComponent as LocationIcon} from "../../assets/svg/TicketBooking/location.svg";
 import Seat from "../TicketBooking/Seat/Seat.js";
 import Status from "../TicketBooking/Seat/Status.js";
-import {useState} from "react"
+import {useState} from "react";
+import {useDispatch} from "react-redux";
+import {setTicketBookingDetails} from "../../store/reducers/ticketBookingSlice";
 
 
 const Ticket = (props) => {
     const [choosingSeats, setChoosingSeats] = useState([]);
     const [price, setPrice] = useState(0);
+    const dispatch = useDispatch();
     const chooseSeat = (seatID) => {
         return setChoosingSeats((pre) => {
             if (pre.includes(seatID)) {
@@ -23,6 +26,29 @@ const Ticket = (props) => {
             return [...pre, seatID];
         })
     }   
+
+    const processContinueBtn = () => {
+        props.onSetStep({
+            stepOne: false,
+            stepTwo: true,
+        });
+        dispatch(setTicketBookingDetails({
+            departure_time: props.ticketDetails.departure_time,
+            arrival_time: props.ticketDetails.arrival_time,
+            departure_city: props.ticketDetails.departure_city,
+            arrival_city: props.ticketDetails.arrival_city,
+            ticket_type: props.ticketDetails.ticket_type,
+            travel_time: props.ticketDetails.travel_time,
+            distance: props.ticketDetails.distance,
+            departure_depot: props.ticketDetails.departure_depot,
+            arrival_depot: props.ticketDetails.arrival_depot,
+            bus_type: props.ticketDetails.bus_type,
+            ticket_price: props.ticketDetails.price,
+            choosing_seats: choosingSeats,
+            total_price: price,
+        }))
+    }
+
 
     return <div className={props.dropdown ? `${styles["ticket"]} ${styles["ticket-active"]}` : styles["ticket"]} onClick = {() => {props.onChooseTicket(props.ticketDetails.id)}}>
         <div className={styles["quick-description"]}>
@@ -157,7 +183,7 @@ const Ticket = (props) => {
                     <div className={styles["chosenSeats"]}>{choosingSeats.length} vé: {choosingSeats.map((el, index) => index === choosingSeats.length - 1 ? `${el}` : `${el}, `)}</div>
                     <div className={styles["total-price"]}>Tổng tiền: <span className={styles["price"]} style={{color: "red", fontWeight: 600}}>{String(price).replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "đ"}</span></div>
                 </div>
-                <button className = {styles["continue-btn"]}>Tiếp tục</button>
+                <button className = {styles["continue-btn"]} onClick = {processContinueBtn}>Tiếp tục</button>
                 </>
                 
             }
