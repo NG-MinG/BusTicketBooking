@@ -1,6 +1,6 @@
 
 const AccountUser = () => {
-  return 1;
+  return <>account</>;
 };
 
 export default AccountUser;
