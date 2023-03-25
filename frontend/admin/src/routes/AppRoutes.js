@@ -11,13 +11,13 @@ const AppRoutes = () => {
     return (
         <>
             <AdminPage />
-            <Routes>
-                <Route path="/admin/dashboard" element={<Dashboard />} />
-                <Route path="/admin/account" element={<AccountUser />} />
-                <Route path="/admin/bustype" element={<BusType />} />
-                <Route path="/admin/busstation" element={<BusStation />} />
-                <Route path="/admin/busroute" element={<BusRoute />} />
-                <Route path="/admin/ticket" element={<Ticket />} />
+            <Routes path="/admin">
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/account" element={<AccountUser />} />
+                <Route path="/bustype" element={<BusType />} />
+                <Route path="/busstation" element={<BusStation />} />
+                <Route path="/busroute" element={<BusRoute />} />
+                <Route path="/ticket" element={<Ticket />} />
             </Routes>
         </>
     )
