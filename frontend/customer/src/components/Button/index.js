@@ -2,17 +2,18 @@ import React from 'react';
 
 import classes from './Button.module.css';
 
-const Button = ({
+const Button = ({ 
     className = '',
-    style,
     outline = false,
     text = '',
-    children
+    children,
+    ...attributes 
 }) => {
+
     const fetchClassName = (className, outline) => (`${className} ${(outline) ? classes.outline : classes.button}`).trim(' ');
     const customClassName = fetchClassName(className, outline);
 
-    return <button  style={style} className={customClassName}>
+    return <button type='button' {...attributes} className={customClassName}>
         {text ? text : children}
     </button>
 }
