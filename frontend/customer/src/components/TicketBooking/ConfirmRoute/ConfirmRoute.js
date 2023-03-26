@@ -5,12 +5,37 @@ import {ReactComponent as DotIcon} from  "../../../assets/svg/TicketBooking/dot.
 import {ReactComponent as EyeIcon} from  "../../../assets/svg/TicketBooking/eye.svg"
 import {ReactComponent as BackIcon} from  "../../../assets/svg/TicketBooking/back_arrow.svg"
 import {ReactComponent as NextIcon} from  "../../../assets/svg/TicketBooking/next_arrow.svg"
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
+import { setTicketBookingDetails } from "../../../store/reducers/ticketBookingSlice";
+
 
 const ConfirmRoute = (props) => {
     const ticketBookingDetails = useSelector((state) => state.ticketBooking.ticketBookingDetails)
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const handleOptionChange = (event) => {
+        dispatch(setTicketBookingDetails({
+            ...ticketBookingDetails,
+            departure_depot: event.target.value,
+        }))
+    }
+
+    const processContinueBtn = () => {
+        props.onSetStep({
+            stepTwo: false,
+            stepThree: true,
+        })
+    }
+    
+    const processBackBtn = () => {
+        props.onSetStep({
+            stepOne: true,
+            stepTwo: false,
+        })
+    }
+
     return <>
     <div className = {styles["nav-bar"]}>
             This is navbar
@@ -48,25 +73,19 @@ const ConfirmRoute = (props) => {
         <div className={styles["chosen-depot"]}>
                 <div className={styles["depot"]}>
                     <span className={styles["title"]}>Điểm lên xe</span>
-                    <select className= {styles["list-depots"]} id="">
+                    <select className= {styles["list-depots"]} id="" onChange = {handleOptionChange}>
                         <option value="" disabled selected>Chọn điểm lên xe</option>
-                        <option value="" >Bến Xe Miền tây</option>
-                        <option value="" >Đồng Tâm</option>
+                        <option value="Bến Xe Miền tây" >Bến Xe Miền tây</option>
+                        <option value="Đồng Tâm" >Đồng Tâm</option>
                     </select>
                 </div>
         </div>
         <div className={styles["btn-wrapper"]}>
-            <button className={styles["back-to-previous"]}  onClick = {() => props.onSetStep({
-                stepOne: true,
-                stepTwo: false,
-            })}>
+            <button className={styles["back-to-previous"]}  onClick = {processBackBtn}>
                 <span className={styles[""]}><BackIcon className = {styles["back-icon"]}/></span>
                 <span className={styles["content"]}>Quay lại</span>
             </button>
-            <button className={styles["continue"]} onClick = {() => props.onSetStep({
-                stepTwo: false,
-                stepThree: true,
-            })}>
+            <button className={styles["continue"]} onClick = {processContinueBtn}>
                 <span className={styles["content"]}>Tiếp tục</span>
                 <span className={styles[""]}><NextIcon className = {styles["next-icon"]}/></span>
             </button>
@@ -78,3 +97,7 @@ const ConfirmRoute = (props) => {
 export default ConfirmRoute;
 
 
+// () => props.onSetStep({
+//     stepTwo: false,
+//     stepThree: true,
+// })

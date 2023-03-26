@@ -1,0 +1,86 @@
+.nav-bar {
+    height: 7rem;
+    width: 100%;
+    background-color: burlywood;
+}
+
+.main-content {
+    margin: 0 auto;
+    margin-top: 4.6rem;
+    width: 90%;
+}
+
+
+
+.btn-wrapper {
+    margin: 3.6rem auto;
+    width: 70rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.btn-wrapper > button {
+    width: 25rem;   
+    font-family: 'Montserrat', sans-serif;
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    font-size: 2rem;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.btn-wrapper > .back-to-previous  {
+    background-color: white;
+    border: 2px solid #333;
+    cursor: pointer;
+}
+
+.btn-wrapper > .back-to-previous:hover  {
+    border: 2px solid #417DD8;
+    background-color: #417DD8;
+}
+
+.btn-wrapper > .back-to-previous:hover  > span.content {
+    color: #fff;
+}
+
+.btn-wrapper > .back-to-previous:hover svg.back-icon path{
+    fill: #fff;
+}
+
+.btn-wrapper > .continue  {
+    background-color: #417DD8;
+    border: 2px solid #417DD8;
+    cursor: pointer;
+}
+
+.btn-wrapper > .continue:hover  {
+    background-color: #1b6bb6;
+    /* color: #417DD8; */
+}
+/* 
+.btn-wrapper > .continue:hover  > span.content {
+    color: #417DD8;
+}
+
+.btn-wrapper > .continue:hover svg.next-icon path{
+    fill: #417DD8;
+} */
+
+
+
+.btn-wrapper > .continue > span.content {
+    color: #fff;
+}
+
+/* .btn-wrapper > .continue > span.content:hover {
+    color: #417DD8;
+}
+  */
+.back-icon, .next-icon {
+    font-size: 0.65em;
+}
