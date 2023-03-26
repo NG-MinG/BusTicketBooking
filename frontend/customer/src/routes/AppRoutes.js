@@ -6,6 +6,7 @@ import EditInformation from '../components/UserProfile/EditInformation/EditInfor
 import ChangePassword from '../components/UserProfile/ChangePassword/ChangePassword'
 import MyTicket from '../components/UserProfile/MyTicket/MyTicket'
 import TicketHistory from "../components/UserProfile/TicketHistory/TicketHistory";
+import Schedule from "../components/Schedule/Schedule";
 
 const AppRoutes = () => {
     return (
@@ -18,6 +19,8 @@ const AppRoutes = () => {
                 <Route path='change-password' element={<ChangePassword />} />
                 <Route path='my-ticket' element={<MyTicket />} />
                 <Route path='ticket-history' element={<TicketHistory />} />
+            </Route>
+            <Route path="/schedule" element={<Schedule />} >
             </Route>
         </Routes>)
 }

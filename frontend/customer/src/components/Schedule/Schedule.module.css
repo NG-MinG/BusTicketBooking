@@ -1,0 +1,82 @@
+.Schedule{
+  padding: 0 33rem;
+  padding-top: 5rem;
+}
+
+.searchTitle{
+  color: #417DD8;
+  font-size: 2.5rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+}
+
+.search{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.search input{
+  border: 1px solid #417DD8;
+  border-radius: 10px;
+  padding: 1rem 1.8rem;
+  font-size: 1.8rem;
+  font-family: inherit;
+  width: 38rem;
+}
+
+.search input::placeholder{
+  color: #A2ABB3;
+}
+
+.table{
+  overflow: hidden;
+  width: 100%;
+  border: 2px solid #417DD8;
+  height: 76vh;
+  border-radius: 12px;
+  border-bottom: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.header{
+  display: flex;
+  align-items: center;
+  background-color: #417DD8;
+  padding: 1.5rem 0rem;
+  color: #ffffff;
+  gap: 1rem;
+}
+
+.header p{
+  font-size: 1.7rem;
+  font-weight: 500;
+  text-align: center;
+  /* background-color: aqua; */
+}
+
+.header p:nth-child(1){
+  width: 27rem;
+}
+
+.header p:nth-child(2){
+  width: 10rem;
+}
+
+.header p:nth-child(3){
+  width: 14rem;
+}
+
+.content >p{
+  background-color: #E2ECF9;
+  color: #083F73;
+  padding: 1.5rem 3.5rem;
+  font-weight: 500;
+  font-size: 1.7rem;
+}
+
+.fromHCM{
+
+}
