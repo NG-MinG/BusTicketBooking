@@ -1,6 +1,8 @@
 import styles from "./ChooseRoute.module.css"
 import Ticket from "../../Ticket/Ticket";
 import {useState} from "react";
+import StepLine from "../StepLine/StepLine";
+
 
 const tickets  = [  
     {
@@ -53,7 +55,7 @@ const tickets  = [
     }
 ]
 
-const ChooseRoute = () => {
+const ChooseRoute = (props) => {
     const [chosenTicket, setChosenTicket] = useState({});
     const chooseTicket = (id) => {
         setChosenTicket(id);
@@ -64,38 +66,7 @@ const ChooseRoute = () => {
             This is navbar
         </div>
         <div className = {styles["main-content"]}>
-            <div className = {styles["route-title"]}>TP.HỒ CHÍ MINH - CẦN THƠ</div>
-            <div className = {styles["date"]}>10/3/2023</div>
-            <div className = {styles["step-line-container"]}>
-                <div className =  {styles["step-block"]}>
-                    <div className={`${styles["title"]} ${styles["active-title"]}`}>Chọn tuyến</div>
-                    <div className = {styles["current-step"]}>
-                        <div className={styles.text}>1</div>
-                        {/* <div className={styles["current-line"]}></div> */}
-                    </div>
-                </div>
-                <div className =  {styles["step-block"]}>
-                    <div className={`${styles["title"]} ${styles["active-title"]}`}>Xác nhận lộ trình</div>
-                    <div className = {styles["next-step"]}>
-                        <div className={styles.text}>2</div>
-                    </div>
-                </div>
-                <div className =  {styles["step-block"]}>
-                    <div className={`${styles["title"]} ${styles["inactive-title"]}`}>Thông tin hành khách</div>
-                    <div className = {styles["empty-step"]}>
-                        <div className={styles.text}>3</div>
-                    </div>
-                </div>
-                <div className =  {styles["step-block"]}>
-                    <div className={`${styles["title"]} ${styles["inactive-title"]}`}>Thanh toán</div>
-                    <div className = {styles["empty-step"]}>
-                        <div className={styles.text}>4</div>
-                    </div>
-                </div>
-                <div className={styles["current-line"]}></div>
-                <div className={styles["empty-line-1"]}></div>
-                <div className={styles["empty-line-2"]}></div>
-            </div>
+            <StepLine currentStep = {props.currentStep}/>
             <div className={styles["reminder"]}>Vui lòng chọn giờ lên xe phù hợp</div>
             <div className={styles["Filter"]}>
                 <select name="PriceFilter" id="" className = {styles.priceFilter}>
@@ -119,7 +90,7 @@ const ChooseRoute = () => {
             </div>
             {
                 tickets.map((el, id) => {
-                    return <Ticket ticketDetails = {el} dropDown = {chosenTicket === el.id} onChooseTicket = {chooseTicket}/>
+                    return <Ticket ticketDetails = {el} dropDown = {chosenTicket === el.id} onChooseTicket = {chooseTicket} onSetStep = {props.onSetStep}/>
                 })
             }
             {/* <Ticket/>
@@ -133,3 +104,34 @@ const ChooseRoute = () => {
 
 
 export default ChooseRoute;
+
+
+// <div className = {styles["step-line-container"]}>
+//                 <div className =  {styles["step-block"]}>
+//                     <div className={`${styles["title"]} ${styles["active-title"]}`}>Chọn tuyến</div>
+//                     <div className = {styles["current-step"]}>
+//                         <div className={styles.text}>1</div>
+//                     </div>
+//                 </div>
+//                 <div className =  {styles["step-block"]}>
+//                     <div className={`${styles["title"]} ${styles["active-title"]}`}>Xác nhận lộ trình</div>
+//                     <div className = {styles["next-step"]}>
+//                         <div className={styles.text}>2</div>
+//                     </div>
+//                 </div>
+//                 <div className =  {styles["step-block"]}>
+//                     <div className={`${styles["title"]} ${styles["inactive-title"]}`}>Thông tin hành khách</div>
+//                     <div className = {styles["empty-step"]}>
+//                         <div className={styles.text}>3</div>
+//                     </div>
+//                 </div>
+//                 <div className =  {styles["step-block"]}>
+//                     <div className={`${styles["title"]} ${styles["inactive-title"]}`}>Thanh toán</div>
+//                     <div className = {styles["empty-step"]}>
+//                         <div className={styles.text}>4</div>
+//                     </div>
+//                 </div>
+//                 <div className={styles["current-line"]}></div>
+//                 <div className={styles["empty-line-1"]}></div>
+//                 <div className={styles["empty-line-2"]}></div>
+// </div>
