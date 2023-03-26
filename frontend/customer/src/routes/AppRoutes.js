@@ -15,7 +15,7 @@ const AppRoutes = () => {
         <Routes>
             <Route element={<BaseLayout />}>
                 <Route path="/" element={<Home />} />
-                <Route path = "/ticket-booking" element = {<TicketBookingPage/>} />
+                <Route path="/ticket-booking" element={<TicketBookingPage />} />
                 <Route path="/user-profile" element={<UserProfilePage />}>
                     <Route index element={<Information />} />
                     <Route path='edit-information' element={<EditInformation />} />
@@ -24,7 +24,7 @@ const AppRoutes = () => {
                     <Route path='ticket-history' element={<TicketHistory />} />
                 </Route>
             </Route>
-            <Route path="/schedule" element={<Schedule />} >
+            <Route path="/schedules" element={<Schedule />} >
             </Route>
         </Routes>)
 }
