@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarDays } from '@fortawesome/free-solid-svg-icons';
 import { ReactComponent as DropdownIcon } from '../../assets/svg/DatePicker/dropdown.svg';
@@ -6,6 +6,13 @@ import { ReactComponent as DropdownIcon } from '../../assets/svg/DatePicker/drop
 import classes from './TimePicker.module.css';
 
 const TimePicker = ({className, disable, ...attribute}) => {
+
+    const [date_value, setDate] = useState('');
+
+    const updateDate = (e) => {
+        setDate(e.target.value);
+    };
+
     return <div className={classes.date_picker_group}>
         { disable && <div className={classes.disable}></div> }
         <label className={classes.date_picker}>
@@ -13,8 +20,7 @@ const TimePicker = ({className, disable, ...attribute}) => {
                 <FontAwesomeIcon icon={faCalendarDays} />
             </span>
             <div className={classes.date_group}>
-                <input type='text' className={classes.date_picker_text} placeholder='dd-mm-yyyy' />
-                <input className={classes.input_date} type="date" {...attribute} />
+                <input className={classes.input_date} name='datePicker' type="date" {...attribute} onChange={updateDate} value={date_value} />
                 <span className={classes.drop_icon}>
                     <DropdownIcon />
                 </span>
