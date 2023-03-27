@@ -8,7 +8,8 @@ import EditInformation from '../components/UserProfile/EditInformation/EditInfor
 import ChangePassword from '../components/UserProfile/ChangePassword/ChangePassword'
 import MyTicket from '../components/UserProfile/MyTicket/MyTicket'
 import TicketHistory from "../components/UserProfile/TicketHistory/TicketHistory";
-import Schedule from "../components/Schedule/Schedule";
+import SchedulePage from '../pages/SchedulePage/SchedulePage'
+import BranchesPage from "../pages/BranchesPage/BranchesPage";
 
 const AppRoutes = () => {
     return (
@@ -23,8 +24,10 @@ const AppRoutes = () => {
                     <Route path='my-ticket' element={<MyTicket />} />
                     <Route path='ticket-history' element={<TicketHistory />} />
                 </Route>
-            </Route>
-            <Route path="/schedules" element={<Schedule />} >
+                <Route path="/schedules" element={<SchedulePage />} >
+                </Route>
+                <Route path="/branches" element={<BranchesPage />} >
+                </Route>
             </Route>
         </Routes>)
 }

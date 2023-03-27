@@ -1,20 +1,21 @@
 .Schedule{
   padding: 0 33rem;
-  padding-top: 5rem;
+  padding-top: 3rem;
+  overflow: hidden;
 }
 
 .searchTitle{
   color: #417DD8;
   font-size: 2.5rem;
   font-weight: 500;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .search{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 3rem;
+  margin-bottom: 1.5rem;
 }
 
 .search input{
@@ -26,15 +27,19 @@
   width: 38rem;
 }
 
+.search input:focus{
+  outline: none;
+}
+
 .search input::placeholder{
   color: #A2ABB3;
 }
 
 .table{
-  overflow: hidden;
+  /* overflow: scroll; */
   width: 100%;
   border: 2px solid #417DD8;
-  height: 76vh;
+  height: 69vh;
   border-radius: 12px;
   border-bottom: 0;
   border-bottom-left-radius: 0;
@@ -69,14 +74,15 @@
   width: 14rem;
 }
 
+.content{
+  overflow-y: scroll !important;
+  max-height: 100%;
+}
+
 .content >p{
   background-color: #E2ECF9;
   color: #083F73;
   padding: 1.5rem 3.5rem;
   font-weight: 500;
   font-size: 1.7rem;
-}
-
-.fromHCM{
-
 }

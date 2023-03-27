@@ -11,11 +11,11 @@ const Navbar = () => {
 
     return <nav className={classes.navbar}>
         <NavLink to='/' className={`${classes.title} ${classes.link}`}>Bus Ticket Booking</NavLink>
-        
+
         <div className={`${classes.main}`}>
             <NavLink to='/' className={activeLink}>Trang chủ</NavLink>
             <NavLink to='/schedules' className={activeLink}>Lịch trình</NavLink>
-            <NavLink to='/stations' className={activeLink}>Bến xe</NavLink>
+            <NavLink to='/branches' className={activeLink}>Bến xe</NavLink>
             <NavLink to='/about' className={activeLink}>Giới thiệu</NavLink>
         </div>
 
@@ -23,7 +23,7 @@ const Navbar = () => {
             <Button className={classes.contact_btn} outline>
                 <FontAwesomeIcon className={classes.phoneIcon} icon={faPhone} />
                 <span>Liên hệ</span>
-                </Button>
+            </Button>
             <Button>Đăng nhập</Button>
         </div>
     </nav>

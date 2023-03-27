@@ -1,0 +1,28 @@
+.BranchItem{
+  width: 100%;
+}
+
+.BranchItem .title{
+  padding: 1rem 3rem;
+  background-color: #E2ECF9;
+  color: #083F73;
+  font-weight: 600;
+}
+
+.items{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.item{
+  gap:0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding:1rem 7rem;
+}
+
+.item p{
+  font-size: 1.5rem;
+}

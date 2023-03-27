@@ -34,4 +34,10 @@
   border-radius: 5px;
   padding: .3rem 1.2rem;
   margin-left: 5rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.ScheduleItem button:hover{
+  background-color: #083F73;
 }

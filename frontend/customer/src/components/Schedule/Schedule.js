@@ -31,6 +31,55 @@ export default function Schedule() {
       quangduong: '100KM',
       thoigianhanhtrinh: '19h'
     },
+    {
+      diemdi: 'TP.Hồ Chí Minh',
+      diemden: 'Bến Tre',
+      loaixe: 'Limousine',
+      quangduong: '100KM',
+      thoigianhanhtrinh: '19h'
+    }, {
+      diemdi: 'TP.Hồ Chí Minh',
+      diemden: 'Trà Vinh',
+      loaixe: 'Giường',
+      quangduong: '100KM',
+      thoigianhanhtrinh: '19h'
+    }, {
+      diemdi: 'Bến Tre',
+      diemden: 'TP.Hồ Chí Minh',
+      loaixe: 'Limousine',
+      quangduong: '100KM',
+      thoigianhanhtrinh: '19h'
+    }, {
+      diemdi: 'Trà Vinh',
+      diemden: 'TP.Hồ Chí Minh',
+      loaixe: 'Giường',
+      quangduong: '100KM',
+      thoigianhanhtrinh: '19h'
+    }, {
+      diemdi: 'TP.Hồ Chí Minh',
+      diemden: 'Bến Tre',
+      loaixe: 'Limousine',
+      quangduong: '100KM',
+      thoigianhanhtrinh: '19h'
+    }, {
+      diemdi: 'TP.Hồ Chí Minh',
+      diemden: 'Trà Vinh',
+      loaixe: 'Giường',
+      quangduong: '100KM',
+      thoigianhanhtrinh: '19h'
+    }, {
+      diemdi: 'Bến Tre',
+      diemden: 'TP.Hồ Chí Minh',
+      loaixe: 'Limousine',
+      quangduong: '100KM',
+      thoigianhanhtrinh: '19h'
+    }, {
+      diemdi: 'Trà Vinh',
+      diemden: 'TP.Hồ Chí Minh',
+      loaixe: 'Giường',
+      quangduong: '100KM',
+      thoigianhanhtrinh: '19h'
+    },
   ]
 
   return (
