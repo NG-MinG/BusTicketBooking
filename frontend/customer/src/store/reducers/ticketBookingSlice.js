@@ -19,7 +19,7 @@ const initialState = {
         ticket_price: "",
         choosing_seats: [],
     },
-    guestTicket: {
+    guestInfo: {
         name: '',
         phoneNumber: '',
         email: '',
@@ -49,7 +49,7 @@ const ticketBookingSlice = createSlice({
             state.ticketBookingDetails.payment_method = action.payload.payment_method || "";
             state.ticketBookingDetails.choosing_seats = action.payload.choosing_seats || [];
         },
-        setGuestTicket: (state,action) => {
+        setGuestInfo: (state,action) => {
             state.guestInfo.name = action.payload.name || "";
             state.guestInfo.phoneNumber = action.payload.phoneNumber || "";
             state.guestInfo.email = action.payload.email || "";
@@ -59,5 +59,5 @@ const ticketBookingSlice = createSlice({
     }
 })
 
-export const {setTicketBookingDetails, setGuestTicket} = ticketBookingSlice.actions;
+export const {setTicketBookingDetails, setGuestInfo} = ticketBookingSlice.actions;
 export default ticketBookingSlice.reducer;

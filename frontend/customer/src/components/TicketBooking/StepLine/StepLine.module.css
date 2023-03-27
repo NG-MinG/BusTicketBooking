@@ -121,8 +121,30 @@
 .empty-line-2 {
     position: absolute;
     height: 6px;   
-    left: 90.41rem;
+    /* left: 90.41rem; */
+    left: 90.77rem;
     bottom: 1.5rem;
-    min-width: 38.8rem;
+    /* min-width: 38.8rem; */
+    min-width: 37.8rem;
     background-color: #DEE2E6;
+}
+
+.current-line-2 {
+    position: absolute;
+    height: 6px;   
+    left: 48.90rem;
+    bottom: 1.5rem;
+    min-width: 38.1rem;
+    background-color: #417DD8;
+}
+
+.current-line-3 {
+    position: absolute;
+    height: 6px;   
+    /* left: 90.41rem; */
+    left: 90.6rem;
+    bottom: 1.5rem;
+    /* min-width: 38.8rem; */
+    min-width: 37.3rem;
+    background-color: #417DD8;
 }

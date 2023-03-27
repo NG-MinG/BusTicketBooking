@@ -8,19 +8,25 @@ import EditInformation from '../components/UserProfile/EditInformation/EditInfor
 import ChangePassword from '../components/UserProfile/ChangePassword/ChangePassword'
 import MyTicket from '../components/UserProfile/MyTicket/MyTicket'
 import TicketHistory from "../components/UserProfile/TicketHistory/TicketHistory";
+import SchedulePage from '../pages/SchedulePage/SchedulePage'
+import BranchesPage from "../pages/BranchesPage/BranchesPage";
 
 const AppRoutes = () => {
     return (
         <Routes>
             <Route element={<BaseLayout />}>
                 <Route path="/" element={<Home />} />
-                <Route path = "/ticket-booking" element = {<TicketBookingPage/>} />
+                <Route path="/ticket-booking" element={<TicketBookingPage />} />
                 <Route path="/user-profile" element={<UserProfilePage />}>
                     <Route index element={<Information />} />
                     <Route path='edit-information' element={<EditInformation />} />
                     <Route path='change-password' element={<ChangePassword />} />
                     <Route path='my-ticket' element={<MyTicket />} />
                     <Route path='ticket-history' element={<TicketHistory />} />
+                </Route>
+                <Route path="/schedules" element={<SchedulePage />} >
+                </Route>
+                <Route path="/branches" element={<BranchesPage />} >
                 </Route>
             </Route>
         </Routes>)
