@@ -4,6 +4,7 @@ import headerImage from '../../assets/images/Home/header.png';
 
 import classes from './Home.module.css';
 import SearchTicket from '../../components/Home/SearchTicket';
+import HotTrip from '../../components/Home/HotTrip';
 
 const Home = () => {
     return <>
@@ -12,8 +13,9 @@ const Home = () => {
         </header>
         <main className={classes.main}>
             <SearchTicket />
+            <HotTrip />
         </main>
-    </>;
+    </>
 }
 
 export default Home;
