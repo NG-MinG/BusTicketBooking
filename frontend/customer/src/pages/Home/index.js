@@ -6,6 +6,7 @@ import classes from './Home.module.css';
 import SearchTicket from '../../components/Home/SearchTicket';
 import HotTrip from '../../components/Home/HotTrip';
 import Analystic from '../../components/Home/Analystic';
+import HotDeal from '../../components/Home/HotDeal';
 
 const Home = () => {
     return <>
@@ -16,6 +17,7 @@ const Home = () => {
             <SearchTicket />
             <HotTrip />
             <Analystic />
+            <HotDeal />
         </main>
     </>
 }
