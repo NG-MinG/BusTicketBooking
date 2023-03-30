@@ -13,12 +13,19 @@
 .trip_card > .trip_card_img {
     width: 100%;
     height: 17.3rem;
+    overflow: hidden;
 }
 
 .trip_card > .trip_card_img > img {
     width: 100%;
     height: 100%;
+    scale: 1;
+    transition: all .45s ease;
 }
+
+.trip_card:hover > .trip_card_img > img {
+    scale: 1.1;
+} 
 
 .trip_card > .trip_card_content {
     padding: 1.8rem;

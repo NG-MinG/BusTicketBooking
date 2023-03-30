@@ -6,7 +6,7 @@ import { faClockRotateLeft, faLocationDot, faTicket } from '@fortawesome/free-so
 
 const TripCard = ({ trip }) => {
     return (
-        <a href='/' className={classes.trip_card}>
+        <a href='#trip' className={classes.trip_card}>
             <div className={classes.trip_card_img}>
                 <img src={trip.img} alt={trip.title} />
             </div>

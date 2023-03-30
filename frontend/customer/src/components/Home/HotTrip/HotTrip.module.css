@@ -4,6 +4,9 @@
     padding: 4rem 0rem;
     background-color: white;
     margin: 5rem 0rem;
+    padding-bottom: 8rem;
+    border-top: 1px solid #F0F0F0;
+    border-bottom: 1px solid #F0F0F0;
 }
 
 .hot_trip_container > .hot_trip_main {

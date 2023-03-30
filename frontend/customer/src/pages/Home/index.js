@@ -5,6 +5,7 @@ import headerImage from '../../assets/images/Home/header.png';
 import classes from './Home.module.css';
 import SearchTicket from '../../components/Home/SearchTicket';
 import HotTrip from '../../components/Home/HotTrip';
+import Analystic from '../../components/Home/Analystic';
 
 const Home = () => {
     return <>
@@ -14,6 +15,7 @@ const Home = () => {
         <main className={classes.main}>
             <SearchTicket />
             <HotTrip />
+            <Analystic />
         </main>
     </>
 }
