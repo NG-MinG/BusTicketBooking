@@ -15,6 +15,10 @@
     text-decoration: none;
 }
 
+.hot_deal > .more_deal > .more_deal_btn:hover {
+    text-decoration: underline;
+}
+
 .hot_deal > h1 {
     text-transform: uppercase;
     font-size: 2.2rem;
