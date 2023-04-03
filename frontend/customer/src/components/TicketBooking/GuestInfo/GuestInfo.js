@@ -6,9 +6,11 @@ import {useSelector, useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import { setTicketBookingDetails, setGuestInfo } from "../../../store/reducers/ticketBookingSlice";
 import {useState} from "react";
+import Overlay from "../../Overlay/Overlay";
 
 
 export const GuestInfo = (props) => {
+    const [note, setNote] = useState(false);
     const [formValues, setFormValues] = useState({
         name: '',
         email: '',
@@ -20,6 +22,10 @@ export const GuestInfo = (props) => {
     const dispatch = useDispatch();
 
     const processContinueBtn = () => {
+        setNote(true);
+    }
+
+    const processConfirmBtn = () => {
         props.onSetStep({
             stepThree: false,
             stepFour: true,
@@ -29,12 +35,17 @@ export const GuestInfo = (props) => {
             ...formValues
         }))
     }
+
     
     const processBackBtn = () => {
         props.onSetStep({
             stepTwo: true,
             stepThree: false,
         })
+    }
+
+    const closeNoteForm = () => {
+        setNote(false);
     }
 
     const handleInputChange = (event) => {
@@ -105,30 +116,21 @@ export const GuestInfo = (props) => {
             </button>
         </div>
     </div>
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-
+    {note && <div className={styles["note-form"]}>
+         <Overlay  onCloseOverlay = {closeNoteForm}/>
+         <div className={styles["form"]}>
+            <div className={styles["title"]}>Điều khoản & lưu ý</div>
+            <span className={styles["text"]}>(*) Quý khách vui lòng mang email có chứa mã vé đến văn phòng để đổi vé lên xe trước giờ xuất bến ít nhất <span style = {{color: "#417DD8", fontWeight: 600}}>60 phút</span> để chúng tôi trung chuyển.</span>
+            <span className={styles["text"]}>(*) Thông tin hành khách phải chính xác, nếu không sẽ không thể lên xe hoặc <span style = {{color: "#417DD8", fontWeight: 600}}>hủy/đổi vé</span>.</span>
+            <span className={styles["text"]}>(*) Quý khách không được đổi/trả vé vào các ngày Lễ Tết (ngày thường quý khách được quyền chuyển đổi hoặc hủy vé một lần, duy nhất trước giờ xe chạy 24 giờ), phí hủy vé <span style = {{color: "#417DD8", fontWeight: 600}}>10%</span>.</span>
+            <span className={styles["text"]}>(*) Nếu quý khách có nhu cầu trung chuyển, vui lòng liên hệ số điện thoại <span style = {{color: "#417DD8", fontWeight: 600}}>1900 1404</span> trước khi đặt vé. Chúng tôi không đón/trung chuyển tại những điểm xe trung chuyển không thể tới được.</span>
+            <div className={styles["confirm"]}>
+                <button className={styles["confirm-btn"]} onClick = {processConfirmBtn}>
+                    Tôi đồng ý, tiếp tục
+                </button>
+            </div>
+         </div>
+    </div>}
     </>
 }
 

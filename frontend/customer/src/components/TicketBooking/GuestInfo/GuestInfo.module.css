@@ -179,3 +179,59 @@
     background-repeat: no-repeat;
     background-position: 98% 50%;
 }
+
+
+.note-form {
+    position: relative;
+}
+
+.note-form  > .form {
+    z-index: 3;
+    position: fixed;
+    width: 60rem; 
+    height: 42rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 2rem;
+}
+
+.note-form  > .form > .title {
+    text-transform: uppercase;
+    color: #417DD8;
+    font-weight: 700;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.note-form  > .form > span.text {
+    display: block;
+    text-align: justify;
+    margin-bottom: 1.6rem;
+}
+
+.note-form  > .form > .confirm  {
+    margin-top: 3.6rem;
+    text-align: center;
+}
+
+
+.note-form  > .form > .confirm > button.confirm-btn {
+    background-color: #417DD8;
+    border: 2px solid #417DD8;
+    cursor: pointer;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    border-radius: 24px;
+    padding: 1rem 2rem;
+    font-size: 1.6rem;
+    margin: 0 auto;
+    transition: all 0.3s ease;
+}
+
+.note-form  > .form > .confirm > button.confirm-btn:hover {
+    background-color: #1c7ed6;
+    color: white;
+}
