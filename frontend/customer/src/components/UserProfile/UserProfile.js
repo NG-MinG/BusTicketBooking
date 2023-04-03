@@ -15,7 +15,7 @@ export default function UserProfile() {
   return (
     <div className={styles['UserProfile']}>
       <div className={styles['menu']}>
-        <NavLink className={chosen} to='/user-profile'>
+        <NavLink exact className={chosen} to='/user-profile/'>
           <FontAwesomeIcon className={styles.icon} icon={faUser} style={{ color: '#417DD8', fontSize: '2.8rem' }} />
           <p>Thông tin của bạn</p>
         </NavLink>

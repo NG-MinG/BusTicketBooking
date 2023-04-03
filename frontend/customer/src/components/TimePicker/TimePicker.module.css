@@ -7,6 +7,7 @@
     z-index: 2;
     inset: 0;
     background-color: rgba(255, 255, 255, .6);
+    cursor: not-allowed;
 }
 
 .date_picker {
@@ -39,19 +40,29 @@
     padding: 0;
     outline: none;
     margin: .2rem;
-    opacity: 0;
+    opacity: 1;
+    padding: .3rem;
+    padding-right: 1rem;
+    font-family: inherit;
+    font-size: 1.3rem;
+    border: none;
+    outline: none;
+    z-index: 1;
 }
 
 .date_picker > .date_group > .drop_icon {
     position: absolute;
-    right: .18em;
+    right: 0em;
+    padding: .3rem;
+    padding-right: 1rem;
     margin-top: .2rem;
     pointer-events: none;
-    font-size: 1.4rem;
+    background-color: white;
+    font-size: 1.5rem;
     z-index: 1;
 }
 
-.date_picker > .date_group > .date_picker_text {
+/* .date_picker > .date_group > .date_picker_text {
     left: 0;
     right: 1.2em;
     position: absolute;
@@ -61,8 +72,10 @@
     font-size: 1.3rem;
     border: none;
     outline: none;
+    opacity: 0;
+    display: none;
     z-index: 1;
-}
+} */
 
 .date_picker > .date_group > .date_picker_text,
 .date_picker > .date_group > .drop_icon {
