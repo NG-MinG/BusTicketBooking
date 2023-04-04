@@ -1,4 +1,4 @@
-import BusType from "../../components/BusType/BusType"
+import BusType from "../../components/BusType/BusType.js"
 import styles from "./BusTypePage.module.css"
 
 const BusTypePage = () => {
