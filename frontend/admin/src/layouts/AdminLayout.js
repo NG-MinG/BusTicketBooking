@@ -1,4 +1,4 @@
-import styles from "./AdminPage.module.css";
+import styles from "./AdminLayout.module.css";
 import { NavLink, Outlet } from "react-router-dom";
 
 import DashBoardIcon from "../assets/svg/sidebar/dashboard.svg";

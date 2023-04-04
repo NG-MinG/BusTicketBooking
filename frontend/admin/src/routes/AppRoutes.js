@@ -1,22 +1,22 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import AdminPage from "../pages/AdminPage";
-import Dashboard from "../components/Dashboard/Dashboard"
-import AccountUser from "../components/AccountUser/AccountUser"
-import BusType from "../components/BusType/BusType"
-import BusStation from "../components/BusStation/BusStation"
-import BusRoute from "../components/BusRoute/BusRoute"
-import Ticket from "../components/Ticket/Ticket"
+import AdminLayout from "../layouts/AdminLayout";
+import DashboardPage from "../pages/DashboardPage/DashboardPage";
+import AccountUserPage from "../pages/AccountUserPage/AccountUserPage";
+import BusStationPage from "../pages/BusStationPage/BusStationPage";
+import BusRoutePage from "../pages/BusRoutePage/BusRoutePage";
+import BusTypePage from "../pages/BusTypePage/BusTypePage";
+import TicketPage from "../pages/TicketPage/TicketPage";
 
 const AppRoutes = () => {
     return (
         <Routes>
-            <Route path="/admin" element={<AdminPage />}>
-                <Route path="dashboard" element={<Dashboard />} />
-                <Route path="account" element={<AccountUser />} />
-                <Route path="bustype" element={<BusType />} />
-                <Route path="busstation" element={<BusStation />} />
-                <Route path="busroute" element={<BusRoute />} />
-                <Route path="ticket" element={<Ticket />} />
+            <Route path="/admin" element={<AdminLayout />}>
+                <Route path="dashboard" element={<DashboardPage />} />
+                <Route path="account" element={<AccountUserPage />} />
+                <Route path="bus-type" element={<BusTypePage />} />
+                <Route path="bus-station" element={<BusStationPage />} />
+                <Route path="bus-route" element={<BusRoutePage />} />
+                <Route path="ticket" element={<TicketPage />} />
             </Route>
         </Routes>
     )
