@@ -7,11 +7,11 @@
 .sidebar-container{
     height: 100vh;
     background: #083F73;
-    width: 25rem;
+    width: 20rem;
 }
 
 .menu-container {
-    margin: 3rem 3rem;
+    margin: 3rem 1rem;
 }
 
 .menu-content{
@@ -38,9 +38,9 @@
 
 .menu-text{
     align-items: top;
-    padding-top: 0.5rem;
-    margin: 0 1.5rem;
-    font-size: 1.8rem;
+    padding: 0.5rem 0;
+    margin: 0 1rem 0 1.5rem;
+    font-size: 1.5rem;
 }
 .content-container{
     background: greenyellow;

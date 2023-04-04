@@ -24,22 +24,22 @@ const AdminPage = () => {
     {
       icon: BusTypeIcon,
       title: "Loại xe",
-      path: "/admin/bustype"
+      path: "/admin/bus-type"
     },
     {
       icon: BusStationIcon,
       title: "Trạm xe",
-      path: "/admin/busstation"
+      path: "/admin/bus-station"
     },
     {
       icon: BusRouteIcon,
       title: "Tuyến xe",
-      path: "/admin/busroute"
+      path: "/admin/bus-route"
     },
     {
       icon: Ticket,
       title: "Vé xe",
-      path: "/admin/ticket"
+      path: "/admin/manage-ticket"
     },
   ]
 
@@ -59,7 +59,7 @@ const AdminPage = () => {
                       <img src={data.icon} className={styles["meun-icon"]}></img>
                       <div className={styles["menu-text"]}>{data.title}</div>
                     </div>
-                    <img src={ActiveIcon} style={{ "margin-left": "1.5rem" }} className={styles["meun-icon"]} />
+                    <img src={ActiveIcon} style={{ "margin-left": "0.5rem" }} className={styles["meun-icon"]} />
                   </> :
                   <>
                     <div className={styles["sub-menu-content"]}>

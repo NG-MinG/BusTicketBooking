@@ -1,6 +1,6 @@
 .a{
     margin: 4rem auto 0 auto ;
-    width: 82%;
+    width: 85%;
 }
 
 .header-container{
@@ -65,10 +65,9 @@
     border-collapse: collapse;
     width: 100%;
     margin-top: 2rem;
-    font-size: 1.1rem;
+    font-size: 1.25rem;
     font-weight: 500;
   }
-  
   .table-containter td, .table-containter th {
     padding: 0.8rem;
   }
