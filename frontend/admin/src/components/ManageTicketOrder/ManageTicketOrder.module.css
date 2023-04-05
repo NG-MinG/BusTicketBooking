@@ -1,0 +1,92 @@
+.ManageTicketOrder{
+  padding: 4rem 6rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.title{
+  text-transform: uppercase;
+  color: #417DD8;
+  font-weight: 700;
+  font-size: 24px;
+  align-self: flex-start;
+}
+
+.search input{
+  padding: 1rem .8rem;
+  width: 32rem;
+  font-family: inherit;
+  border-radius: 6px;
+  border: 1px solid #8D8A8A;
+  margin-right: -30px;
+  font-size: 1.6rem;
+}
+
+.search input:focus{
+  outline: none;
+}
+
+.search{
+  display: flex;
+  align-items: center;
+  align-self: flex-end;
+  padding-right: 1rem;
+  margin-top: 4rem;
+}
+
+.table{
+  width: 100%;
+  height: 50rem;
+  border-radius: 12px;
+  border: 1px solid #EDEDED;
+  border-top: 0;
+  overflow: hidden;
+  margin-top: 2rem;
+}
+
+.header{
+  background-color: #417DD8;
+  padding: 1.5rem .5rem;
+  display: flex;
+}
+
+.ManageTicketOrder p{
+  margin: 0;
+}
+
+.header p{
+  color: white;
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+.header p:nth-child(1){
+  margin-left: 3rem;
+}
+
+.header p:nth-child(2){
+  margin-left: 13rem;
+}
+
+.header p:nth-child(3){
+  margin-left: 13rem;
+}
+
+.header p:nth-child(4){
+  margin-left: 14rem;
+}
+
+.header p:nth-child(5){
+  margin-left: 14rem;
+}
+
+.header p:nth-child(6){
+  margin-left: 7rem;
+}
+
+.listItem{
+  height: 100%;
+  overflow-y: scroll;
+}
