@@ -78,7 +78,6 @@ const AdminPage = () => {
                       <div className={styles["menu-text"]}>{data.title}</div>
                     </div>
                     <img src={ActiveIcon} style={{ "margin-left": "0.5rem" }} className={styles["meun-icon"]} />
-
                     {index === sidebarData.length - 1
                       &&
                       <div className={styles["ticket-item"]}>

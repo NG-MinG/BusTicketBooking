@@ -1,0 +1,79 @@
+.ManageTicketOrderEdit{
+  padding: 3rem 6rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 0;
+  gap: 2rem;
+}
+
+.main{
+  width: 100%;
+  height: 52rem;
+  display: flex;
+  padding-top: 3.5rem;
+}
+
+.information{
+  width: 50%;
+  padding: 0 3rem;
+  display: flex;
+  gap: 3rem;
+}
+
+.title{
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  font-size: 1.5rem;
+}
+
+p{
+  margin: 0;
+}
+
+.ManageTicketOrderEdit button{
+  border: none;
+  border-radius: 3px;
+  padding: .4rem 2rem;
+  color: white;
+  background-color:#417DD8;
+  align-self: center;
+}
+
+.content{
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.content input{
+  padding: .8rem;
+  width: 35rem;
+  font-family: inherit;
+  border-radius: 3px;
+  border: 1px solid #8D8A8A;
+  margin-right: -30px;
+  font-size: 1.4rem;
+  height: 3.4rem;
+  box-sizing: border-box;
+}
+
+.content input:focus{
+  outline: none;
+}
+
+.content p{
+  line-height: 3.4rem;
+  vertical-align: middle;
+}
+
+.seat{
+  width: 50%;
+  display: flex;
+  font-size: 10rem;
+  align-items: center;
+  justify-content: center;
+}
+
