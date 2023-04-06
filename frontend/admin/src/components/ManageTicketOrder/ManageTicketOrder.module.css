@@ -89,14 +89,14 @@
   margin-left: 7rem;
 }
 
-.listItem{
+.listItems{
   height: 100%;
   overflow-y: scroll;
 }
 
-.detail{
+/* .detail{
 
-}
+} */
 
 .overlay{
   position: absolute;
