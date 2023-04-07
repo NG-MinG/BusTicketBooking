@@ -2,12 +2,13 @@
     display: flex;
     margin: 0;
     padding: 0;
+    
 }
 
 .sidebar-container{
     height: 100vh;
     background: #083F73;
-    width: 20rem;
+    min-width: 20rem;
 }
 
 .menu-container {
