@@ -9,6 +9,11 @@
     height: 100vh;
     background: #083F73;
     min-width: 20rem;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    left: 0;
+    bottom: 0;
 }
 
 .menu-container {
