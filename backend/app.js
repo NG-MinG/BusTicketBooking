@@ -4,6 +4,8 @@ import mongoSanitize from 'express-mongo-sanitize';
 import xss from 'xss-clean';
 import hpp from 'hpp';
 import cors from 'cors';
+import userProfileRouter from "./routes/userProfileRoutes.js"
+import globalErrorhandler from "./controllers/ErrorController.js"
 
 import authRouter from './routes/authRoutes.js';
 
@@ -24,5 +26,8 @@ app.use(hpp());
 app.use(express.json({ limit: '10mb' }));
 
 app.use(`${process.env.API_HOST}/auth`, authRouter);
+app.use('/bus/v1/user', userProfileRouter); // mounting new router on route (URL)
+
+app.use(globalErrorhandler);
 
 export default app;
