@@ -5,6 +5,8 @@ import xss from 'xss-clean';
 import hpp from 'hpp';
 import cors from 'cors';
 
+import authRouter from './routes/authRoutes.js';
+
 const limiter = rateLimit({
   // limiter is now become a middleware function
   max: 1000,
@@ -20,5 +22,7 @@ app.use(xss());
 app.use(hpp());
 
 app.use(express.json({ limit: '10mb' }));
+
+app.use(`${process.env.API_HOST}/auth`, authRouter);
 
 export default app;
