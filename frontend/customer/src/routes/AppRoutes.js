@@ -10,6 +10,7 @@ import MyTicket from '../components/UserProfile/MyTicket/MyTicket'
 import TicketHistory from "../components/UserProfile/TicketHistory/TicketHistory";
 import SchedulePage from '../pages/SchedulePage/SchedulePage'
 import BranchesPage from "../pages/BranchesPage/BranchesPage";
+import ContactPage from "../pages/ContactPage/ContactPage";
 
 const AppRoutes = () => {
     return (
@@ -24,10 +25,9 @@ const AppRoutes = () => {
                     <Route path='my-ticket' element={<MyTicket />} />
                     <Route path='ticket-history' element={<TicketHistory />} />
                 </Route>
-                <Route path="/schedules" element={<SchedulePage />} >
-                </Route>
-                <Route path="/branches" element={<BranchesPage />} >
-                </Route>
+                <Route path="/schedules" element={<SchedulePage />} ></Route>
+                <Route path="/branches" element={<BranchesPage />} ></Route>
+                <Route path="/contact" element={<ContactPage />} ></Route>
             </Route>
         </Routes>)
 }
