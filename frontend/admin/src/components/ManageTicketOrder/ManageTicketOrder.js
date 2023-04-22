@@ -11,6 +11,17 @@ const ManageTicketOrder = () => {
 
   const ticketHistory = [
     {
+      id: 'HCMBT1',
+      ten: 'Dinh Nguyen Duy Khang',
+      sodienthoai: '0976975548',
+      diemdi: 'TP.Hồ Chí Minh',
+      diemden: 'Bến Tre',
+      ngay: '31/12/2022',
+      gio: '13h30',
+      gia: '150.000đ',
+      trangthai: 'Đang xử lí'
+    },
+    {
       id: 'HCMBT2',
       ten: 'Khang Dinh',
       sodienthoai: '0976975548',
