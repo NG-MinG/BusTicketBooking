@@ -15,7 +15,7 @@
 
 .information{
   width: 50%;
-  padding: 0 3rem;
+  padding: 1rem 3rem;
   display: flex;
   gap: 3rem;
 }
@@ -35,10 +35,13 @@ p{
 .ManageTicketOrderEdit .save{
   border: none;
   border-radius: 3px;
-  padding: .4rem 2rem;
+  padding: .5rem 2rem;
   color: white;
+  font-size: 1.5rem;
+  font-weight: 600;
   background-color:#417DD8;
   align-self: center;
+  cursor: pointer;
 }
 
 .content{

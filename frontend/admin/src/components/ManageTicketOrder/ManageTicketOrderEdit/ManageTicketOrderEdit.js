@@ -2,11 +2,15 @@ import React, { useState } from 'react'
 import styles from './ManageTicketOrderEdit.module.css'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation, useParams } from 'react-router-dom'
 import Seat from './Seat/Seat'
 import Status from './Status/Status'
+
 export default function ManageTicketOrderEdit() {
   const navigate = useNavigate();
+  const location = useLocation();
+  // const { data } = location.state;
+  // console.log(data)
 
   const [choosingSeats, setChoosingSeats] = useState([]);
   const [price, setPrice] = useState(0);
