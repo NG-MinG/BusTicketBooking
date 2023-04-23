@@ -9,4 +9,23 @@ const getAll = catchAsync(async (req, res) => {
   })
 })
 
-export { getAll }
+const getBySearch = catchAsync(async (req, res) => {
+  const search = req.body.search.toLowerCase()
+  const stations_filter = []
+  const stations = await Station.find()
+  for (let i of stations) {
+    if (i.location.toLowerCase().includes(req.body.search)) {
+      stations_filter.push(i)
+      continue
+    }
+    for (let j of i.stations) {
+      if (j.address.toLowerCase().includes(req.body.search) || j.phone.toLowerCase().includes(req.body.search)) stations_filter.push(i)
+    }
+  }
+  res.status(200).json({
+    status: 'success',
+    data: { stations_filter }
+  })
+})
+
+export { getAll, getBySearch }
