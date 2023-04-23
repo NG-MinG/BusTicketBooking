@@ -3,10 +3,6 @@ import { BrowserRouter, NavLink, Outlet, Route, Routes } from 'react-router-dom'
 import styles from './UserProfile.module.css'
 import { faUser, faPenToSquare, faKey, faTicket, faClockRotateLeft, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Information from './Information/Information'
-import EditInformation from './EditInformation/EditInformation'
-import ChangePassword from './ChangePassword/ChangePassword'
-import MyTicket from './MyTicket/MyTicket'
 
 export default function UserProfile() {
 

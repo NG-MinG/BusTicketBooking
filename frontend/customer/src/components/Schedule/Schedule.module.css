@@ -1,6 +1,6 @@
 .Schedule{
   padding: 0 33rem;
-  padding-top: 3rem;
+  padding-top: 3.5rem;
   overflow: hidden;
 }
 
@@ -8,17 +8,17 @@
   color: #417DD8;
   font-size: 2.5rem;
   font-weight: 500;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
 }
 
-.search{
+.searches{
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
 }
 
-.search input{
+.searches input{
   border: 1px solid #417DD8;
   border-radius: 10px;
   padding: 1rem 1.8rem;
@@ -27,12 +27,16 @@
   width: 38rem;
 }
 
-.search input:focus{
+.searches input:focus{
   outline: none;
 }
 
-.search input::placeholder{
+.searches input::placeholder{
   color: #A2ABB3;
+}
+
+.search{
+  position: relative;
 }
 
 .table{
@@ -44,6 +48,7 @@
   border-bottom: 0;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+  overflow: hidden;
 }
 
 .header{
@@ -85,4 +90,13 @@
   padding: 1.5rem 3.5rem;
   font-weight: 500;
   font-size: 1.7rem;
+}
+
+.content::-webkit-scrollbar {
+  width: 10px;
+}
+
+.content::-webkit-scrollbar-thumb {
+  background-color: #dddddd;
+  border-radius: 5px;
 }
