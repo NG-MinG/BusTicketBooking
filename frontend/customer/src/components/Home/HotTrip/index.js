@@ -62,7 +62,7 @@ const HotTrip = () => {
             <div className={classes.hot_trip_main}>
                 <h1 className={classes.title}>Các tuyến xe nổi bật</h1>
                 <div className={classes.hot_trip_wrapper}>
-                    {trip_list.map((item) => <TripCard trip={item} /> )}
+                    {trip_list.map((item, index) => <TripCard key={`trip_${index}`} trip={item} /> )}
                 </div>
             </div>
         </div>
