@@ -20,37 +20,39 @@ export default function Schedule() {
 
   return (
     <div className={styles.Schedule}>
-      <p className={styles.searchTitle}>Tìm chuyến xe</p>
-      <div className={styles.searches}>
-        <div className={styles.search}>
-          <input placeholder="Nhập điểm đi..." />
-          <FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: '#A2ABB3', fontSize: '2.2rem', position: 'absolute', top: '25%', right: '4%', cursor: 'pointer' }} />
-        </div>
-        <FontAwesomeIcon icon={faArrowRightLong} style={{ color: '#417DD8', fontSize: '4.5rem' }} />
-        <div className={styles.search}>
-          <input placeholder="Nhập điểm đến..." />
-          <FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: '#A2ABB3', fontSize: '2.2rem', position: 'absolute', top: '25%', right: '4%', cursor: 'pointer' }} />
-        </div>
-      </div>
-      <div className={styles.table}>
-        <div className={styles.header}>
-          <p>Tuyến xe</p>
-          <p>Loại xe</p>
-          <p>Quãng đường</p>
-          <p>Thời gian hành trình</p>
-        </div>
-        <div className={styles.content}>
-          <p>Đi từ TP.Hồ Chí Minh đến</p>
-          <div className={styles.fromHCM}>
-            {data.map((value, index) => (
-              value.departure_city === "TP.Hồ Chí Minh" && <ScheduleItem key={index} diem={value.arrival_city} value={value} />
-            ))}
+      <div className={styles['main-content']}>
+        <p className={styles.searchTitle}>Tìm chuyến xe</p>
+        <div className={styles.searches}>
+          <div className={styles.search}>
+            <input placeholder="Nhập điểm đi..." />
+            <FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: '#A2ABB3', fontSize: '2.2rem', position: 'absolute', top: '25%', right: '4%', cursor: 'pointer' }} />
           </div>
-          <p>Đi đến TP.Hồ Chí Minh từ</p>
-          <div className={styles.toHCM}>
-            {data.map((value, index) => (
-              value.arrival_city === "TP.Hồ Chí Minh" && <ScheduleItem key={index} diem={value.departure_city} value={value} />
-            ))}
+          <FontAwesomeIcon icon={faArrowRightLong} style={{ color: '#417DD8', fontSize: '4.5rem' }} />
+          <div className={styles.search}>
+            <input placeholder="Nhập điểm đến..." />
+            <FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: '#A2ABB3', fontSize: '2.2rem', position: 'absolute', top: '25%', right: '4%', cursor: 'pointer' }} />
+          </div>
+        </div>
+        <div className={styles.table}>
+          <div className={styles.header}>
+            <p>Tuyến xe</p>
+            <p>Loại xe</p>
+            <p>Quãng đường</p>
+            <p>Thời gian hành trình</p>
+          </div>
+          <div className={styles.content}>
+            <p>Đi từ TP.Hồ Chí Minh đến</p>
+            <div className={styles.fromHCM}>
+              {data.map((value, index) => (
+                value.departure_city === "TP.Hồ Chí Minh" && <ScheduleItem key={index} diem={value.arrival_city} value={value} />
+              ))}
+            </div>
+            <p>Đi đến TP.Hồ Chí Minh từ</p>
+            <div className={styles.toHCM}>
+              {data.map((value, index) => (
+                value.arrival_city === "TP.Hồ Chí Minh" && <ScheduleItem key={index} diem={value.departure_city} value={value} />
+              ))}
+            </div>
           </div>
         </div>
       </div>

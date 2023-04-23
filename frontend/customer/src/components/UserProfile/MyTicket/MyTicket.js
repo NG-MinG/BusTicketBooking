@@ -8,7 +8,7 @@ export default function MyTicket() {
       id: '1',
       diemdi: 'TP. Hồ Chí Minh',
       diemden: 'Nha Trang',
-      ngaydi: '14/02/2023',
+      ngaydi: '14/05/2023',
       giodi: '13h30',
       tenhanhkhach: 'Đinh Nguyễn Duy Khang',
       soluongghe: '3',
@@ -21,7 +21,7 @@ export default function MyTicket() {
       id: '2',
       diemdi: 'TP. Hồ Chí Minh',
       diemden: 'Nha Trang',
-      ngaydi: '14/02/2023',
+      ngaydi: '14/05/2023',
       giodi: '13h30',
       tenhanhkhach: 'Đinh Nguyễn Duy Khang',
       soluongghe: '3',
@@ -34,7 +34,7 @@ export default function MyTicket() {
       id: '3',
       diemdi: 'TP. Hồ Chí Minh',
       diemden: 'Nha Trang',
-      ngaydi: '14/02/2023',
+      ngaydi: '23/04/2023',
       giodi: '13h30',
       tenhanhkhach: 'Đinh Nguyễn Duy Khang',
       soluongghe: '3',
@@ -47,7 +47,7 @@ export default function MyTicket() {
       id: '4',
       diemdi: 'TP. Hồ Chí Minh',
       diemden: 'Nha Trang',
-      ngaydi: '14/02/2023',
+      ngaydi: '23/03/2023',
       giodi: '13h30',
       tenhanhkhach: 'Đinh Nguyễn Duy Khang',
       soluongghe: '3',
@@ -61,11 +61,13 @@ export default function MyTicket() {
 
   return (
     <div className={styles.MyTicket}>
-      {
-        tickets.map((item, index) => (
-          <MyTicketItem key={item.id} value={item} />
-        ))
-      }
+      <div className={styles.listTicket}>
+        {
+          tickets.map((item, index) => (
+            <MyTicketItem key={item.id} value={item} />
+          ))
+        }
+      </div>
     </div>
   )
 }

@@ -75,5 +75,27 @@
   border-radius: 5px;
   width: 8rem;
   height: 2.6rem;
+  cursor: pointer;
+}
+
+.error{
+  position: absolute;
+  font-size: 12px !important;
+  width: 24rem;
+  top:87%;
+  right: 5%;
+  text-align: center;
+  color: red;
+  /* background-color: yellow; */
+}
+
+.success{
+  position: absolute;
+  font-size: 12px !important;
+  width: 24rem;
+  top:87%;
+  right: 5%;
+  text-align: center;
+  color:green;
 }
 

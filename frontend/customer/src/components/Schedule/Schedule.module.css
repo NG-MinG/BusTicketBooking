@@ -1,14 +1,19 @@
 .Schedule{
-  padding: 0 33rem;
-  padding-top: 3.5rem;
+  width: 100%;
+  padding-top: 3rem;
   overflow: hidden;
+}
+
+.main-content{
+  margin: 0 auto;
+  width: 96rem;
 }
 
 .searchTitle{
   color: #417DD8;
   font-size: 2.5rem;
   font-weight: 500;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
 }
 
 .searches{
@@ -45,7 +50,6 @@
   border: 2px solid #417DD8;
   height: 69vh;
   border-radius: 12px;
-  border-bottom: 0;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   overflow: hidden;
@@ -57,7 +61,7 @@
   background-color: #417DD8;
   padding: 1.5rem 0rem;
   color: #ffffff;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 .header p{
@@ -68,20 +72,21 @@
 }
 
 .header p:nth-child(1){
-  width: 27rem;
+  width: 28rem;
 }
 
 .header p:nth-child(2){
-  width: 10rem;
+  width: 12rem;
 }
 
 .header p:nth-child(3){
-  width: 14rem;
+  width: 15rem;
 }
 
 .content{
   overflow-y: scroll !important;
   max-height: 100%;
+  padding-bottom: 1rem;
 }
 
 .content >p{

@@ -6,9 +6,9 @@ import axios from 'axios'
 
 
 export default function EditInformation() {
-  const [information, setInformation] = useState()
+  const [information, setInformation] = useState({})
 
-  // const [nameError,setNameError] = useState(false);
+  const [nameError, setNameError] = useState(" ");
   // const []
 
 
@@ -34,6 +34,8 @@ export default function EditInformation() {
       // console.log(res.data.data.user)
     }).catch(error => {
       console.log(error)
+
+
     })
   }, [])
 
@@ -42,14 +44,16 @@ export default function EditInformation() {
 
     axios.patch(process.env.REACT_APP_ipAddress + '/bus/v1/user/updateProfile', information).then((res) => {
       console.log('Successfully!!!')
+      setNameError("")
     }).catch(error => {
       // console.log(error)
-      let a = error.response.data.message
-      console.log(a)
+      let name_error = error.response.data.message
+      setNameError(name_error)
     })
   }
 
   const handleChangeInput = (e) => {
+    console.log(e.target.value)
     setInformation(prev => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
@@ -78,6 +82,7 @@ export default function EditInformation() {
         <img alt="" src='' />
       </div>
       <button type='submit'>save</button>
+      {nameError.length > 0 ? <p className={styles['error']}>{nameError}</p> : <p className={styles['success']}>Successfully!</p>}
     </form>
   )
 }

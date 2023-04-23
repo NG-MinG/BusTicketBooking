@@ -1,10 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from './MyTicketItem.module.css'
 import { faCalendarCheck, faClock } from '@fortawesome/free-regular-svg-icons'
 import { faArrowRightLong, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function MyTicketItem(props) {
+  const date = new Date()
+  var dateParts = props.value.ngaydi.split("/");
+
+  let dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+  console.log(date)
+  console.log(dateObject)
+
+  const [expire, setExpire] = useState(dateObject.getTime() < date.getTime());
+
   return (
     <div className={styles.MyTicketItem}>
       <div className={styles.top}>
@@ -56,6 +65,8 @@ export default function MyTicketItem(props) {
           <p>hủy chuyến</p>
         </div>
       </div>
+      {expire && <div className={styles.expire}></div>}
+      {expire && <p className={styles['expire-text']}>Hết hạn</p>}
     </div>
   )
 }
