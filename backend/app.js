@@ -25,7 +25,7 @@ app.use(hpp());
 
 app.use(express.json({ limit: '10mb' }));
 
-app.use(`${process.env.API_HOST}/auth`, authRouter);
+app.use('/bus/api/v1/auth', authRouter);
 app.use('/bus/v1/user', userProfileRouter); // mounting new router on route (URL)
 
 app.use(globalErrorhandler);

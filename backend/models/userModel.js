@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-
+import bcrypt from 'bcryptjs';
 
 const userSchema = new mongoose.Schema({
   fullname: {
@@ -30,8 +30,6 @@ const userSchema = new mongoose.Schema({
   address: String,
   gender: String,
   avatar: String,
-
-
   passwordChangedAt: Date,
   userVerifyToken: String,
   passwordResetExpires: Date,
@@ -40,6 +38,49 @@ const userSchema = new mongoose.Schema({
     default: true
   }
 });
+
+userSchema.pre('save', async function(next) {
+  // Only run this function if password was actually modified
+  if (!this.isModified('password')) return next();
+
+  // Hash the password with cost of 12
+  this.password = await bcrypt.hash(this.password, 12)
+
+  next();
+});  
+
+userSchema.pre('save', function(next) {
+  if (!this.isModified('password') || this.isNew)
+    return next();
+    
+  this.passwordChangeAt = Date.now()-1000;
+  
+  next();
+})
+
+userSchema.pre(/^find/, function(next) {
+  // this points to the current query
+  // this.find({active: { $ne: false }})
+  next();
+})
+
+userSchema.methods.correctPassword = async function(
+  candidatePassword, 
+  userPassword
+  ) {
+  return await bcrypt.compare(candidatePassword, userPassword)
+}
+
+userSchema.methods.changedPasswordAfter = function(JWTTimestamp) {
+  if (this.passwordChangeAt) {
+    const changedTimestamp = parseInt(this.passwordChangeAt.getTime() / 1000, 10)
+
+    return JWTTimestamp < changedTimestamp;
+  }
+  
+  // False means NOT changed
+  return false;
+}
 
 const User = mongoose.model('users', userSchema);
 
