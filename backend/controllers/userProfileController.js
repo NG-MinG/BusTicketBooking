@@ -60,8 +60,25 @@ const updateProfile = catchAsync(async (req, res, next) => {
   if (!gender.includes(req.body.gender)) return next(new AppError('Giới tính không tồn tại'));
   // 3) Update user account
   const updatedUser = await User.findByIdAndUpdate("64312f06ab1ff0a59daf4263", filterBody, { new: true, runValidators: true });
-  console.log(updatedUser)
+  // console.log(updatedUser)
   res.status(200).json({ status: 'success', data: { user: updatedUser } });
 })
 
-export { userProfile, updateProfile }
+const changePassword = catchAsync(async (req, res, next) => {
+  const user = await User.findById("64312f06ab1ff0a59daf4263")
+
+  // 1) Get user from collection
+  // const user = await User.findById(res.locals.authUser._id).select('+password');
+  // 2) Check if POSTed current password is correct
+  if (!(await user.correctPassword(req.body.currentPassword, user.password))) {
+    return next(new Error('Your current password is wrong'), 401);
+  }
+  // 3) If so, update password
+  if (req.body.password != req.body.passwordConfirm) {
+    return next(new Error('Password and password confirm not equal'), 401);
+  }
+
+  res.status(200).json({ status: 'success' });
+})
+
+export { userProfile, updateProfile, changePassword }

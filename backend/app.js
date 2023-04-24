@@ -5,6 +5,8 @@ import xss from 'xss-clean';
 import hpp from 'hpp';
 import cors from 'cors';
 import userProfileRouter from "./routes/userProfileRoutes.js"
+import scheduleRouter from "./routes/scheduleRoutes.js"
+import stationRouter from "./routes/stationRoutes.js"
 import globalErrorhandler from "./controllers/ErrorController.js"
 
 import authRouter from './routes/authRoutes.js';
@@ -27,6 +29,8 @@ app.use(express.json({ limit: '10mb' }));
 
 app.use('/bus/api/v1/auth', authRouter);
 app.use('/bus/v1/user', userProfileRouter); // mounting new router on route (URL)
+app.use('/bus/v1/schedule', scheduleRouter);
+app.use('/bus/v1/station', stationRouter);
 
 app.use(globalErrorhandler);
 
