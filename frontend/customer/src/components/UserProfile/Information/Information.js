@@ -4,14 +4,7 @@ import axios from 'axios'
 
 export default function Information() {
 
-  const [information, setInformation] = useState({
-    // name: "Đinh Nguyễn Duy Khang",
-    // phoneNumber: "0976975548",
-    // email: "khangduy017@gmail.com",
-    // birthday: "21/04/2002",
-    // gender: "Nam",
-    // address: "1647 Phạm Thế Hiển, phường 6, quận 8"
-  })
+  const [information, setInformation] = useState({})
 
 
   useEffect(() => {

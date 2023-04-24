@@ -71,9 +71,34 @@
   border: none;
   color: white;
   font-weight: 500;
-  text-transform: uppercase;
   border-radius: 5px;
   width: 8rem;
   height: 2.6rem;
+  cursor: pointer;
+}
+
+.EditInformation button:hover{
+  background-color: #0a355f;
+}
+
+.error{
+  position: absolute;
+  font-size: 12px !important;
+  width: 24rem;
+  top:87%;
+  right: 5%;
+  text-align: center;
+  color: red;
+  /* background-color: yellow; */
+}
+
+.success{
+  position: absolute;
+  font-size: 12px !important;
+  width: 24rem;
+  top:87%;
+  right: 5%;
+  text-align: center;
+  color:green;
 }
 

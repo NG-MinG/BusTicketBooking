@@ -7,7 +7,6 @@ import Information from '../components/UserProfile/Information/Information'
 import EditInformation from '../components/UserProfile/EditInformation/EditInformation'
 import ChangePassword from '../components/UserProfile/ChangePassword/ChangePassword'
 import MyTicket from '../components/UserProfile/MyTicket/MyTicket'
-import TicketHistory from "../components/UserProfile/TicketHistory/TicketHistory";
 import SchedulePage from '../pages/SchedulePage/SchedulePage'
 import BranchesPage from "../pages/BranchesPage/BranchesPage";
 import ContactPage from "../pages/ContactPage/ContactPage";
@@ -23,7 +22,6 @@ const AppRoutes = () => {
                     <Route path='edit-information' element={<EditInformation />} />
                     <Route path='change-password' element={<ChangePassword />} />
                     <Route path='my-ticket' element={<MyTicket />} />
-                    <Route path='ticket-history' element={<TicketHistory />} />
                 </Route>
                 <Route path="/schedules" element={<SchedulePage />} ></Route>
                 <Route path="/branches" element={<BranchesPage />} ></Route>
