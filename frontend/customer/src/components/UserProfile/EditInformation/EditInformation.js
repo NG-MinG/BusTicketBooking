@@ -9,8 +9,6 @@ export default function EditInformation() {
   const [information, setInformation] = useState({})
 
   const [nameError, setNameError] = useState(" ");
-  // const []
-
 
   // useEffect(() => {
   //   if (cookie.get("TWJ")) {
@@ -77,11 +75,11 @@ export default function EditInformation() {
       </div>
       <div className={styles['avatar']}>
         <div className={styles.addIcon}>
-          <FontAwesomeIcon icon={faPlus} style={{ color: '#417DD8', fontSize: '3.5rem' }} />
+          <FontAwesomeIcon icon={faPlus} style={{ color: '#417DD8', fontSize: '3.5rem', cursor: "pointer" }} />
         </div>
         <img alt="" src='' />
       </div>
-      <button type='submit'>save</button>
+      <button type='submit'>Lưu</button>
       {nameError.length > 0 ? <p className={styles['error']}>{nameError}</p> : <p className={styles['success']}>Successfully!</p>}
     </form>
   )

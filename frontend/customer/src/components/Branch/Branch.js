@@ -22,6 +22,12 @@ export default function Branch() {
   const [searchText, setSearchText] = useState('')
   const searchTextHandle = (e) => {
     setSearchText(e.target.value)
+    axios.patch(process.env.REACT_APP_ipAddress + '/bus/v1/station/searchStations', { search: e.target.value }).then((res) => {
+      setBranches(res.data.data.stations_filter)
+      console.log(res.data.data.stations_filter)
+    }).catch(error => {
+      console.log(error)
+    })
   }
 
 
@@ -52,7 +58,7 @@ export default function Branch() {
           {branches.map((value, index) => (
             <BranchItem key={index} value={value} />
           ))}
-        </div> : <div style={{ marginTop: '2.5rem', marginBottom: '8rem', fontSize: '2.1rem' }}>
+        </div> : <div style={{ marginTop: '2.5rem', marginBottom: '60rem', fontSize: '2.1rem' }}>
           Không có kết quả...
         </div>}
       </div>

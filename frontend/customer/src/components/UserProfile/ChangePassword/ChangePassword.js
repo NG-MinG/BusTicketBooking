@@ -37,7 +37,7 @@ export default function ChangePassword() {
         <input name="newPassword" onChange={() => handleInput} type="password" />
         <input name="confirmPassword" onChange={() => handleInput} type="password" />
       </div>
-      <button type='submit'>save</button>
+      <button type='submit'>Lưu</button>
     </form>
   )
 }
