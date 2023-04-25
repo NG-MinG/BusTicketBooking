@@ -1,3 +1,4 @@
+import jwt from 'jsonwebtoken';
 import catchAsync from "../utils/catchAsync.js";
 import AppError from "../utils/appError.js";
 import Validator from "../utils/Validator.js";
@@ -22,11 +23,40 @@ const signToken = function (id) {
 /// > LOGIN
 const login = catchAsync(async (req, res, next) => {
 
-    res.status(200).json({
-        status: "success",
-        message: "Login successful"
-    });
+    // Validate request body
+    if (!Validator.isValidRequestBody(req.body.user, ['phonenumber', 'password']))
+        return next(new AppError("Bad request", 400)); 
 
+    // Validate phonenumber, password and password confirm
+    const { phonenumber, password } = req.body.user;
+
+    if (Validator.isEmptyString(phonenumber) || Validator.isEmptyString(password))
+        return next(new AppError("Tài khoản hoặc mật khẩu không chính xác", 401));
+
+    else if (isNaN(+phonenumber) || !Validator.isMatching(phonenumber, REGEX.PHONE_NUMBER))
+        return next(new AppError("Tài khoản hoặc mật khẩu không chính xác", 401));
+    
+    else if (password.length < 8)
+        return next(new AppError('Tài khoản hoặc mật khẩu không chính xác', 401));
+
+    const user = await User.findOne({ phone: phonenumber }).select('+password');
+
+    if (!user || !(await user.correctPassword(password, user.password)) || !user.active) {
+        return next(new AppError('Tài khoản hoặc mật khẩu không chính xác', 401));
+    }
+
+    const token = signToken(user._id);
+
+ 
+    const userInfo = {
+        user,
+        access_token: token
+    };
+
+    res.status(200).json({
+        status: 'success',
+        data: userInfo
+    });
 });
 
 /// > REGISTER
@@ -40,22 +70,22 @@ const validateRegister = catchAsync(async (req, res, next) => {
     const { phonenumber, password, passwordConfirm } = req.body.user;
 
     if (Validator.isEmptyString(phonenumber) || Validator.isEmptyString(password) || Validator.isEmptyString(passwordConfirm))
-        return next(new AppError("Please provide phonenumber, password and password confirm", 400));
+        return next(new AppError("Vui lòng nhập đầy đủ thông tin", 400));
 
     else if (isNaN(+phonenumber) || !Validator.isMatching(phonenumber, REGEX.PHONE_NUMBER))
-        return next(new AppError("Please provide a valid phonenumber", 400));
+        return next(new AppError("Số điện thoại không tồn tại", 400));
     
     else if (password.length < 8)
-        return next(new AppError('Password is too weak (minimum 8 character)', 400));
+        return next(new AppError('Mật khẩu của bạn quá yếu (tối thiểu 8 kí tự)', 400));
     
     else if (password !== passwordConfirm)
-        return next(new AppError("Password and password confirm do not match", 400));
+        return next(new AppError("Mật khẩu của bạn không khớp", 400));
 
 
     const founded_user = await User.findOne({ phone: phonenumber });
 
     if (founded_user)
-        return next(new AppError("This phonenumber has already been registered", 400));
+        return next(new AppError("Tài khoản đã tồn tại", 400));
 
     return res.status(200).json({
         status: "success",
