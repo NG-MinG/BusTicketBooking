@@ -5,6 +5,7 @@ import {
 } from "firebase/auth";
 
 import { auth } from "../../configs/firebase-config";
+import { auth as authStorage } from '../../utilities/storage';
 
 import busLogo from "../../assets/images/logo.png";
 import Button from "../Button";
@@ -15,7 +16,7 @@ import axios from "axios";
 import classes from "./LoginForm.module.css";
 import Loader from "../Loader";
 
-const LoginForm = ({ closeForm, nextStep, setUserInfo }) => {
+const LoginForm = ({ closeForm, nextStep, setUserInfo, setSuccess }) => {
     const [hasAccount, setHasAccount] = useState(true);
     const [user, setUser] = useState({
         phonenumber: "",
@@ -85,14 +86,30 @@ const LoginForm = ({ closeForm, nextStep, setUserInfo }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        setIsLoading(true);
+
         const bodyData = { user: { ...user } };
 
         if (hasAccount) {
             // Login
             delete bodyData.user.passwordConfirm;
+
+            axios.post(process.env.REACT_APP_API_HOST + "/auth/login", bodyData)
+            .then(res => {
+                setIsLoading(false);
+                authStorage.login(res.data.data);
+                setSuccess('login');
+            })
+            .catch(err => {
+                setIsLoading(false);
+                setMessage({
+                    type: "error",
+                    content: err.response.data.message
+                });
+                console.log(err);
+            })
         } else {
             // Register
-            setIsLoading(true);
             sendOTP(bodyData);
         }
     };
