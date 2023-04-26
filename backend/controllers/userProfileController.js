@@ -6,7 +6,7 @@ import AppError from "../utils/appError.js";
 const userProfile = catchAsync(async (req, res) => {
   // let users
   // const user = await User.findOne({ _id: res.locals.authUser._id })
-  const user = await User.findOne({ _id: "64312f06ab1ff0a59daf4263" })
+  const user = await User.findById(req.user.id)
 
   // SEND RESPONSE
   res.status(200).json({
@@ -28,12 +28,12 @@ const filterObj = (obj, ...allowedFields) => {
 const updateProfile = catchAsync(async (req, res, next) => {
   const filterBody = filterObj(req.body, 'fullname', 'email', 'phone', 'address', 'gender', 'dob', 'photo');
   if (
-    req.body.fullname === '' ||
-    req.body.email === '' ||
-    req.body.phone === '' ||
-    req.body.address === '' ||
-    req.body.gender === '' ||
-    req.body.dob === ''
+    !req.body.fullname || req.body.fullname === '' ||
+    !req.body.email || req.body.email === '' ||
+    !req.body.phone || req.body.phone === '' ||
+    !req.body.address || req.body.address === '' ||
+    !req.body.gender || req.body.gender === '' ||
+    !req.body.dob || req.body.dob === ''
   ) {
     return next(new AppError('Thông tin bạn nhập không hợp lệ!', 400));
   }
@@ -59,24 +59,31 @@ const updateProfile = catchAsync(async (req, res, next) => {
   const gender = ['Nam', 'Nữ', 'Khác'];
   if (!gender.includes(req.body.gender)) return next(new AppError('Giới tính không tồn tại'));
   // 3) Update user account
-  const updatedUser = await User.findByIdAndUpdate("64312f06ab1ff0a59daf4263", filterBody, { new: true, runValidators: true });
+  const updatedUser = await User.findByIdAndUpdate(req.user.id, filterBody, { new: true, runValidators: true });
   // console.log(updatedUser)
   res.status(200).json({ status: 'success', data: { user: updatedUser } });
 })
 
 const changePassword = catchAsync(async (req, res, next) => {
-  const user = await User.findById("64312f06ab1ff0a59daf4263")
-
+  const user = await User.findById(req.user.id).select('+password')
   // 1) Get user from collection
   // const user = await User.findById(res.locals.authUser._id).select('+password');
   // 2) Check if POSTed current password is correct
   if (!(await user.correctPassword(req.body.currentPassword, user.password))) {
-    return next(new Error('Your current password is wrong'), 401);
+    return next(new AppError('Mật khẩu hiện tại không đúng'), 401);
   }
+
+  if (req.body.newPassword.length < 8) {
+    return next(new AppError('Mật khẩu mới quá ngắn'), 401);
+  }
+
   // 3) If so, update password
-  if (req.body.password != req.body.passwordConfirm) {
-    return next(new Error('Password and password confirm not equal'), 401);
+  if (req.body.newPassword != req.body.confirmPassword) {
+    return next(new AppError('Mật khẩu mới và xác nhận mật khẩu mới không trùng khớp'), 401);
   }
+
+  user.password = req.body.newPassword;
+  await user.save();
 
   res.status(200).json({ status: 'success' });
 })
