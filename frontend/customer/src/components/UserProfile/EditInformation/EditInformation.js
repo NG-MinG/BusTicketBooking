@@ -3,6 +3,7 @@ import styles from './EditInformation.module.css'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import axios from 'axios'
+import { auth } from '../../../utilities/storage'
 
 
 export default function EditInformation() {
@@ -10,24 +11,8 @@ export default function EditInformation() {
 
   const [nameError, setNameError] = useState(" ");
 
-  // useEffect(() => {
-  //   if (cookie.get("TWJ")) {
-  //     const headers = {
-  //       'Authorization': `Bearer ${cookie.get("TWJ")}`
-  //     }
-  //     axios.get(process.env.REACT_APP_ipAddress + '/tcf/v1/products/get-products', { headers: headers }).then((res) => {
-  //       setData(JSON.parse(res.data.data.productData))
-  //       console.log(JSON.parse(res.data.data.productData))
-  //       setProductsAmount(JSON.parse(res.data.data.productData))
-  //     }).catch(error => {
-  //       console.log(error)
-  //     })
-  //   }
-  // }, [])
-
-
   useEffect(() => {
-    axios.get(process.env.REACT_APP_ipAddress + '/bus/v1/user/userProfile').then((res) => {
+    axios.get(process.env.REACT_APP_ipAddress + '/bus/v1/user/userProfile', { headers: { Authorization: 'Bearer ' + auth.getAccessToken() } }).then((res) => {
       setInformation(res.data.data.user)
       // console.log(res.data.data.user)
     }).catch(error => {
@@ -40,7 +25,7 @@ export default function EditInformation() {
   const handleSave = (event) => {
     event.preventDefault()
 
-    axios.patch(process.env.REACT_APP_ipAddress + '/bus/v1/user/updateProfile', information).then((res) => {
+    axios.patch(process.env.REACT_APP_ipAddress + '/bus/v1/user/updateProfile', information, { headers: { Authorization: 'Bearer ' + auth.getAccessToken() } }).then((res) => {
       console.log('Successfully!!!')
       setNameError("")
     }).catch(error => {
@@ -66,12 +51,12 @@ export default function EditInformation() {
         <p>Địa chỉ:</p>
       </div>
       <div className={styles['content']}>
-        <input name='fullname' onChange={handleChangeInput} value={information.fullname} />
-        <input name='phone' onChange={handleChangeInput} value={information.phone} />
-        <input name='email' onChange={handleChangeInput} value={information.email} />
-        <input name='dob' onChange={handleChangeInput} value={information.dob} />
-        <input name='gender' onChange={handleChangeInput} value={information.gender} />
-        <input name='address' onChange={handleChangeInput} value={information.address} />
+        <input onFocus={() => setNameError(" ")} name='fullname' onChange={handleChangeInput} value={information.fullname} />
+        <input onFocus={() => setNameError(" ")} name='phone' onChange={handleChangeInput} value={information.phone} />
+        <input onFocus={() => setNameError(" ")} name='email' onChange={handleChangeInput} value={information.email} />
+        <input onFocus={() => setNameError(" ")} name='dob' onChange={handleChangeInput} value={information.dob} />
+        <input onFocus={() => setNameError(" ")} name='gender' onChange={handleChangeInput} value={information.gender} />
+        <input onFocus={() => setNameError(" ")} name='address' onChange={handleChangeInput} value={information.address} />
       </div>
       <div className={styles['avatar']}>
         <div className={styles.addIcon}>

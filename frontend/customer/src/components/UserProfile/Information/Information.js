@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import styles from './Information.module.css'
 import axios from 'axios'
+import { auth } from '../../../utilities/storage'
 
 export default function Information() {
 
   const [information, setInformation] = useState({})
 
-
+  console.log(auth.getAccessToken())
   useEffect(() => {
-    axios.get(process.env.REACT_APP_ipAddress + '/bus/v1/user/userProfile').then((res) => {
+    axios.get(process.env.REACT_APP_ipAddress + '/bus/v1/user/userProfile', { headers: { Authorization: 'Bearer ' + auth.getAccessToken() } }).then((res) => {
       setInformation(res.data.data.user)
       console.log(res.data.data.user)
     }).catch(error => {
@@ -27,12 +28,12 @@ export default function Information() {
         <p>Địa chỉ:</p>
       </div>
       <div className={styles['content']}>
-        <p>{information.fullname}</p>
-        <p>{information.phone}</p>
-        <p>{information.email}</p>
-        <p>{information.dob}</p>
-        <p>{information.gender}</p>
-        <p>{information.address}</p>
+        {information.fullname ? <p>{information.fullname}</p> : <p>&nbsp;</p>}
+        {information.phone ? <p>{information.phone}</p> : <p>&nbsp;</p>}
+        {information.email ? <p>{information.email}</p> : <p>&nbsp;</p>}
+        {information.dob ? <p>{information.dob}</p> : <p>&nbsp;</p>}
+        {information.gender ? <p>{information.gender}</p> : <p>&nbsp;</p>}
+        {information.address ? <p>{information.address}</p> : <p>&nbsp;</p>}
       </div>
       <div className={styles['avatar']}>
         <img alt="" src='' />
