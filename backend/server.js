@@ -1,10 +1,9 @@
 import mongoose from 'mongoose';
-
 import dotenv from 'dotenv';
+import app from "./app.js";
 
 const port = process.env.PORT || 5000;
 
-import app from "./app.js";
 dotenv.config({ path: './config.env' });
 
 mongoose
@@ -24,3 +23,25 @@ process.on('unhandledRejection', (err) => {
         process.exit(1); // 0 is success, 1 is uncaught exception
     });
 });
+
+// Import the functions you need from the SDKs you need
+// import { initializeApp } from "firebase/app";
+// import { getAnalytics } from "firebase/analytics";
+// // TODO: Add SDKs for Firebase products that you want to use
+// // https://firebase.google.com/docs/web/setup#available-libraries
+
+// // Your web app's Firebase configuration
+// // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// const firebaseConfig = {
+//   apiKey: "AIzaSyDlcuVBmUxI8dV9pziNX5u6YktxfQjbKEw",
+//   authDomain: "busticketbooking-455c8.firebaseapp.com",
+//   projectId: "busticketbooking-455c8",
+//   storageBucket: "busticketbooking-455c8.appspot.com",
+//   messagingSenderId: "176983530226",
+//   appId: "1:176983530226:web:fc34434c0203043606ce6b",
+//   measurementId: "G-Y26Q2CKKRR"
+// };
+
+// // Initialize Firebase
+// const app = initializeApp(firebaseConfig);
+// const analytics = getAnalytics(app);
