@@ -8,9 +8,10 @@ import userProfileRouter from "./routes/userProfileRoutes.js"
 import scheduleRouter from "./routes/scheduleRoutes.js"
 import stationRouter from "./routes/stationRoutes.js"
 import accountRouter from "./routes/accountRoutes.js"
+import authRouter from './routes/authRoutes.js';
+import ticketBookingRouter from "./routes/ticketBookingRoutes.js";
 import globalErrorhandler from "./controllers/ErrorController.js"
 
-import authRouter from './routes/authRoutes.js';
 
 const limiter = rateLimit({
   // limiter is now become a middleware function
@@ -32,6 +33,7 @@ app.use('/bus/api/v1/auth', authRouter);
 app.use('/bus/v1/user', userProfileRouter); // mounting new router on route (URL)
 app.use('/bus/v1/schedule', scheduleRouter);
 app.use('/bus/v1/station', stationRouter);
+app.use('/bus/api/v1/tickets', ticketBookingRouter)
 
 app.use('/admin', accountRouter);
 
