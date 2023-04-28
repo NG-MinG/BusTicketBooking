@@ -62,9 +62,6 @@ const ChooseRoute = (props) => {
     }
 
     return <>
-        <div className = {styles["nav-bar"]}>
-            This is navbar
-        </div>
         <div className = {styles["main-content"]}>
             <StepLine currentStep = {props.currentStep}/>
             <div className={styles["reminder"]}>Vui lòng chọn giờ lên xe phù hợp</div>
@@ -97,9 +94,7 @@ const ChooseRoute = (props) => {
             <Ticket/>
             <Ticket/> */}
         </div>
-        <div className = {styles["nav-bar"]}>This is footer</div>
     </> 
-    
 }   
 
 

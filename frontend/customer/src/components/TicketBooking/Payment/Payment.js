@@ -67,6 +67,12 @@ const Payment = (props) => {
         navigate('/')
     }
 
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+    var date_now = day + "/" + month + "/" + year;
+
     return <>
      <div className = {styles["nav-bar"]}>
             This is navbar
@@ -79,15 +85,15 @@ const Payment = (props) => {
             <div className={styles["guest-info"]}>
                 <div className={styles["name-info"]}>
                     <span className={styles["label"]}>Họ tên:</span>
-                    <span className={styles["value"]}>Nguyễn Thoại Đăng Khoa</span>
+                    <span className={styles["value"]}>{guestInfo.name}</span>
                 </div>
                 <div className={styles["phone-info"]}>
                     <span className={styles["label"]}>Số điện thoại:</span>
-                    <span className={styles["value"]}>0903861515</span>
+                    <span className={styles["value"]}>{guestInfo.phoneNumber}</span>
                 </div>
                 <div className={styles["email-info"]}>
                     <span className={styles["label"]}>Email:</span>
-                    <span className={styles["value"]}>nguyenthoaidangkhoa@gmail.com</span>
+                    <span className={styles["value"]}>{guestInfo.email}</span>
                 </div>
             </div>
             <div className={styles["route-info-label"]}>Thông tin chuyến:
@@ -116,23 +122,23 @@ const Payment = (props) => {
                     </div>
                     <div className={styles["arrival-depot"]}>
                         <span className={styles["label"]}>Điểm lên xe:</span>
-                        <span className={styles["depot"]}>VP BX Miền Tây: 395 Kinh Dương Vương, P.An Lạc , Q.Bình Tân , TP.HCM</span>
+                        <span className={styles["depot"]}>{ticketBookingDetails.departure_depot}</span>
                     </div>
                 </div>
                 <div className={styles["route-info-gr-2"]}>
                     <div className={styles["number-of-seats"]}>
                         <span className={styles["label"]}>Số lượng ghế: </span>
-                        <span className={styles["seats-num"]}>3</span>
+                        <span className={styles["seats-num"]}>{ticketBookingDetails.choosing_seats.length}</span>
                     </div>
                     <div className={styles["chosen-seats"]}>
                         <span className={styles["label"]}>Số ghế: </span>
-                        <span className={styles["seats-id"]}>B16, B15, B12</span>
+                        <span className={styles["seats-id"]}>{ticketBookingDetails.choosing_seats.map((el, index) => index === ticketBookingDetails.choosing_seats.length - 1 ? `${el}` : `${el}, `)}</span>
                     </div>
                 </div>
             </div>
             <div className={styles["total-price"]}>
                 <span className={styles["label"]}>Tổng tiền</span>
-                <span className={styles["price"]}>495.000đ</span>
+                <span className={styles["price"]}>{String(ticketBookingDetails.total_price).replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "đ"}</span>
             </div>
         </div>
         <div className={styles["payment-title"]}>Chọn cách thanh toán</div>
