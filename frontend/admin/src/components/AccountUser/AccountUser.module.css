@@ -67,31 +67,33 @@
     font-size: 1.4rem;
     font-weight: 400;
     padding: 2rem;
-    /* height: 40rem; */
-    height: 40rem;
-    overflow-y: scroll;
   }
-  .table-containter thead{
+  
+.table-containter thead{
     position: sticky;
     top: 0;
   }
-  .table-containter td, .table-containter th {
+.table-containter td, .table-containter th {
     padding: 0.8rem;
   }
   
-  .table-containter tr:nth-child(even){background-color: #EAF5FF;}
+.table-containter tr:nth-child(even){background-color: #EAF5FF;}
   
-  .table-containter tr:hover {background-color: #E6ECF1;}
+.table-containter tr:hover {background-color: #E6ECF1;}
   
-  .table-containter th {
+.table-containter > thead > tr > th {
     text-align: left;
     padding: 1rem;
     background-color: #417DD8;
     color: white;
   }
 
-  .table-containter td {
-    padding: 1rem;
+.table-containter > tbody > tr > td {
+    padding: 1rem; 
+}
+
+.table-containter > tbody > tr > td > a :hover {
+    cursor: pointer;
 }
 
 .listAccount{
