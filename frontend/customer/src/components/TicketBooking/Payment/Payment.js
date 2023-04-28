@@ -67,18 +67,19 @@ const Payment = (props) => {
         navigate('/')
     }
 
+    // date handle 
+
     var dateObj = new Date();
     var month = dateObj.getUTCMonth() + 1; //months from 1-12
     var day = dateObj.getUTCDate();
     var year = dateObj.getUTCFullYear();
     var date_now = day + "/" + month + "/" + year;
-
+    var hours = dateObj.getHours().toString().padStart(2, '0');
+    var minutes = dateObj.getMinutes().toString().padStart(2, '0');
+   
     return <>
-     <div className = {styles["nav-bar"]}>
-            This is navbar
-    </div>
     <div className={styles["main-content"]}>
-        <StepLine currentStep = {props.currentStep}/>
+        <StepLine departure_city = {props.departure_city} arrival_city = {props.arrival_city} date = {props.date} currentStep = {props.currentStep}/>
         <div className={styles["ticket-information"]}>
             <div className={styles["title"]}>Thông tin mua vé</div>
             <div className={styles["guest-info-label"]}>Thông tin khách hàng</div>
@@ -98,9 +99,9 @@ const Payment = (props) => {
             </div>
             <div className={styles["route-info-label"]}>Thông tin chuyến:
                 <span className={styles["route"]}>
-                    <span className={styles["departure_city"]}>TP.HCM</span>
+                    <span className={styles["departure_city"]}>{ticketBookingDetails.departure_city}</span>
                     <span className={styles[""]}><RightArrowIcon className = {styles["right-arrow-icon"]}/></span>
-                    <span className={styles["arrival_city"]}>Cần Thơ</span>     
+                    <span className={styles["arrival_city"]}>{ticketBookingDetails.arrival_city}</span>     
                 </span> 
             </div>
             <div className={styles["route-info"]}>
@@ -108,16 +109,16 @@ const Payment = (props) => {
                     <div className={styles["route"]}>
                         <span className={styles["label"]}>Tuyến xe:</span>
                         <span className={styles["route"]}>
-                           <span className={styles["departure_city"]}>TP.HCM</span>
+                           <span className={styles["departure_city"]}>{ticketBookingDetails.departure_city}</span>
                            <span className={styles[""]}><RightArrowIcon className = {styles["right-arrow-icon"]}/></span>
-                           <span className={styles["arrival_city"]}>Cần Thơ</span>     
+                           <span className={styles["arrival_city"]}>{ticketBookingDetails.arrival_city}</span>     
                         </span> 
                     </div>
                     <div className={styles["time"]}>
                         <span className={styles["label"]}>Thời gian:</span>
                         <span className={styles["time-info"]}>
-                           <span className={styles["current-time"]}>00:01</span>
-                           <span className={styles["date"]}>10/3/2023</span>     
+                           <span className={styles["current-time"]}>{hours}:{minutes}</span>
+                           <span className={styles["date"]}>{date_now}</span>     
                         </span> 
                     </div>
                     <div className={styles["arrival-depot"]}>

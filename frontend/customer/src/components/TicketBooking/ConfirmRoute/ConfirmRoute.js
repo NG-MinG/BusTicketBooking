@@ -38,12 +38,12 @@ const ConfirmRoute = (props) => {
 
     return <>
     <div className={styles["main-content"]}>
-        <StepLine currentStep = {props.currentStep}/>
+        <StepLine departure_city = {props.departure_city} arrival_city = {props.arrival_city} date = {props.date} currentStep = {props.currentStep}/>
         <div className={`${styles["ticket"]} ${styles["ticket-active"]}`}>
             <div className={styles["quick-description"]}>
                     <div className={styles["confirm-route-title"]}>Xác nhận lộ trình đi</div>
                     <div className={styles["ticket-details"]}>
-                        <span className={styles["ticket-price"]}>{ticketBookingDetails.ticket_price}</span>
+                        <span className={styles["ticket-price"]}>{ticketBookingDetails.price}</span>
                         <span className={styles["bus-type"]}>
                             <span className={styles["Dot-icon"]}><DotIcon/></span>
                             <span className={styles["name"]}>{ticketBookingDetails.bus_type}</span>
@@ -53,7 +53,7 @@ const ConfirmRoute = (props) => {
                         <LocationIcon/>
                         <span className={styles["departure-place"]}>{ticketBookingDetails.departure_depot}</span>
                         <span className={styles["arrival-place"]}>{ticketBookingDetails.arrival_depot}</span>
-                        <span className={styles["distance"]}>Xe tuyến: {ticketBookingDetails.distance} - {ticketBookingDetails.travel_time} tiếng</span>
+                        <span className={styles["distance"]}>Xe tuyến: {ticketBookingDetails.distance} - {ticketBookingDetails.travel_time}</span>
                     </div>
             </div>
         </div>

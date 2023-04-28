@@ -1,6 +1,10 @@
 import styles from "./StepLine.module.css";
 
 const StepLine = (props) => {
+    const originalDate = props.date;
+    const date_parts = originalDate.split('-');
+    const formattedDate = `${date_parts[2]}-${date_parts[1]}-${date_parts[0]}`
+
     return(
     <>
     {/* {(props.currentStep === "stepOne" || props.currentStep === "stepTwo")
@@ -9,8 +13,8 @@ const StepLine = (props) => {
         
         </>
     } */}
-    <div className = {styles["route-title"]}>TP.HỒ CHÍ MINH - CẦN THƠ</div>
-        <div className = {styles["date"]}>10/3/2023</div>
+    <div className = {styles["route-title"]}>{`${props.departure_city.toUpperCase()} - ${props.arrival_city.toUpperCase()}`}</div>
+        <div className = {styles["date"]}>{formattedDate}</div>
         <div className = {styles["step-line-container"]}>
             <div className =  {styles["step-block"]}>
                 <div className={`${styles["title"]} ${styles["active-title"]}`}>Chọn tuyến</div>

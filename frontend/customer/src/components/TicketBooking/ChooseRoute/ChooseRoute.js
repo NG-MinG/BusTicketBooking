@@ -5,71 +5,82 @@ import { useSearchParams } from "react-router-dom"
 import axios from "axios";
 import StepLine from "../StepLine/StepLine";
 
-
-
-const tickets  = [  
-    {
-        id: '1',
-        departure_time: "03-12-2023 00:01",
-        arrival_time: "03-12-2023 04:01",
-        departure_city: "TP. Hồ Chí Minh",
-        arrival_city: "Cần Thơ",
-        ticket_type: "round_trip",
-        price: "170.000đ",
-        travel_time: "4h",
-        distance: "160km",
-        departure_depot: "Bến Xe Miền Tây",
-        arrival_depot: "Bến Xe Cần Thơ",
-        reserved_seat: 25,
-        total_seat: 34, 
-        bus_type: "Limousine"
-    },
-    {
-        id: '2',
-        departure_time: "03-12-2023 04:01",
-        arrival_time: "03-12-2023 08:01",
-        departure_city: "TP. Hồ Chí Minh",
-        arrival_city: "Cần Thơ",
-        ticket_type: "round_trip",
-        price: "150.000đ",
-        travel_time: "4h",
-        distance: "160km",
-        departure_depot: "Bến Xe Miền Tây",
-        arrival_depot: "Bến Xe Cần Thơ",
-        reserved_seat: 23,
-        total_seat: 34, 
-        bus_type: "Giường"
-    },
-    {
-        id: '3',
-        departure_time: "03-12-2023 08:01",
-        arrival_time: "03-12-2023 12:01",
-        departure_city: "TP. Hồ Chí Minh",
-        arrival_city: "Cần Thơ",
-        ticket_type: "round_trip",
-        price: "130.000đ",
-        travel_time: "4h",
-        distance: "160km",
-        departure_depot: "Bến Xe Miền Tây",
-        arrival_depot: "Bến Xe Cần Thơ",
-        reserved_seat: 22,
-        total_seat: 34, 
-        bus_type: "Ghế"
-    }
-]
+// const tickets  = [  
+//     {
+//         id: '1',
+//         departure_time: "03-12-2023 00:01",
+//         arrival_time: "03-12-2023 04:01",
+//         departure_city: "TP. Hồ Chí Minh",
+//         arrival_city: "Cần Thơ",
+//         ticket_type: "round_trip",
+//         price: "170.000đ",
+//         travel_time: "4h",
+//         distance: "160km",
+//         departure_depot: "Bến Xe Miền Tây",
+//         arrival_depot: "Bến Xe Cần Thơ",
+//         reserved_seat: 25,
+//         total_seat: 34, 
+//         bus_type: "Limousine"
+//     },
+//     {
+//         id: '2',
+//         departure_time: "03-12-2023 04:01",
+//         arrival_time: "03-12-2023 08:01",
+//         departure_city: "TP. Hồ Chí Minh",
+//         arrival_city: "Cần Thơ",
+//         ticket_type: "round_trip",
+//         price: "150.000đ",
+//         travel_time: "4h",
+//         distance: "160km",
+//         departure_depot: "Bến Xe Miền Tây",
+//         arrival_depot: "Bến Xe Cần Thơ",
+//         reserved_seat: 23,
+//         total_seat: 34, 
+//         bus_type: "Giường"
+//     },
+//     {
+//         id: '3',
+//         departure_time: "03-12-2023 08:01",
+//         arrival_time: "03-12-2023 12:01",
+//         departure_city: "TP. Hồ Chí Minh",
+//         arrival_city: "Cần Thơ",
+//         ticket_type: "round_trip",
+//         price: "130.000đ",
+//         travel_time: "4h",
+//         distance: "160km",
+//         departure_depot: "Bến Xe Miền Tây",
+//         arrival_depot: "Bến Xe Cần Thơ",
+//         reserved_seat: 22,
+//         total_seat: 34, 
+//         bus_type: "Ghế"
+//     }
+// ]
 
 const ChooseRoute = (props) => {
     const [searchParams] = useSearchParams();
     // console.log("departure_city: ", searchParams.get('departure_city'));
     // console.log("arrival_city: ", searchParams.get('arrival_city'));
-    const departure_city = searchParams.get('departure_city');
-    const arrival_city = searchParams.get('arrival_city');
+    
     const [isLoading, setIsLoading] = useState(true);
     const [tickets, setTickets] = useState([]);
+    console.log("tickets: ", tickets);
 
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_API_HOST}/tickets/get-ticket/?departure_city=${departure_city}&arrival_city=${arrival_city}`)
-        .then((res) => console.log(res))
+        axios.get(`${process.env.REACT_APP_API_HOST}/tickets/get-ticket/?departure_city=${props.departure_city}&arrival_city=${props.arrival_city}&date=${props.date}`)
+        .then((res) => {
+            console.log(res)
+            console.log("tickets: ", res.data.tickets);
+            setTickets(res.data.tickets.map((el) => {
+                    return {
+                        ...el,
+                        price: new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(el.price).replace(/\s/g, ' '),
+                        distance: `${Math.floor(el.distance/1000)} km`,
+                        travel_time: `${Math.floor(el.travel_time/3600)} tiếng`
+                    }
+                }
+            ));
+            setIsLoading(false);
+        })
     }, [])
 
     const [chosenTicket, setChosenTicket] = useState({});
@@ -80,7 +91,7 @@ const ChooseRoute = (props) => {
    
     return <>
         <div className = {styles["main-content"]}>
-            <StepLine currentStep = {props.currentStep}/>
+            <StepLine departure_city = {props.departure_city} arrival_city = {props.arrival_city} date = {props.date} currentStep = {props.currentStep}/>
             <div className={styles["reminder"]}>Vui lòng chọn giờ lên xe phù hợp</div>
             <div className={styles["Filter"]}>
                 <select name="PriceFilter" id="" className = {styles.priceFilter}>
@@ -103,9 +114,9 @@ const ChooseRoute = (props) => {
                 </select>
             </div>
             {
-                tickets.map((el, id) => {
+                tickets.length > 0  ? tickets.map((el, id) => {
                     return <Ticket ticketDetails = {el} dropDown = {chosenTicket === el.id} onChooseTicket = {chooseTicket} onSetStep = {props.onSetStep}/>
-                })
+                }) : null
             }
             {/* <Ticket/>
             <Ticket/>
