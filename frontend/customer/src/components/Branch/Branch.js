@@ -10,7 +10,7 @@ export default function Branch() {
   const [branches, setBranches] = useState([])
 
   useEffect(() => {
-    axios.get(process.env.REACT_APP_ipAddress + '/bus/v1/station/stations').then((res) => {
+    axios.get(process.env.REACT_APP_API_HOST + '/station/stations').then((res) => {
       // setData(res.data.data.user)
       setBranches(res.data.data.stations)
       // setData(res.data.data.schedules)
@@ -22,7 +22,7 @@ export default function Branch() {
   const [searchText, setSearchText] = useState('')
   const searchTextHandle = (e) => {
     setSearchText(e.target.value)
-    axios.patch(process.env.REACT_APP_ipAddress + '/bus/v1/station/searchStations', { search: e.target.value }).then((res) => {
+    axios.patch(process.env.REACT_APP_API_HOST + '/station/searchStations', { search: e.target.value }).then((res) => {
       setBranches(res.data.data.stations_filter)
       console.log(res.data.data.stations_filter)
     }).catch(error => {
@@ -32,7 +32,7 @@ export default function Branch() {
 
 
   const searchHandle = () => {
-    axios.patch(process.env.REACT_APP_ipAddress + '/bus/v1/station/searchStations', { search: searchText }).then((res) => {
+    axios.patch(process.env.REACT_APP_API_HOST + '/station/searchStations', { search: searchText }).then((res) => {
       setBranches(res.data.data.stations_filter)
       console.log(res.data.data.stations_filter)
     }).catch(error => {

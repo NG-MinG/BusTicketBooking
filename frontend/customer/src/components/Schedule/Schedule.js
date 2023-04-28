@@ -9,7 +9,7 @@ export default function Schedule() {
   const [data, setData] = useState([])
 
   useEffect(() => {
-    axios.get(process.env.REACT_APP_ipAddress + '/bus/v1/schedule/schedules').then((res) => {
+    axios.get(process.env.REACT_APP_API_HOST + '/schedule/schedules').then((res) => {
       // setData(res.data.data.user)
       // console.log(res.data.data.schedules)
       setData(res.data.data.schedules)
@@ -22,23 +22,17 @@ export default function Schedule() {
 
   const handleOnChangeDeparture = (e) => {
     setDepartureSearch(e.target.value)
-    axios.patch(process.env.REACT_APP_ipAddress + '/bus/v1/schedule//searchSchedule', { search: e.target.value }).then((res) => {
+    axios.patch(process.env.REACT_APP_API_HOST + '/schedule/searchSchedule', { search: e.target.value }).then((res) => {
       setData(res.data.data.schedule_filter)
-      // console.log(res.data.data.stations_filter)
     }).catch(error => {
       console.log(error)
     })
   }
 
-  // const [arrivalSearch, setArrivalSearch] = useState('')
-  // const handleOnChangeArrival = (e) => {
-
-  // }
 
   const searchHandle = () => {
-    axios.patch(process.env.REACT_APP_ipAddress + '/bus/v1/schedule//searchSchedule', { search: departureSearch }).then((res) => {
+    axios.patch(process.env.REACT_APP_API_HOST + '/schedule/searchSchedule', { search: departureSearch }).then((res) => {
       setData(res.data.data.schedule_filter)
-      // console.log(res.data.data.stations_filter)
     }).catch(error => {
       console.log(error)
     })

@@ -9,7 +9,7 @@ export default function Information() {
 
   console.log(auth.getAccessToken())
   useEffect(() => {
-    axios.get(process.env.REACT_APP_ipAddress + '/bus/v1/user/userProfile', { headers: { Authorization: 'Bearer ' + auth.getAccessToken() } }).then((res) => {
+    axios.get(process.env.REACT_APP_API_HOST + '/user/userProfile', { headers: { Authorization: 'Bearer ' + auth.getAccessToken() } }).then((res) => {
       setInformation(res.data.data.user)
       console.log(res.data.data.user)
     }).catch(error => {
