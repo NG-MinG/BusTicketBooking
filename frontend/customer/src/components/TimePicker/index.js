@@ -20,7 +20,7 @@ const TimePicker = ({className, disable, ...attribute}) => {
                 <FontAwesomeIcon icon={faCalendarDays} />
             </span>
             <div className={classes.date_group}>
-                <input className={classes.input_date} name='datePicker' type="date" {...attribute} onChange={updateDate} value={date_value} />
+                <input className={classes.input_date} type="date" {...attribute} onChange={updateDate} value={date_value} />
                 <span className={classes.drop_icon}>
                     <DropdownIcon />
                 </span>
