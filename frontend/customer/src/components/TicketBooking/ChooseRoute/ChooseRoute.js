@@ -1,7 +1,10 @@
 import styles from "./ChooseRoute.module.css"
 import Ticket from "../../Ticket/Ticket";
-import {useState} from "react";
+import {useState, useEffect} from "react";
+import { useSearchParams } from "react-router-dom"
+import axios from "axios";
 import StepLine from "../StepLine/StepLine";
+
 
 
 const tickets  = [  
@@ -56,11 +59,25 @@ const tickets  = [
 ]
 
 const ChooseRoute = (props) => {
+    const [searchParams] = useSearchParams();
+    // console.log("departure_city: ", searchParams.get('departure_city'));
+    // console.log("arrival_city: ", searchParams.get('arrival_city'));
+    const departure_city = searchParams.get('departure_city');
+    const arrival_city = searchParams.get('arrival_city');
+    const [isLoading, setIsLoading] = useState(true);
+    const [tickets, setTickets] = useState([]);
+
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_API_HOST}/tickets/get-ticket/?departure_city=${departure_city}&arrival_city=${arrival_city}`)
+        .then((res) => console.log(res))
+    }, [])
+
     const [chosenTicket, setChosenTicket] = useState({});
     const chooseTicket = (id) => {
         setChosenTicket(id);
     }
 
+   
     return <>
         <div className = {styles["main-content"]}>
             <StepLine currentStep = {props.currentStep}/>
