@@ -10,7 +10,8 @@ export default function ManageTicketOrderEdit() {
   const navigate = useNavigate();
   const location = useLocation();
   // const { data } = location.state;
-  // console.log(data)
+  console.log(location.state)
+  const [information, setInformation] = useState(location.state)
 
   const [choosingSeats, setChoosingSeats] = useState([]);
   const [price, setPrice] = useState(0);
@@ -42,12 +43,12 @@ export default function ManageTicketOrderEdit() {
             <p>Số ghế</p>
           </div>
           <div className={styles.content}>
-            <input value={"Đinh Nguyễn Duy Khang"} />
-            <input value={"0976975548"} />
-            <input value={"13h 12/01/1992"} />
+            <input value={information.ten} />
+            <input value={information.sodienthoai} />
+            <input value={information.gio + " " + information.ngay} />
             <input value={"1647 Phạm Thế Hiển"} />
-            <input value={"TP. Hồ Chí Minh"} />
-            <input value={"Trà Vinh"} />
+            <input value={information.diemdi} />
+            <input value={information.diemden} />
             <p>3</p>
             <p>B12 B15 B16</p>
           </div>

@@ -198,7 +198,7 @@ const ManageTicketOrder = () => {
   }
 
   const editData = () => {
-    navigate("edit/" + currentData.id, currentData)
+    navigate("edit/" + currentData.id, { state: currentData })
   }
 
 
