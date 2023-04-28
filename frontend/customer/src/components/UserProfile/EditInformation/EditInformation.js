@@ -12,7 +12,7 @@ export default function EditInformation() {
   const [nameError, setNameError] = useState(" ");
 
   useEffect(() => {
-    axios.get(process.env.REACT_APP_ipAddress + '/bus/v1/user/userProfile', { headers: { Authorization: 'Bearer ' + auth.getAccessToken() } }).then((res) => {
+    axios.get(process.env.REACT_APP_API_HOST + '/user/userProfile', { headers: { Authorization: 'Bearer ' + auth.getAccessToken() } }).then((res) => {
       setInformation(res.data.data.user)
       // console.log(res.data.data.user)
     }).catch(error => {
@@ -25,7 +25,7 @@ export default function EditInformation() {
   const handleSave = (event) => {
     event.preventDefault()
 
-    axios.patch(process.env.REACT_APP_ipAddress + '/bus/v1/user/updateProfile', information, { headers: { Authorization: 'Bearer ' + auth.getAccessToken() } }).then((res) => {
+    axios.patch(process.env.REACT_APP_API_HOST + '/user/updateProfile', information, { headers: { Authorization: 'Bearer ' + auth.getAccessToken() } }).then((res) => {
       console.log('Successfully!!!')
       setNameError("")
     }).catch(error => {
