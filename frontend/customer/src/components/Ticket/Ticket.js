@@ -7,6 +7,9 @@ import {ReactComponent as DotIcon} from "../../assets/svg/TicketBooking/dot.svg"
 import {ReactComponent as LocationIcon} from "../../assets/svg/TicketBooking/location.svg";
 import Seat from "../TicketBooking/Seat/Seat.js";
 import Status from "../TicketBooking/Seat/Status.js";
+import LimousineLayout from "../BusLayout/LimousineLayout/LimousineLayout";
+import SleeperLayout from "../BusLayout/SleeperLayout/SleeperLayout";
+import ChairLayout from "../BusLayout/ChairLayout/ChairLayout";
 import {useState} from "react";
 import {useDispatch} from "react-redux";
 import {setTicketBookingDetails} from "../../store/reducers/ticketBookingSlice";
@@ -84,7 +87,10 @@ const Ticket = (props) => {
         <>
             <div className={styles["layout-seat-description"]}>Vị trí ghế ngồi</div>
             <div className={styles["layout-seat"]}>
-                <div className={styles["layout-seat-title"]}>
+                {props.ticketDetails.bus_type === "Limousine" && <LimousineLayout choosingSeats = {choosingSeats} onChooseSeat = {chooseSeat}/>}
+                {props.ticketDetails.bus_type === "Giường" && <SleeperLayout choosingSeats = {choosingSeats} onChooseSeat = {chooseSeat}/>}
+                {props.ticketDetails.bus_type === "Ghế" && <ChairLayout choosingSeats = {choosingSeats} onChooseSeat = {chooseSeat}/>}
+                {/* <div className={styles["layout-seat-title"]}>
                     <div className={styles["below"]}>Tầng dưới</div>
                     <div className={styles["above"]}>Tầng trên</div>
                 </div>
@@ -161,7 +167,7 @@ const Ticket = (props) => {
                             </tbody>
                         </table>
                     </div>
-                </div>
+                </div> */}
                 <div className={styles["notes"]}>
                     <div className={styles["status"]}>
                         <span className={styles["color-indicate"]}><Status color = "#C0C6CC"/></span>
@@ -185,7 +191,6 @@ const Ticket = (props) => {
                 </div>
                 <button className = {styles["continue-btn"]} onClick = {processContinueBtn}>Tiếp tục</button>
                 </>
-                
             }
         </>
         }

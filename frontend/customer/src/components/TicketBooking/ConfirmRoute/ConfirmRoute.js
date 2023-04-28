@@ -37,9 +37,6 @@ const ConfirmRoute = (props) => {
     }
 
     return <>
-    <div className = {styles["nav-bar"]}>
-            This is navbar
-    </div>
     <div className={styles["main-content"]}>
         <StepLine currentStep = {props.currentStep}/>
         <div className={`${styles["ticket"]} ${styles["ticket-active"]}`}>

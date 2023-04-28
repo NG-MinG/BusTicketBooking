@@ -14,3 +14,7 @@ div.seat > span.seat-id {
     font-family: 'Open Sans';
     font-size: 1.2rem;
 }
+
+.unclickable  {
+    pointer-events: visiblePainted;
+}
