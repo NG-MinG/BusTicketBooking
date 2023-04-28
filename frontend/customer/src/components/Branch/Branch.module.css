@@ -1,7 +1,11 @@
 .Branch{
-  padding: 0 33rem;
   padding-top: 3rem;
   overflow: hidden;
+}
+
+.main-content{
+  margin: 0 auto;
+  width: 100rem;
 }
 
 .title{
@@ -15,7 +19,6 @@
   display: flex;
   align-items: center;
   margin-bottom: 1.5rem;
-
 }
 
 .search input{
@@ -42,9 +45,16 @@
   border: 2px solid #417DD8;
   height: 69vh;
   border-radius: 12px;
-  border-bottom: 0;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   
 }
 
+.table::-webkit-scrollbar {
+  width: 10px;
+}
+
+.table::-webkit-scrollbar-thumb {
+  background-color: #dddddd;
+  border-radius: 5px;
+}

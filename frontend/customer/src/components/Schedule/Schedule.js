@@ -1,116 +1,94 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './Schedule.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowRightLong } from '@fortawesome/free-solid-svg-icons'
+import { faArrowRightLong, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import ScheduleItem from './ScheduleItem/ScheduleItem'
+import axios from 'axios'
 
 export default function Schedule() {
-  const schedule = [
-    {
-      diemdi: 'TP.Hồ Chí Minh',
-      diemden: 'Bến Tre',
-      loaixe: 'Limousine',
-      quangduong: '100KM',
-      thoigianhanhtrinh: '19h'
-    }, {
-      diemdi: 'TP.Hồ Chí Minh',
-      diemden: 'Trà Vinh',
-      loaixe: 'Giường',
-      quangduong: '100KM',
-      thoigianhanhtrinh: '19h'
-    }, {
-      diemdi: 'Bến Tre',
-      diemden: 'TP.Hồ Chí Minh',
-      loaixe: 'Limousine',
-      quangduong: '100KM',
-      thoigianhanhtrinh: '19h'
-    }, {
-      diemdi: 'Trà Vinh',
-      diemden: 'TP.Hồ Chí Minh',
-      loaixe: 'Giường',
-      quangduong: '100KM',
-      thoigianhanhtrinh: '19h'
-    },
-    {
-      diemdi: 'TP.Hồ Chí Minh',
-      diemden: 'Bến Tre',
-      loaixe: 'Limousine',
-      quangduong: '100KM',
-      thoigianhanhtrinh: '19h'
-    }, {
-      diemdi: 'TP.Hồ Chí Minh',
-      diemden: 'Trà Vinh',
-      loaixe: 'Giường',
-      quangduong: '100KM',
-      thoigianhanhtrinh: '19h'
-    }, {
-      diemdi: 'Bến Tre',
-      diemden: 'TP.Hồ Chí Minh',
-      loaixe: 'Limousine',
-      quangduong: '100KM',
-      thoigianhanhtrinh: '19h'
-    }, {
-      diemdi: 'Trà Vinh',
-      diemden: 'TP.Hồ Chí Minh',
-      loaixe: 'Giường',
-      quangduong: '100KM',
-      thoigianhanhtrinh: '19h'
-    }, {
-      diemdi: 'TP.Hồ Chí Minh',
-      diemden: 'Bến Tre',
-      loaixe: 'Limousine',
-      quangduong: '100KM',
-      thoigianhanhtrinh: '19h'
-    }, {
-      diemdi: 'TP.Hồ Chí Minh',
-      diemden: 'Trà Vinh',
-      loaixe: 'Giường',
-      quangduong: '100KM',
-      thoigianhanhtrinh: '19h'
-    }, {
-      diemdi: 'Bến Tre',
-      diemden: 'TP.Hồ Chí Minh',
-      loaixe: 'Limousine',
-      quangduong: '100KM',
-      thoigianhanhtrinh: '19h'
-    }, {
-      diemdi: 'Trà Vinh',
-      diemden: 'TP.Hồ Chí Minh',
-      loaixe: 'Giường',
-      quangduong: '100KM',
-      thoigianhanhtrinh: '19h'
-    },
-  ]
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    axios.get(process.env.REACT_APP_ipAddress + '/bus/v1/schedule/schedules').then((res) => {
+      // setData(res.data.data.user)
+      // console.log(res.data.data.schedules)
+      setData(res.data.data.schedules)
+    }).catch(error => {
+      console.log(error)
+    })
+  }, [])
+
+  const [departureSearch, setDepartureSearch] = useState('')
+
+  const handleOnChangeDeparture = (e) => {
+    setDepartureSearch(e.target.value)
+    axios.patch(process.env.REACT_APP_ipAddress + '/bus/v1/schedule//searchSchedule', { search: e.target.value }).then((res) => {
+      setData(res.data.data.schedule_filter)
+      // console.log(res.data.data.stations_filter)
+    }).catch(error => {
+      console.log(error)
+    })
+  }
+
+  // const [arrivalSearch, setArrivalSearch] = useState('')
+  // const handleOnChangeArrival = (e) => {
+
+  // }
+
+  const searchHandle = () => {
+    axios.patch(process.env.REACT_APP_ipAddress + '/bus/v1/schedule//searchSchedule', { search: departureSearch }).then((res) => {
+      setData(res.data.data.schedule_filter)
+      // console.log(res.data.data.stations_filter)
+    }).catch(error => {
+      console.log(error)
+    })
+  }
+
+  const handleKeyUp = (e) => {
+    if (e.key === "Enter") {
+      searchHandle()
+    }
+  };
 
   return (
     <div className={styles.Schedule}>
-      <p className={styles.searchTitle}>Tìm chuyến xe</p>
-      <div className={styles.search}>
-        <input placeholder="Nhập điểm đi..." />
-        <FontAwesomeIcon icon={faArrowRightLong} style={{ color: '#417DD8', fontSize: '4.5rem' }} />
-        <input placeholder="Nhập điểm đến..." />
-      </div>
-      <div className={styles.table}>
-        <div className={styles.header}>
-          <p>Tuyến xe</p>
-          <p>Loại xe</p>
-          <p>Quãng đường</p>
-          <p>Thời gian hành trình</p>
-        </div>
-        <div className={styles.content}>
-          <p>Đi từ TP.Hồ Chí Minh đến</p>
-          <div className={styles.fromHCM}>
-            {schedule.map((value, index) => (
-              value.diemdi === "TP.Hồ Chí Minh" && <ScheduleItem key={index} diem={value.diemden} value={value} />
-            ))}
+      <div className={styles['main-content']}>
+        <p className={styles.searchTitle}>Tìm chuyến xe</p>
+        <div className={styles.searches}>
+          <div className={styles.search}>
+            <input onKeyDown={(e) => handleKeyUp(e)} onChange={handleOnChangeDeparture} placeholder="Nhập địa điểm cần tìm..." />
+            <FontAwesomeIcon onClick={searchHandle} icon={faMagnifyingGlass} style={{ color: '#A2ABB3', fontSize: '2.2rem', position: 'absolute', top: '25%', right: '4%', cursor: 'pointer' }} />
           </div>
-          <p>Đi đến TP.Hồ Chí Minh từ</p>
-          <div className={styles.toHCM}>
-            {schedule.map((value, index) => (
-              value.diemden === "TP.Hồ Chí Minh" && <ScheduleItem key={index} diem={value.diemdi} value={value} />
-            ))}
-          </div>
+          {/* <FontAwesomeIcon icon={faArrowRightLong} style={{ color: '#417DD8', fontSize: '4.5rem' }} />
+          <div className={styles.search}>
+            <input onChange={handleOnChangeArrival} placeholder="Nhập điểm đến..." />
+            <FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: '#A2ABB3', fontSize: '2.2rem', position: 'absolute', top: '25%', right: '4%', cursor: 'pointer' }} />
+          </div> */}
         </div>
+        {data.length > 0 ? <div className={styles.table}>
+          <div className={styles.header}>
+            <p>Tuyến xe</p>
+            <p>Loại xe</p>
+            <p>Quãng đường</p>
+            <p>Thời gian hành trình</p>
+          </div>
+          <div className={styles.content}>
+            <p>Đi từ TP.Hồ Chí Minh đến</p>
+            <div className={styles.fromHCM}>
+              {data.map((value, index) => (
+                value.departure_city === "TP.Hồ Chí Minh" && <ScheduleItem key={index} diem={value.arrival_city} value={value} />
+              ))}
+            </div>
+            <p>Đi đến TP.Hồ Chí Minh từ</p>
+            <div className={styles.toHCM}>
+              {data.map((value, index) => (
+                value.arrival_city === "TP.Hồ Chí Minh" && <ScheduleItem key={index} diem={value.departure_city} value={value} />
+              ))}
+            </div>
+          </div>
+        </div> : <div style={{ marginTop: '2.5rem', marginBottom: '60rem', fontSize: '2.1rem' }}>
+          Không có kết quả...
+        </div>}
       </div>
     </div>
   )

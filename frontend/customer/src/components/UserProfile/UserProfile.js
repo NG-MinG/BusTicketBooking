@@ -3,10 +3,6 @@ import { BrowserRouter, NavLink, Outlet, Route, Routes } from 'react-router-dom'
 import styles from './UserProfile.module.css'
 import { faUser, faPenToSquare, faKey, faTicket, faClockRotateLeft, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Information from './Information/Information'
-import EditInformation from './EditInformation/EditInformation'
-import ChangePassword from './ChangePassword/ChangePassword'
-import MyTicket from './MyTicket/MyTicket'
 
 export default function UserProfile() {
 
@@ -31,10 +27,6 @@ export default function UserProfile() {
           <FontAwesomeIcon className={styles.icon} icon={faTicket} style={{ color: '#417DD8', fontSize: '2.8rem' }} />
           <p>Vé xe của tôi</p>
         </NavLink>
-        <NavLink className={chosen} to='/user-profile/ticket-history'>
-          <FontAwesomeIcon className={styles.icon} icon={faClockRotateLeft} style={{ color: '#417DD8', fontSize: '2.9rem' }} />
-          <p>Lịch sử mua vé</p>
-        </NavLink>
         <NavLink className={styles.item}>
           <FontAwesomeIcon icon={faArrowLeft} style={{ color: '#417DD8', fontSize: '3.2rem' }} />
           <p>Đăng xuất</p>
@@ -46,3 +38,6 @@ export default function UserProfile() {
     </div>
   )
 }
+
+
+

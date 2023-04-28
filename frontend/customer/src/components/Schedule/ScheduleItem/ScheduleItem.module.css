@@ -1,7 +1,7 @@
 .ScheduleItem{
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 2rem;
   padding: 1rem 0;
 }
 
@@ -12,19 +12,19 @@
 }
 
 .ScheduleItem p:nth-child(1){
-  width: 27rem;
+  width: 28rem;
 }
 
 .ScheduleItem p:nth-child(2){
-  width: 10rem;
+  width: 12rem;
 }
 
 .ScheduleItem p:nth-child(3){
-  width: 14rem;
+  width: 15rem;
 }
 
 .ScheduleItem p:nth-child(4){
-  width: 17.5rem;
+  width: 18rem;
 }
 
 .ScheduleItem button{
@@ -33,7 +33,7 @@
   color: #ffffff;
   border-radius: 5px;
   padding: .3rem 1.2rem;
-  margin-left: 5rem;
+  margin-left: 3rem;
   cursor: pointer;
   transition: all 0.3s;
 }

@@ -1,93 +1,66 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './Branch.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import BranchItem from './BranchItem/BranchItem'
+import axios from 'axios'
 
 export default function Branch() {
 
-  const branches = [
-    {
-      diem: 'TP.Hồ Chí Minh',
-      benxe: [
-        {
-          diachi: '1647 Phạm Thế Hiển, phường 6, quận 8,TP. Hồ Chí Minh',
-          sodienthoai: '0976975548'
-        },
-        {
-          diachi: '1647 Phạm Thế Hiển, phường 6, quận 8,TP. Hồ Chí Minh',
-          sodienthoai: '0976975548'
-        },
-        {
-          diachi: '1647 Phạm Thế Hiển, phường 6, quận 8,TP. Hồ Chí Minh',
-          sodienthoai: '0976975548'
-        },
-      ]
-    },
-    {
-      diem: 'Trà Vinh',
-      benxe: [
-        {
-          diachi: '1647 Phạm Thế Hiển, phường 6, quận 8, Trà Vinh',
-          sodienthoai: '0976975548'
-        },
-        {
-          diachi: '1647 Phạm Thế Hiển, phường 6, quận 8, Trà Vinh',
-          sodienthoai: '0976975548'
-        },
-        {
-          diachi: '1647 Phạm Thế Hiển, phường 6, quận 8, Trà Vinh',
-          sodienthoai: '0976975548'
-        },
-      ]
-    },
-    {
-      diem: 'Bến Tre',
-      benxe: [
-        {
-          diachi: '1647 Phạm Thế Hiển, phường 6, quận 8, Bến Tre',
-          sodienthoai: '0976975548'
-        },
-        {
-          diachi: '1647 Phạm Thế Hiển, phường 6, quận 8, Bến Tre',
-          sodienthoai: '0976975548'
-        },
-        {
-          diachi: '1647 Phạm Thế Hiển, phường 6, quận 8, Bến Tre',
-          sodienthoai: '0976975548'
-        },
-      ]
-    },
-    {
-      diem: 'Bến Tre',
-      benxe: [
-        {
-          diachi: '1647 Phạm Thế Hiển, phường 6, quận 8, Bến Tre',
-          sodienthoai: '0976975548'
-        },
-        {
-          diachi: '1647 Phạm Thế Hiển, phường 6, quận 8, Bến Tre',
-          sodienthoai: '0976975548'
-        },
-        {
-          diachi: '1647 Phạm Thế Hiển, phường 6, quận 8, Bến Tre',
-          sodienthoai: '0976975548'
-        },
-      ]
-    },
-  ]
+  const [branches, setBranches] = useState([])
+
+  useEffect(() => {
+    axios.get(process.env.REACT_APP_ipAddress + '/bus/v1/station/stations').then((res) => {
+      // setData(res.data.data.user)
+      setBranches(res.data.data.stations)
+      // setData(res.data.data.schedules)
+    }).catch(error => {
+      console.log(error)
+    })
+  }, [])
+
+  const [searchText, setSearchText] = useState('')
+  const searchTextHandle = (e) => {
+    setSearchText(e.target.value)
+    axios.patch(process.env.REACT_APP_ipAddress + '/bus/v1/station/searchStations', { search: e.target.value }).then((res) => {
+      setBranches(res.data.data.stations_filter)
+      console.log(res.data.data.stations_filter)
+    }).catch(error => {
+      console.log(error)
+    })
+  }
+
+
+  const searchHandle = () => {
+    axios.patch(process.env.REACT_APP_ipAddress + '/bus/v1/station/searchStations', { search: searchText }).then((res) => {
+      setBranches(res.data.data.stations_filter)
+      console.log(res.data.data.stations_filter)
+    }).catch(error => {
+      console.log(error)
+    })
+  }
+
+  const handleKeyUp = (e) => {
+    if (e.key === "Enter") {
+      searchHandle()
+    }
+  };
 
   return (
     <div className={styles.Branch}>
-      <p className={styles.title}>Chi nhánh của chúng tôi</p>
-      <div className={styles.search}>
-        <input placeholder="Tìm chi nhánh..." />
-        <FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: '#A2ABB3', fontSize: '2.2rem', marginLeft: '-3.5rem' }} />
-      </div>
-      <div className={styles.table}>
-        {branches.map((value, index) => (
-          <BranchItem key={index} value={value} />
-        ))}
+      <div className={styles['main-content']}>
+        <p className={styles.title}>Chi nhánh của chúng tôi</p>
+        <div className={styles.search}>
+          <input onKeyDown={(e) => handleKeyUp(e)} onChange={searchTextHandle} placeholder="Tìm chi nhánh..." />
+          <FontAwesomeIcon onClick={searchHandle} icon={faMagnifyingGlass} style={{ color: '#A2ABB3', fontSize: '2.2rem', marginLeft: '-3.5rem', cursor: 'pointer' }} />
+        </div>
+        {branches.length > 0 ? <div className={styles.table}>
+          {branches.map((value, index) => (
+            <BranchItem key={index} value={value} />
+          ))}
+        </div> : <div style={{ marginTop: '2.5rem', marginBottom: '60rem', fontSize: '2.1rem' }}>
+          Không có kết quả...
+        </div>}
       </div>
     </div>
   )

@@ -1,7 +1,22 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './Information.module.css'
+import axios from 'axios'
+import { auth } from '../../../utilities/storage'
 
 export default function Information() {
+
+  const [information, setInformation] = useState({})
+
+  console.log(auth.getAccessToken())
+  useEffect(() => {
+    axios.get(process.env.REACT_APP_ipAddress + '/bus/v1/user/userProfile', { headers: { Authorization: 'Bearer ' + auth.getAccessToken() } }).then((res) => {
+      setInformation(res.data.data.user)
+      console.log(res.data.data.user)
+    }).catch(error => {
+      console.log(error)
+    })
+  }, [])
+
   return (
     <div className={styles['Information']}>
       <div className={styles['title']}>
@@ -13,12 +28,12 @@ export default function Information() {
         <p>Địa chỉ:</p>
       </div>
       <div className={styles['content']}>
-        <p>Đinh Nguyễn Duy Khang</p>
-        <p>0976975548</p>
-        <p>khangduy017@gmail.com</p>
-        <p>21/04/2002</p>
-        <p>Nam</p>
-        <p>1647 Phạm Thế Hiển, phường 6, quận 8</p>
+        {information.fullname ? <p>{information.fullname}</p> : <p>&nbsp;</p>}
+        {information.phone ? <p>{information.phone}</p> : <p>&nbsp;</p>}
+        {information.email ? <p>{information.email}</p> : <p>&nbsp;</p>}
+        {information.dob ? <p>{information.dob}</p> : <p>&nbsp;</p>}
+        {information.gender ? <p>{information.gender}</p> : <p>&nbsp;</p>}
+        {information.address ? <p>{information.address}</p> : <p>&nbsp;</p>}
       </div>
       <div className={styles['avatar']}>
         <img alt="" src='' />
