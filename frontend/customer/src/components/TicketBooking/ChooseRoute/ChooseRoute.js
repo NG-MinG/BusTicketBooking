@@ -58,18 +58,13 @@ import StepLine from "../StepLine/StepLine";
 
 const ChooseRoute = (props) => {
     const [searchParams] = useSearchParams();
-    // console.log("departure_city: ", searchParams.get('departure_city'));
-    // console.log("arrival_city: ", searchParams.get('arrival_city'));
-    
     const [isLoading, setIsLoading] = useState(true);
     const [tickets, setTickets] = useState([]);
-    console.log("tickets: ", tickets);
+    const [startingDepots, setStartingDepots] = useState([]);
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_HOST}/tickets/get-ticket/?departure_city=${props.departure_city}&arrival_city=${props.arrival_city}&date=${props.date}`)
         .then((res) => {
-            console.log(res)
-            console.log("tickets: ", res.data.tickets);
             setTickets(res.data.tickets.map((el) => {
                     return {
                         ...el,
@@ -78,16 +73,16 @@ const ChooseRoute = (props) => {
                         travel_time: `${Math.floor(el.travel_time/3600)} tiếng`
                     }
                 }
-            ));
+            ))
+            setStartingDepots([...res.data.starting_depots.stations]);
             setIsLoading(false);
-        })
+        }).catch((err) => console.log(err));
     }, [])
 
     const [chosenTicket, setChosenTicket] = useState({});
     const chooseTicket = (id) => {
         setChosenTicket(id);
     }
-
    
     return <>
         <div className = {styles["main-content"]}>
@@ -115,7 +110,7 @@ const ChooseRoute = (props) => {
             </div>
             {
                 tickets.length > 0  ? tickets.map((el, id) => {
-                    return <Ticket ticketDetails = {el} dropDown = {chosenTicket === el.id} onChooseTicket = {chooseTicket} onSetStep = {props.onSetStep}/>
+                    return <Ticket ticketDetails = {el} startingDepots = {startingDepots} dropDown = {chosenTicket === el.id} onChooseTicket = {chooseTicket} onSetStep = {props.onSetStep}/>
                 }) : null
             }
             {/* <Ticket/>

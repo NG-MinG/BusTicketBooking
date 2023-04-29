@@ -18,7 +18,7 @@ const ConfirmRoute = (props) => {
     const handleOptionChange = (event) => {
         dispatch(setTicketBookingDetails({
             ...ticketBookingDetails,
-            departure_depot: event.target.value,
+            chosen_depot: event.target.value,
         }))
     }
 
@@ -72,8 +72,9 @@ const ConfirmRoute = (props) => {
                     <span className={styles["title"]}>Điểm lên xe</span>
                     <select className= {styles["list-depots"]} id="" onChange = {handleOptionChange}>
                         <option value="" disabled selected>Chọn điểm lên xe</option>
-                        <option value="Bến Xe Miền tây" >Bến Xe Miền tây</option>
-                        <option value="Đồng Tâm" >Đồng Tâm</option>
+                        {ticketBookingDetails.starting_depots.map((el) => <option value= {el.address} >{el.name} - {el.address}</option>)}
+                        {/* <option value="Bến Xe Miền tây" >Bến Xe Miền tây - VP Bến xe Trung Tâm Cần Thơ: P.Hưng Thạnh , Q. Cái Răng , TP.Cần Thơ</option>
+                        <option value="Đồng Tâm" >Đồng Tâm</option> */}
                     </select>
                 </div>
         </div>

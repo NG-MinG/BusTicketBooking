@@ -12,7 +12,8 @@ import Zalopay from "../../../assets/images/Payment/Zalopay.png"
 import {useSelector, useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import { setTicketBookingDetails } from "../../../store/reducers/ticketBookingSlice";
-import {useState} from "react"
+import {useState, useEffect} from "react"
+import axios from "axios";
 
 const Payment = (props) => {
     const [isPayment, setIsPayment] = useState(false);
@@ -27,6 +28,17 @@ const Payment = (props) => {
         visa: false,
     })
 
+    // date handle 
+
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+    var date_now = day + "/" + month + "/" + year;
+    var hours = dateObj.getHours().toString().padStart(2, '0');
+    var minutes = dateObj.getMinutes().toString().padStart(2, '0');
+
+    // processing state
     const processBackBtn = () => {
         props.onSetStep({
             stepOne: true,
@@ -39,11 +51,36 @@ const Payment = (props) => {
 
     const handlePaymentMethodChange = (paymentMethod) => {
         setPaymentMethod({momo: false, zalopay: false, napas: false, visa: false, ...paymentMethod})
-    }
+        dispatch(setTicketBookingDetails({
+            ...ticketBookingDetails,
+            payment_method: Object.keys(paymentMethod)[0]
+          }))
+    }  
+
 
     const processPaymentBtn = () => {
-        console.log('process payment btn');
-        setIsPayment(true);
+        // post api
+        const bodyData = {
+            ticket_id: ticketBookingDetails.ticket_id,
+            date: date_now,
+            time: `${hours}:${minutes}`,
+            departure_city: ticketBookingDetails.departure_city,
+            arrival_city: ticketBookingDetails.arrival_city,
+            depot_address: ticketBookingDetails.chosen_depot,
+            payment_method: ticketBookingDetails.payment_method,
+            number_of_seats: ticketBookingDetails.choosing_seats.length,
+            chosen_seats: ticketBookingDetails.choosing_seats,
+            total_price: ticketBookingDetails.total_price,
+            guestInfo: {
+                ...guestInfo
+            }
+        }
+        axios.post(`${process.env.REACT_APP_API_HOST}/tickets/booking-ticket-detail`, bodyData)
+        .then((res) => {
+            console.log(res)
+            setIsPayment(true)
+        }).catch((err) => console.log(err))
+
     }
 
 
@@ -67,15 +104,7 @@ const Payment = (props) => {
         navigate('/')
     }
 
-    // date handle 
-
-    var dateObj = new Date();
-    var month = dateObj.getUTCMonth() + 1; //months from 1-12
-    var day = dateObj.getUTCDate();
-    var year = dateObj.getUTCFullYear();
-    var date_now = day + "/" + month + "/" + year;
-    var hours = dateObj.getHours().toString().padStart(2, '0');
-    var minutes = dateObj.getMinutes().toString().padStart(2, '0');
+    
    
     return <>
     <div className={styles["main-content"]}>
@@ -123,7 +152,7 @@ const Payment = (props) => {
                     </div>
                     <div className={styles["arrival-depot"]}>
                         <span className={styles["label"]}>Điểm lên xe:</span>
-                        <span className={styles["depot"]}>{ticketBookingDetails.departure_depot}</span>
+                        <span className={styles["depot"]}>{ticketBookingDetails.chosen_depot}</span>
                     </div>
                 </div>
                 <div className={styles["route-info-gr-2"]}>

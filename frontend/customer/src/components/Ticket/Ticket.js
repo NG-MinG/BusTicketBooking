@@ -54,6 +54,8 @@ const Ticket = (props) => {
             total_seats: props.ticketDetails.total_seats,
             choosing_seats: choosingSeats,
             total_price: price,
+            // ***
+            starting_depots: props.startingDepots,
         }))
     }
 

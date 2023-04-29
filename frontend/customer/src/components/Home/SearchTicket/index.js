@@ -65,7 +65,7 @@ const SearchTicket = () => {
 
     useEffect(() => {
         axios
-            .get(process.env.REACT_APP_ipAddress + "/bus/v1/schedule/schedules")
+            .get(process.env.REACT_APP_ipAddress + "/bus/api/v1/schedule/schedules")
             .then((res) => {
 
                 const departure_data = Array.from(new Set(res.data.data.schedules.map(el => el.departure_city.replace('. ', '.'))));

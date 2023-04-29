@@ -169,10 +169,10 @@
 .chosen-depot > .depot > select.list-depots {
     font-family: 'Montserrat';
     outline: none;
-    padding: 1.2rem 1rem;
+    padding: 1.2rem 1.2rem;
     border-radius: 8px;
     border: 1px solid #cccccc;
-    width: 70%;
+    /* width: 70%; */
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -183,6 +183,7 @@
 
 .chosen-depot > .depot > select.list-depots > option {
     font-family: 'Montserrat', sans-serif;  
+    max-width: 20rem;
 }
 
 .main-content > .border-line-spacing {
