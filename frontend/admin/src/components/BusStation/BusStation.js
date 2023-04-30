@@ -9,34 +9,63 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
 const BusStation = () => {
+  //Active, inactive modal
   const [show, setShow] = useState(false);
   const [createShow, setCreateShow] = useState(false);
+
+  //Pass data to modal
   const [modalData, setModalData] = useState("");
 
+  //Handle state of modal
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleCreateClose = () => setCreateShow(false);
   const handleCreateShow = () => setCreateShow(true);
 
-  // const [stationData, setstationData] = useState([])
+  //Handle data from database
+  const [stationData, setstationData] = useState([]);
+  const [locationData, setLocationData] = useState([]);
+  const [id, setId] = useState([]);
 
-  // useEffect(() => {
-  //   axios.get(process.env.REACT_APP_ipAddress + '/admin/getaccount')
-  //   .then((res) => {
-  //     setstationData(res.data.data.account)
-  //   }).catch(error => {
-  //     console.log(error)
-  //   })
-  // }, [])
+  //Use for edit station
+  const [station, setStation] = useState({
+    place: "",
+    oldname: "",
+    name: "",
+    address: "",
+    phone: "",
+  });
 
-  // const onBan = (id) =>{
-  //   axios.post(process.env.REACT_APP_ipAddress + `/admin/banaccount/${id}`)
-  //   .then((res) => {
-  //     setstationData(res.data.data.account)
-  //   }).catch(error => {
-  //     console.log(error)
-  //   })
-  // }
+  const handleInit = (e, place_p, oldname_p)=>{
+    setStation((prev) => ({ ...prev, place: place_p, oldname: oldname_p}));
+  }
+
+  const handleChange = (e) => {
+    setStation((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  useEffect(() => {
+    axios
+      .get(process.env.REACT_APP_ipAddress + "/admin/getstation")
+      .then((res) => {
+        setstationData(res.data.data.station);
+        setLocationData(res.data.data.location);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  const onEdit = (e, id) =>{
+    e.preventDefault();
+    const bodyData = {...station}
+    axios.post(process.env.REACT_APP_ipAddress + `/admin/editstation/${id}`, bodyData)
+    .then((res) => {
+      setstationData(res.data.data.station)
+    }).catch(error => {
+      console.log(error)
+    })
+  }
 
   // const onDelete = (id) =>{
   //   axios.post(process.env.REACT_APP_ipAddress + `/admin/deleteaccount/${id}`)
@@ -46,44 +75,6 @@ const BusStation = () => {
   //     console.log(error)
   //   })
   // }
-  const stationData = [
-    {
-      id: "a92i13490sa2kkawad",
-      place: "TP. Hồ Chí Minh",
-      address: "1647 Phạm Thế Hiển, phường 6, quận 8",
-      phone: "0976975548",
-    },
-    {
-      id: "a92i13490sa2kkawad",
-      place: "TP. Hồ Chí Minh",
-      address: "1647 Phạm Thế Hiển, phường 6, quận 8",
-      phone: "0976975548",
-    },
-    {
-      id: "a92i13490sa2kkawad",
-      place: "TP. Hồ Chí Minh",
-      address: "1647 Phạm Thế Hiển, phường 6, quận 8",
-      phone: "0976975548",
-    },
-    {
-      id: "a92i13490sa2kkawad",
-      place: "TP. Hồ Chí Minh",
-      address: "1647 Phạm Thế Hiển, phường 6, quận 8",
-      phone: "0976975548",
-    },
-    {
-      id: "a92i13490sa2kkawad",
-      place: "TP. Hồ Chí Minh",
-      address: "1647 Phạm Thế Hiển, phường 6, quận 8",
-      phone: "0976975548",
-    },
-    {
-      id: "a92i13490sa2kkawad",
-      place: "TP. Hồ Chí Minh",
-      address: "1647 Phạm Thế Hiển, phường 6, quận 8",
-      phone: "0976975548",
-    },
-  ];
 
   return (
     <div className={styles["a"]}>
@@ -103,8 +94,8 @@ const BusStation = () => {
         <table className={styles["table-containter"]}>
           <thead>
             <tr>
-              <th>ID</th>
               <th>Địa điểm</th>
+              <th>Trạm xe</th>
               <th>Địa chỉ</th>
               <th>Số điện thoại</th>
               <th className={styles["small-space"]}></th>
@@ -115,7 +106,7 @@ const BusStation = () => {
           <tbody>
             {stationData.map((data) => (
               <tr>
-                <td>{data.id}</td>
+                <td>{data.location}</td>
                 <td>{data.place}</td>
                 <td>{data.address}</td>
                 <td>{data.phone}</td>
@@ -124,6 +115,8 @@ const BusStation = () => {
                     onClick={() => {
                       setShow(true);
                       setModalData(data);
+                      setId(data._id);
+                      handleInit(data._id, data.name)
                     }}
                   >
                     <img src={EditIcon} />
@@ -152,11 +145,10 @@ const BusStation = () => {
             >
               <div className={styles["modal-row-container"]}>
                 <div>Địa điểm</div>
-                <select name="place" id="place">
-                  <option value="tphcm">TP. Hồ Chí Minh</option>
-                  <option value="travinh">Trà Vinh</option>
-                  <option value="bentre">Bến Tre</option>
-                  <option value="longan">Long An</option>
+                <select name="place" id="place" onChange={handleChange}>
+                  {locationData.map(option=>(
+                    <option value={option.location}>{option.location}</option>
+                  ))}
                 </select>
               </div>
               <div className={styles["modal-row-container"]}>
@@ -164,8 +156,9 @@ const BusStation = () => {
                 <input
                   type="text"
                   name="address"
-                  // placeholder={data.phonenumber}
                   value={modalData.address}
+                  required
+                  onChange={handleChange}
                 ></input>
               </div>
               <div className={styles["modal-row-container"]}>
@@ -173,8 +166,9 @@ const BusStation = () => {
                 <input
                   type="text"
                   name="phone"
-                  // placeholder={data.phonenumber}
                   value={modalData.phone}
+                  required
+                  onChange={handleChange}
                 ></input>
               </div>
             </form>
@@ -195,7 +189,6 @@ const BusStation = () => {
             </button>
           </Modal.Footer>
         </Modal>
-
       </div>
 
       <div className={styles["foot-new"]}>
@@ -206,61 +199,60 @@ const BusStation = () => {
       </div>
 
       <Modal show={createShow} onHide={handleCreateClose}>
-          <Modal.Header>
-            <div className={styles["modal-head"]}>TẠO TRẠM XE</div>
-          </Modal.Header>
-          <Modal.Body>
-            <form
-              className={styles["modal-body-container"]}
-              action=""
-              method="POST"
-            >
-              <div className={styles["modal-row-container"]}>
-                <div>Địa điểm</div>
-                <select name="place" id="place">
-                  <option value="tphcm">TP. Hồ Chí Minh</option>
-                  <option value="travinh">Trà Vinh</option>
-                  <option value="bentre">Bến Tre</option>
-                  <option value="longan">Long An</option>
-                </select>
-              </div>
-              <div className={styles["modal-row-container"]}>
-                <div>Địa chỉ</div>
-                <input
-                  type="text"
-                  name="address"
-                  placeholder="Nhập địa chỉ"
-                  value={modalData.address}
-                ></input>
-              </div>
-              <div className={styles["modal-row-container"]}>
-                <div>Số điện thoại</div>
-                <input
-                  type="text"
-                  name="phone"
-                  placeholder="Nhập số điện thoại"
-                  // value={modalData.phone}
-                ></input>
-              </div>
-            </form>
-          </Modal.Body>
-          <Modal.Footer>
-            <button
-              className={styles["modal-cancel-button"]}
-              onClick={handleCreateClose}
-            >
-              <div>Hủy</div>
-            </button>
+        <Modal.Header>
+          <div className={styles["modal-head"]}>TẠO TRẠM XE</div>
+        </Modal.Header>
+        <Modal.Body>
+          <form
+            className={styles["modal-body-container"]}
+            action=""
+            method="POST"
+          >
+            <div className={styles["modal-row-container"]}>
+              <div>Địa điểm</div>
+              <select name="place" id="place">
+                <option value="tphcm">TP. Hồ Chí Minh</option>
+                <option value="travinh">Trà Vinh</option>
+                <option value="bentre">Bến Tre</option>
+                <option value="longan">Long An</option>
+              </select>
+            </div>
+            <div className={styles["modal-row-container"]}>
+              <div>Địa chỉ</div>
+              <input
+                type="text"
+                name="address"
+                placeholder="Nhập địa chỉ"
+                // value={modalData.address}
+              ></input>
+            </div>
+            <div className={styles["modal-row-container"]}>
+              <div>Số điện thoại</div>
+              <input
+                type="text"
+                name="phone"
+                placeholder="Nhập số điện thoại"
+                // value={modalData.phone}
+              ></input>
+            </div>
+          </form>
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            className={styles["modal-cancel-button"]}
+            onClick={handleCreateClose}
+          >
+            <div>Hủy</div>
+          </button>
 
-            <button
-              className={styles["modal-save-button"]}
-              onClick={handleCreateClose}
-            >
-              <div>Lưu thay đổi</div>
-            </button>
-          </Modal.Footer>
-        </Modal>
-
+          <button
+            className={styles["modal-save-button"]}
+            onClick={handleCreateClose}
+          >
+            <div>Lưu thay đổi</div>
+          </button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

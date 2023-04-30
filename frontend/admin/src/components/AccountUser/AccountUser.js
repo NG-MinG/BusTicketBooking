@@ -11,6 +11,7 @@ const AccountUser = () => {
   const [accountData, setAccountData] = useState([])
 
   useEffect(() => {
+    console.log(process.env.REACT_APP_ipAddress + '/admin/getaccount')
     axios.get(process.env.REACT_APP_ipAddress + '/admin/getaccount')
     .then((res) => {
       setAccountData(res.data.data.account)
