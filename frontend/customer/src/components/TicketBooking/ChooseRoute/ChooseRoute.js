@@ -1,6 +1,6 @@
 import styles from "./ChooseRoute.module.css"
 import Ticket from "../../Ticket/Ticket";
-import {useState, useEffect} from "react";
+import {useState, useEffect, useRef} from "react";
 import { useSearchParams } from "react-router-dom"
 import axios from "axios";
 import StepLine from "../StepLine/StepLine";
@@ -61,17 +61,25 @@ const ChooseRoute = (props) => {
     const [isLoading, setIsLoading] = useState(true);
     const [tickets, setTickets] = useState([]);
     const [startingDepots, setStartingDepots] = useState([]);
+    const [selectedTimeRange, setSelectedTimeRange] = useState('');
+    const [selectedPrice, setSelectedPrice] = useState('');
+    const [selectedBusType, setSelectedBusType] = useState('');
 
+
+    let originalTickets = useRef([]);
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_HOST}/tickets/get-ticket/?departure_city=${props.departure_city}&arrival_city=${props.arrival_city}&date=${props.date}`)
         .then((res) => {
-            setTickets(res.data.tickets.map((el) => {
-                    return {
+            originalTickets.current = [...res.data.tickets];
+            setTickets(originalTickets.current.map((el, index) => {
+                    const ticketPreProcessed = {
                         ...el,
                         price: new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(el.price).replace(/\s/g, ' '),
                         distance: `${Math.floor(el.distance/1000)} km`,
                         travel_time: `${Math.floor(el.travel_time/3600)} tiếng`
                     }
+                    originalTickets.current[index] = ticketPreProcessed;
+                    return ticketPreProcessed;
                 }
             ))
             setStartingDepots([...res.data.starting_depots.stations]);
@@ -83,29 +91,79 @@ const ChooseRoute = (props) => {
     const chooseTicket = (id) => {
         setChosenTicket(id);
     }
-   
+    
+    // filter based on hours
+    const handleTimeSelectChange = (e) => {
+        if (e.target.value === "Giờ") 
+        {
+            setTickets(originalTickets.current);
+        }
+        else {
+            setTickets(originalTickets.current.filter((el) => {
+                return parseInt(el.departure_time.split(":")[0]) >= parseInt(e.target.value.split("-")[0]) 
+                && parseInt(el.departure_time.split(":")[0]) <= parseInt(e.target.value.split("-")[1]);
+            }))
+        }
+        setSelectedTimeRange(e.target.value);
+        setSelectedPrice("Giá");
+        setSelectedBusType("Loại xe");
+    }
+
+    // sort based on price
+    const handlePriceChange = (e) => {
+        if (e.target.value === "Giá") {
+            setTickets(originalTickets.current);
+        }
+        else if (e.target.value === "LowToHigh") {
+            let sortedTickets = [...originalTickets.current].sort((a,b) => parseInt(a.price.replace(/\.|\s/g, '')) - parseInt(b.price.replace(/\.|\s/g, '')));
+            setTickets(sortedTickets);
+        }
+        else if (e.target.value === "HighToLow") {
+            let sortedTickets = [...originalTickets.current].sort((a,b) => parseInt(b.price.replace(/\.|\s/g, '')) - parseInt(a.price.replace(/\.|\s/g, '')));
+            setTickets(sortedTickets)
+        }
+        setSelectedPrice(e.target.value);
+        setSelectedTimeRange("Giờ");
+        setSelectedBusType("Loại xe");
+    }
+
+    // filter based on bus type
+    const handleBusTypeChange = (e) => {
+        if (e.target.value === "Loại xe") 
+        {
+            setTickets(originalTickets.current);
+        }
+        else {
+            setTickets(originalTickets.current.filter((el) => {
+                return el.bus_type === e.target.value;
+            }))
+        }
+        setSelectedBusType(e.target.value);
+        setSelectedTimeRange("Giờ");
+        setSelectedPrice("Giá");
+    }
     return <>
         <div className = {styles["main-content"]}>
             <StepLine departure_city = {props.departure_city} arrival_city = {props.arrival_city} date = {props.date} currentStep = {props.currentStep}/>
             <div className={styles["reminder"]}>Vui lòng chọn giờ lên xe phù hợp</div>
             <div className={styles["Filter"]}>
-                <select name="PriceFilter" id="" className = {styles.priceFilter}>
-                    <option value="" disable selected>Giá</option>
+                <select value = {selectedPrice} name="PriceFilter" id="" onChange = {handlePriceChange} className = {styles.priceFilter}>
+                    <option value="Giá" disable selected>Giá</option>
                     <option value="LowToHigh">Thấp - Cao</option>
                     <option value="HighToLow">Cao - Thấp</option>
                 </select>
-                <select name="CarTypeFilter" id="" >
-                    <option value="" disable selected>Loại xe</option>
-                    <option value="chair">Ghế</option>
-                    <option value="sleeper">Giường</option>
-                    <option value="limousine">Limousine</option>
+                <select value = {selectedBusType} onChange = {handleBusTypeChange} name="CarTypeFilter" id="" >
+                    <option value="Loại xe" disable selected>Loại xe</option>
+                    <option value="Ghế">Ghế</option>
+                    <option value="Giường">Giường</option>
+                    <option value="Limousine">Limousine</option>
                 </select>
-                <select name="HoursFilter" id="">
-                    <option value="" disable selected>Giờ</option>
-                    <option value="">0h-6h</option>
-                    <option value="">6h-12h</option>
-                    <option value="">12h-18h</option>
-                    <option value="">18h-24h</option>
+                <select value = {selectedTimeRange} onChange = {handleTimeSelectChange} name="HoursFilter" id="">
+                    <option value="Giờ" disable selected>Giờ</option>
+                    <option value="0-6">0h-6h</option>
+                    <option value="6-12">6h-12h</option>
+                    <option value="12-18">12h-18h</option>
+                    <option value="18-24">18h-24h</option>
                 </select>
             </div>
             {
