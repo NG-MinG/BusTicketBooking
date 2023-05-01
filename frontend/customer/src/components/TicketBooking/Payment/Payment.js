@@ -60,7 +60,7 @@ const Payment = (props) => {
 
     const processPaymentBtn = () => {
         // post api
-        const bodyData = {
+        const data = {
             ticket_id: ticketBookingDetails.ticket_id,
             date: date_now,
             time: `${hours}:${minutes}`,
@@ -75,7 +75,7 @@ const Payment = (props) => {
                 ...guestInfo
             }
         }
-        axios.post(`${process.env.REACT_APP_API_HOST}/tickets/booking-ticket-detail`, bodyData)
+        axios.post(`${process.env.REACT_APP_API_HOST}/tickets/book-ticket`, data)
         .then((res) => {
             console.log(res)
             setIsPayment(true)

@@ -94,54 +94,116 @@ const ChooseRoute = (props) => {
     
     // filter based on hours
     const handleTimeSelectChange = (e) => {
-        if (e.target.value === "Giờ") 
-        {
-            setTickets(originalTickets.current);
-        }
-        else {
-            setTickets(originalTickets.current.filter((el) => {
+        let ticketsFiltered = [...originalTickets.current];
+        // if (e.target.value === "Giờ") 
+        // {
+        //     setTickets(originalTickets.current);
+        //     ticketsFiltered = [...originalTickets.current]
+        // }
+        if (e.target.value !== "Giờ") {
+            // setTickets(originalTickets.current.filter((el) => {
+            //     return parseInt(el.departure_time.split(":")[0]) >= parseInt(e.target.value.split("-")[0]) 
+            //     && parseInt(el.departure_time.split(":")[0]) <= parseInt(e.target.value.split("-")[1]);
+            // }))
+            ticketsFiltered = ticketsFiltered.filter((el) => {
                 return parseInt(el.departure_time.split(":")[0]) >= parseInt(e.target.value.split("-")[0]) 
                 && parseInt(el.departure_time.split(":")[0]) <= parseInt(e.target.value.split("-")[1]);
-            }))
+            })
+            ticketsFiltered = ticketsFiltered.sort((a,b) => parseInt(a.departure_time.split(":")[0]) - parseInt(b.departure_time.split(":")[0]));
         }
+        if (selectedPrice && selectedPrice !== "Giá") {
+            if (selectedPrice === "LowToHigh") {
+             ticketsFiltered = ticketsFiltered.sort((a,b) => parseInt(a.price.replace(/\.|\s/g, '')) - parseInt(b.price.replace(/\.|\s/g, '')));
+            } else if (selectedPrice === "HighToLow") { 
+             ticketsFiltered = ticketsFiltered.sort((a,b) => parseInt(b.price.replace(/\.|\s/g, '')) - parseInt(a.price.replace(/\.|\s/g, '')));
+            }
+        } 
+        if (selectedBusType && selectedBusType !== "Loại xe") {
+            ticketsFiltered = ticketsFiltered.filter((el) => {
+                return el.bus_type === selectedBusType;
+            })
+        }
+        setTickets(ticketsFiltered);
         setSelectedTimeRange(e.target.value);
-        setSelectedPrice("Giá");
-        setSelectedBusType("Loại xe");
+        // setSelectedPrice("Giá");
+        // setSelectedBusType("Loại xe");
     }
 
     // sort based on price
     const handlePriceChange = (e) => {
-        if (e.target.value === "Giá") {
-            setTickets(originalTickets.current);
+        let ticketsFiltered = [...originalTickets.current];
+        // if (e.target.value === "Giá") {
+        //     setTickets(originalTickets.current);
+        // }
+        if (e.target.value !== "Giá") {
+            if (e.target.value === "LowToHigh") {
+                // let sortedTickets = [...originalTickets.current].sort((a,b) => parseInt(a.price.replace(/\.|\s/g, '')) - parseInt(b.price.replace(/\.|\s/g, '')));
+                // setTickets(sortedTickets);
+                ticketsFiltered = ticketsFiltered.sort((a,b) => parseInt(a.price.replace(/\.|\s/g, '')) - parseInt(b.price.replace(/\.|\s/g, '')));
+            }
+            else if (e.target.value === "HighToLow") {
+                // let sortedTickets = [...originalTickets.current].sort((a,b) => parseInt(b.price.replace(/\.|\s/g, '')) - parseInt(a.price.replace(/\.|\s/g, '')));
+                // setTickets(sortedTickets)
+                ticketsFiltered = ticketsFiltered.sort((a,b) => parseInt(b.price.replace(/\.|\s/g, '')) - parseInt(a.price.replace(/\.|\s/g, '')));
+            }
         }
-        else if (e.target.value === "LowToHigh") {
-            let sortedTickets = [...originalTickets.current].sort((a,b) => parseInt(a.price.replace(/\.|\s/g, '')) - parseInt(b.price.replace(/\.|\s/g, '')));
-            setTickets(sortedTickets);
+        if (selectedTimeRange && selectedTimeRange !== "Giờ") {
+            ticketsFiltered = ticketsFiltered.filter((el) => {
+                return parseInt(el.departure_time.split(":")[0]) >= parseInt(selectedTimeRange.split("-")[0]) 
+                && parseInt(el.departure_time.split(":")[0]) <= parseInt(selectedTimeRange.split("-")[1]);
+            })
+            ticketsFiltered = ticketsFiltered.sort((a,b) => parseInt(a.departure_time.split(":")[0]) - parseInt(b.departure_time.split(":")[0]));
         }
-        else if (e.target.value === "HighToLow") {
-            let sortedTickets = [...originalTickets.current].sort((a,b) => parseInt(b.price.replace(/\.|\s/g, '')) - parseInt(a.price.replace(/\.|\s/g, '')));
-            setTickets(sortedTickets)
+        if (selectedBusType && selectedBusType !== "Loại xe") {
+            ticketsFiltered = ticketsFiltered.filter((el) => {
+                return el.bus_type === selectedBusType;
+            })
         }
+        setTickets(ticketsFiltered);
         setSelectedPrice(e.target.value);
-        setSelectedTimeRange("Giờ");
-        setSelectedBusType("Loại xe");
+        // setSelectedTimeRange("Giờ");
+        // setSelectedBusType("Loại xe");
     }
 
     // filter based on bus type
     const handleBusTypeChange = (e) => {
-        if (e.target.value === "Loại xe") 
-        {
-            setTickets(originalTickets.current);
-        }
-        else {
-            setTickets(originalTickets.current.filter((el) => {
+        let ticketsFiltered = [...originalTickets.current];
+        // if (e.target.value === "Loại xe") 
+        // {
+        //     setTickets(originalTickets.current);
+        // }
+        if (e.target.value !== "Loại xe") {
+            ticketsFiltered = ticketsFiltered.filter((el) => {
                 return el.bus_type === e.target.value;
-            }))
+            })
+            // setTickets(originalTickets.current.filter((el) => {
+            //     return el.bus_type === e.target.value;
+            // }))
         }
+        if (selectedPrice && selectedPrice !== "Giá") {
+            if (selectedPrice === "LowToHigh") {
+             ticketsFiltered = ticketsFiltered.sort((a,b) => parseInt(a.price.replace(/\.|\s/g, '')) - parseInt(b.price.replace(/\.|\s/g, '')));
+            } else if (selectedPrice === "HighToLow") { 
+             ticketsFiltered = ticketsFiltered.sort((a,b) => parseInt(b.price.replace(/\.|\s/g, '')) - parseInt(a.price.replace(/\.|\s/g, '')));
+            }
+        } 
+        if (selectedTimeRange && selectedTimeRange !== "Giờ") {
+            ticketsFiltered = ticketsFiltered.filter((el) => {
+                return parseInt(el.departure_time.split(":")[0]) >= parseInt(selectedTimeRange.split("-")[0]) 
+                && parseInt(el.departure_time.split(":")[0]) <= parseInt(selectedTimeRange.split("-")[1]);
+            })
+            ticketsFiltered = ticketsFiltered.sort((a,b) => parseInt(a.departure_time.split(":")[0]) - parseInt(b.departure_time.split(":")[0]));
+        }
+        setTickets(ticketsFiltered);
         setSelectedBusType(e.target.value);
-        setSelectedTimeRange("Giờ");
-        setSelectedPrice("Giá");
+        // setSelectedTimeRange("Giờ");
+        // setSelectedPrice("Giá");
     }
+
+    // handle filter change
+    // const handleFilterChange = (e) => {
+    //     const ticketsFiltered = [...originalTickets.current];
+    // }
     return <>
         <div className = {styles["main-content"]}>
             <StepLine departure_city = {props.departure_city} arrival_city = {props.arrival_city} date = {props.date} currentStep = {props.currentStep}/>

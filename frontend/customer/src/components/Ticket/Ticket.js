@@ -60,7 +60,7 @@ const Ticket = (props) => {
     }
 
 
-    return <div className={props.dropdown ? `${styles["ticket"]} ${styles["ticket-active"]}` : styles["ticket"]} onClick = {() => {props.onChooseTicket(props.ticketDetails.id)}}>
+    return <div className={props.dropDown ? `${styles["ticket"]} ${styles["ticket-active"]}` : styles["ticket"]} onClick = {() => {props.onChooseTicket(props.ticketDetails.id)}}>
         <div className={styles["quick-description"]}>
             <div className={styles["time-travel"]}>
                 <span className={styles["start-time"]}>{props.ticketDetails.departure_time}</span>
@@ -94,9 +94,9 @@ const Ticket = (props) => {
         <>
             <div className={styles["layout-seat-description"]}>Vị trí ghế ngồi</div>
             <div className={styles["layout-seat"]}>
-                {props.ticketDetails.bus_type === "Limousine" && <LimousineLayout choosingSeats = {choosingSeats} onChooseSeat = {chooseSeat}/>}
-                {props.ticketDetails.bus_type === "Giường" && <SleeperLayout choosingSeats = {choosingSeats} onChooseSeat = {chooseSeat}/>}
-                {props.ticketDetails.bus_type === "Ghế" && <ChairLayout choosingSeats = {choosingSeats} onChooseSeat = {chooseSeat}/>}
+                {props.ticketDetails.bus_type === "Limousine" && <LimousineLayout bookedSeats = {props.ticketDetails.booked_seats} choosingSeats = {choosingSeats} onChooseSeat = {chooseSeat}/>}
+                {props.ticketDetails.bus_type === "Giường" && <SleeperLayout bookedSeats = {props.ticketDetails.booked_seats} choosingSeats = {choosingSeats} onChooseSeat = {chooseSeat}/>}
+                {props.ticketDetails.bus_type === "Ghế" && <ChairLayout bookedSeats = {props.ticketDetails.booked_seats} choosingSeats = {choosingSeats} onChooseSeat = {chooseSeat}/>}
                 {/* <div className={styles["layout-seat-title"]}>
                     <div className={styles["below"]}>Tầng dưới</div>
                     <div className={styles["above"]}>Tầng trên</div>
