@@ -186,6 +186,7 @@
     align-items: center;
     justify-content: space-around;
     border: none;
+    margin-top: 1rem;
 }
 
 .modal-save-button:hover{
@@ -211,6 +212,7 @@
     align-items: center;
     justify-content: space-around;
     border: none;
+    margin-top: 1rem;
 }
 
 .modal-cancel-button:hover{

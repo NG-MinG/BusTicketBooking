@@ -13,9 +13,6 @@ const BusStation = () => {
   const [show, setShow] = useState(false);
   const [createShow, setCreateShow] = useState(false);
 
-  //Pass data to modal
-  const [modalData, setModalData] = useState("");
-
   //Handle state of modal
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -23,32 +20,30 @@ const BusStation = () => {
   const handleCreateShow = () => setCreateShow(true);
 
   //Handle data from database
-  const [stationData, setstationData] = useState([]);
+  const [stationData, setStationData] = useState([]);
   const [locationData, setLocationData] = useState([]);
-  const [id, setId] = useState([]);
 
   //Use for edit station
   const [station, setStation] = useState({
-    place: "",
+    _id: "",
+    oldlocation: "",
+    location: "",
     oldname: "",
     name: "",
     address: "",
     phone: "",
   });
 
-  const handleInit = (e, place_p, oldname_p)=>{
-    setStation((prev) => ({ ...prev, place: place_p, oldname: oldname_p}));
-  }
-
   const handleChange = (e) => {
     setStation((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+  console.log(station);
 
   useEffect(() => {
     axios
       .get(process.env.REACT_APP_ipAddress + "/admin/getstation")
       .then((res) => {
-        setstationData(res.data.data.station);
+        setStationData(res.data.data.station);
         setLocationData(res.data.data.location);
       })
       .catch((error) => {
@@ -56,25 +51,48 @@ const BusStation = () => {
       });
   }, []);
 
-  const onEdit = (e, id) =>{
-    e.preventDefault();
-    const bodyData = {...station}
-    axios.post(process.env.REACT_APP_ipAddress + `/admin/editstation/${id}`, bodyData)
-    .then((res) => {
-      setstationData(res.data.data.station)
-    }).catch(error => {
-      console.log(error)
-    })
-  }
+  const onEdit = (e) => {
+    const bodyData = { ...station };
+    console.log(bodyData);
+    axios
+      .post(
+        process.env.REACT_APP_ipAddress + `/admin/editstation/${station._id}`,
+        bodyData
+      )
+      .then((res) => {
+        setStationData(res.data.data.station);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
-  // const onDelete = (id) =>{
-  //   axios.post(process.env.REACT_APP_ipAddress + `/admin/deleteaccount/${id}`)
-  //   .then((res) => {
-  //     setstationData(res.data.data.account)
-  //   }).catch(error => {
-  //     console.log(error)
-  //   })
-  // }
+  const onCreate = (e) => {
+    const bodyData = { ...station };
+    console.log(bodyData);
+    axios
+      .post(process.env.REACT_APP_ipAddress + `/admin/createstation`, bodyData)
+      .then((res) => {
+        setStationData(res.data.data.station);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const onDelete = (data) => {
+    axios
+      .post(
+        process.env.REACT_APP_ipAddress +
+          `/admin/deletestation?id=${data._id}&name=${data.name}`
+      )
+      .then((res) => {
+        setStationData(res.data.data.station);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <div className={styles["a"]}>
@@ -107,16 +125,14 @@ const BusStation = () => {
             {stationData.map((data) => (
               <tr>
                 <td>{data.location}</td>
-                <td>{data.place}</td>
+                <td>{data.name}</td>
                 <td>{data.address}</td>
                 <td>{data.phone}</td>
                 <td>
                   <a
                     onClick={() => {
                       setShow(true);
-                      setModalData(data);
-                      setId(data._id);
-                      handleInit(data._id, data.name)
+                      setStation(data);
                     }}
                   >
                     <img src={EditIcon} />
@@ -124,7 +140,11 @@ const BusStation = () => {
                 </td>
 
                 <td>
-                  <a>
+                  <a
+                    onClick={() => {
+                      onDelete(data);
+                    }}
+                  >
                     <img src={DeleteIcon} />
                   </a>
                 </td>
@@ -145,18 +165,31 @@ const BusStation = () => {
             >
               <div className={styles["modal-row-container"]}>
                 <div>Địa điểm</div>
-                <select name="place" id="place" onChange={handleChange}>
-                  {locationData.map(option=>(
+                <select name="location" id="location" onChange={handleChange}>
+                  <option value="" selected disabled hidden>
+                    {station.location}
+                  </option>
+                  {locationData.map((option) => (
                     <option value={option.location}>{option.location}</option>
                   ))}
                 </select>
+              </div>
+              <div className={styles["modal-row-container"]}>
+                <div>Trạm xe</div>
+                <input
+                  type="text"
+                  name="name"
+                  value={station.name}
+                  required
+                  onChange={handleChange}
+                ></input>
               </div>
               <div className={styles["modal-row-container"]}>
                 <div>Địa chỉ</div>
                 <input
                   type="text"
                   name="address"
-                  value={modalData.address}
+                  value={station.address}
                   required
                   onChange={handleChange}
                 ></input>
@@ -166,7 +199,7 @@ const BusStation = () => {
                 <input
                   type="text"
                   name="phone"
-                  value={modalData.phone}
+                  value={station.phone}
                   required
                   onChange={handleChange}
                 ></input>
@@ -183,7 +216,10 @@ const BusStation = () => {
 
             <button
               className={styles["modal-save-button"]}
-              onClick={handleClose}
+              onClick={() => {
+                onEdit();
+                handleClose();
+              }}
             >
               <div>Lưu thay đổi</div>
             </button>
@@ -210,12 +246,24 @@ const BusStation = () => {
           >
             <div className={styles["modal-row-container"]}>
               <div>Địa điểm</div>
-              <select name="place" id="place">
-                <option value="tphcm">TP. Hồ Chí Minh</option>
-                <option value="travinh">Trà Vinh</option>
-                <option value="bentre">Bến Tre</option>
-                <option value="longan">Long An</option>
+              <select name="location" id="location" onChange={handleChange}>
+                <option value="" selected disabled hidden>
+                  Chọn địa điểm
+                </option>
+                {locationData.map((option) => (
+                  <option value={option.location}>{option.location}</option>
+                ))}
               </select>
+            </div>
+            <div className={styles["modal-row-container"]}>
+              <div>Trạm xe</div>
+              <input
+                type="text"
+                name="name"
+                placeholder="Nhập trạm xe"
+                required
+                onChange={handleChange}
+              ></input>
             </div>
             <div className={styles["modal-row-container"]}>
               <div>Địa chỉ</div>
@@ -223,7 +271,8 @@ const BusStation = () => {
                 type="text"
                 name="address"
                 placeholder="Nhập địa chỉ"
-                // value={modalData.address}
+                required
+                onChange={handleChange}
               ></input>
             </div>
             <div className={styles["modal-row-container"]}>
@@ -232,7 +281,8 @@ const BusStation = () => {
                 type="text"
                 name="phone"
                 placeholder="Nhập số điện thoại"
-                // value={modalData.phone}
+                required
+                onChange={handleChange}
               ></input>
             </div>
           </form>
@@ -247,7 +297,10 @@ const BusStation = () => {
 
           <button
             className={styles["modal-save-button"]}
-            onClick={handleCreateClose}
+            onClick={() => {
+              onCreate();
+              handleCreateClose();
+            }}
           >
             <div>Lưu thay đổi</div>
           </button>
