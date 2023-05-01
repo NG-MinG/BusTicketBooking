@@ -44,7 +44,6 @@ const deleteStation = catchAsync(async (req, res) => {
     for (let i = 0; i < getStation.stations.length; i++) {
         if (getStation.stations[i].name === req.query.name) {
             getStation.stations.splice(i, 1);
-            console.log(getStation.stations);
             i--
         }
     }
