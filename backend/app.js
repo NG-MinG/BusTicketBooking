@@ -30,18 +30,12 @@ app.use(hpp());
 app.use(express.json({ limit: '10mb' }));
 
 app.use('/bus/api/v1/auth', authRouter);
-<<<<<<< HEAD
-app.use('/bus/v1/user', userProfileRouter); // mounting new router on route (URL)
-app.use('/bus/v1/schedule', scheduleRouter);
-app.use('/bus/v1/station', stationRouter);
-app.use('/bus/api/v1/tickets', ticketBookingRouter)
-=======
 app.use('/bus/api/v1/user', userProfileRouter); // mounting new router on route (URL)
 app.use('/bus/api/v1/schedule', scheduleRouter);
 app.use('/bus/api/v1/station', stationRouter);
->>>>>>> 41176ce0cd818fdff8d00e449989da16d6f31112
+app.use('/bus/api/v1/tickets', ticketBookingRouter)
 
-app.use('/admin', accountRouter);
+app.use('/bus/api/v1/admin', accountRouter);
 
 app.use(globalErrorhandler);
 
