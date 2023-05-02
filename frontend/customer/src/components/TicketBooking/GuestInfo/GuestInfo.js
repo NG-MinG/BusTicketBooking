@@ -62,7 +62,7 @@ export const GuestInfo = (props) => {
             This is navbar
     </div>
     <div className={styles["main-content"]}>
-        <StepLine currentStep = {props.currentStep}/>
+        <StepLine departure_city = {props.departure_city} arrival_city = {props.arrival_city} date = {props.date} currentStep = {props.currentStep}/>
         <div className={styles["guest-info"]}>
             <div className={styles["title"]}>Thông tin hành khách</div>
             <div className={styles["input"]}>

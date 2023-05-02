@@ -22,10 +22,10 @@ const Ticket = (props) => {
     const chooseSeat = (seatID) => {
         return setChoosingSeats((pre) => {
             if (pre.includes(seatID)) {
-               setPrice((pre) => pre - 150000)
+               setPrice((pre) => pre - parseInt(props.ticketDetails.price.replace(/\D/g, '')))
                return pre.filter((el, index) => el !== seatID);
             }   
-            setPrice((pre) => pre + 150000)
+            setPrice((pre) => pre + parseInt(props.ticketDetails.price.replace(/\D/g, '')))
             return [...pre, seatID];
         })
     }   
@@ -36,29 +36,36 @@ const Ticket = (props) => {
             stepTwo: true,
         });
         dispatch(setTicketBookingDetails({
+            ticket_id: props.ticketDetails._id,
+            truncatedDate: props.ticketDetails.truncatedDate,
             departure_time: props.ticketDetails.departure_time,
             arrival_time: props.ticketDetails.arrival_time,
             departure_city: props.ticketDetails.departure_city,
             arrival_city: props.ticketDetails.arrival_city,
             ticket_type: props.ticketDetails.ticket_type,
+            price: props.ticketDetails.price,
             travel_time: props.ticketDetails.travel_time,
             distance: props.ticketDetails.distance,
             departure_depot: props.ticketDetails.departure_depot,
             arrival_depot: props.ticketDetails.arrival_depot,
             bus_type: props.ticketDetails.bus_type,
-            ticket_price: props.ticketDetails.price,
+            booked_seats: props.ticketDetails.booked_seats,
+            reserved_seats: props.ticketDetails.reserved_seats,
+            total_seats: props.ticketDetails.total_seats,
             choosing_seats: choosingSeats,
             total_price: price,
+            // ***
+            starting_depots: props.startingDepots,
         }))
     }
 
 
-    return <div className={props.dropdown ? `${styles["ticket"]} ${styles["ticket-active"]}` : styles["ticket"]} onClick = {() => {props.onChooseTicket(props.ticketDetails.id)}}>
+    return <div className={props.dropDown ? `${styles["ticket"]} ${styles["ticket-active"]}` : styles["ticket"]} onClick = {() => {props.onChooseTicket(props.ticketDetails.id)}}>
         <div className={styles["quick-description"]}>
             <div className={styles["time-travel"]}>
-                <span className={styles["start-time"]}>{props.ticketDetails.departure_time.split(" ")[1]}</span>
+                <span className={styles["start-time"]}>{props.ticketDetails.departure_time}</span>
                 <span className={styles["arrow"]}>{<RightArrowIcon/>}</span>
-                <span className={styles["end-time"]}>{props.ticketDetails.arrival_time.split(" ")[1]}</span>
+                <span className={styles["end-time"]}>{props.ticketDetails.arrival_time}</span>
             </div>
             <div className={styles["features"]}>
                 <WaterIcon/>
@@ -73,23 +80,23 @@ const Ticket = (props) => {
                 </span>
                 <span className={styles["left-slots"]}>
                     <span className={styles["Dot-icon"]}><DotIcon/></span>
-                    <span className={styles["status"]}>Còn {props.ticketDetails.total_seat - props.ticketDetails.reserved_seat} chỗ</span>
+                    <span className={styles["status"]}>Còn {props.ticketDetails.total_seats - props.ticketDetails.reserved_seats} chỗ</span>
                 </span>
             </div>
             <div className={styles["location"]}>
                 <LocationIcon/>
                 <span className={styles["departure-place"]}>{props.ticketDetails.departure_depot}</span>
                 <span className={styles["arrival-place"]}>{props.ticketDetails.arrival_depot}</span>
-                <span className={styles["distance"]}>Xe tuyến: {props.ticketDetails.distance} - {props.ticketDetails.travel_time.slice(0,-1)} tiếng</span>
+                <span className={styles["distance"]}>Xe tuyến: {props.ticketDetails.distance} - {props.ticketDetails.travel_time}</span>
             </div>
         </div>
         {props.dropDown && 
         <>
             <div className={styles["layout-seat-description"]}>Vị trí ghế ngồi</div>
             <div className={styles["layout-seat"]}>
-                {props.ticketDetails.bus_type === "Limousine" && <LimousineLayout choosingSeats = {choosingSeats} onChooseSeat = {chooseSeat}/>}
-                {props.ticketDetails.bus_type === "Giường" && <SleeperLayout choosingSeats = {choosingSeats} onChooseSeat = {chooseSeat}/>}
-                {props.ticketDetails.bus_type === "Ghế" && <ChairLayout choosingSeats = {choosingSeats} onChooseSeat = {chooseSeat}/>}
+                {props.ticketDetails.bus_type === "Limousine" && <LimousineLayout bookedSeats = {props.ticketDetails.booked_seats} choosingSeats = {choosingSeats} onChooseSeat = {chooseSeat}/>}
+                {props.ticketDetails.bus_type === "Giường" && <SleeperLayout bookedSeats = {props.ticketDetails.booked_seats} choosingSeats = {choosingSeats} onChooseSeat = {chooseSeat}/>}
+                {props.ticketDetails.bus_type === "Ghế" && <ChairLayout bookedSeats = {props.ticketDetails.booked_seats} choosingSeats = {choosingSeats} onChooseSeat = {chooseSeat}/>}
                 {/* <div className={styles["layout-seat-title"]}>
                     <div className={styles["below"]}>Tầng dưới</div>
                     <div className={styles["above"]}>Tầng trên</div>

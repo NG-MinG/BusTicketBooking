@@ -20,7 +20,7 @@ export default function ChangePassword() {
   const handleSubmit = (event) => {
     event.preventDefault()
 
-    axios.patch(process.env.REACT_APP_ipAddress + '/bus/v1/user/updatePassword', value, { headers: { Authorization: 'Bearer ' + auth.getAccessToken() } }).then((res) => {
+    axios.patch(process.env.REACT_APP_API_HOST + '/user/updatePassword', value, { headers: { Authorization: 'Bearer ' + auth.getAccessToken() } }).then((res) => {
       console.log('Successfully!!!')
       setMessage("")
 
