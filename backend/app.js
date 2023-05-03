@@ -40,7 +40,7 @@ app.use('/bus/api/v1/schedule', scheduleRouter);
 app.use('/bus/api/v1/station', stationRouter);
 app.use('/bus/api/v1/tickets', ticketBookingRouter)
 
-app.use('/bus/api/v1/admin', accountRouter);
+app.use('/bus/api/v1/admin', adminRouter);
 
 app.use(globalErrorhandler);
 
