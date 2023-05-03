@@ -1,11 +1,12 @@
 import Station from '../models/stationModel.js';
 import Trip from '../models/scheduleModel.js';
+import Location from '../models/locationModel.js';
 import catchAsync from '../utils/catchAsync.js';
 import AppError from '../utils/appError.js';
 
 const getAllTrip = catchAsync(async (req, res) => {
     const trip = await Trip.find();
-    const location = [];
+    const location = await Location.find();
     const getStation = await Station.find();
     for (let i = 0; i < getStation.length; i++) {
         location.push({ location: getStation[i].location });
