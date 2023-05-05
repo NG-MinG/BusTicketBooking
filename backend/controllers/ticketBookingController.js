@@ -3,7 +3,7 @@ import Ticket from "../models/ticketModel.js";
 import Station from "../models/stationModel.js";
 import catchAsync from "../utils/catchAsync.js";
 
-const getTicket = catchAsync(async(req,res,next) => {
+const getTickets = catchAsync(async(req,res,next) => {
     const departure_city  = req.query.departure_city;
     const arrival_city = req.query.arrival_city;
     const date = req.query.date;
@@ -26,4 +26,4 @@ const bookTicket = catchAsync(async(req,res,next) => {
 })
 
 
-export default {getTicket, bookTicket};
+export default {getTickets, bookTicket};
