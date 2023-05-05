@@ -23,11 +23,6 @@ const AdminPage = () => {
       path: "/admin/account"
     },
     {
-      icon: BusTypeIcon,
-      title: "Loại xe",
-      path: "/admin/bus-type"
-    },
-    {
       icon: BusStationIcon,
       title: "Trạm xe",
       path: "/admin/bus-station"
