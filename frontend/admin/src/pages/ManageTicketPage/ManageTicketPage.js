@@ -5,15 +5,21 @@ import TableView from "../../components/ManageTicket/TableView/TableView";
 import SeatLayout from "../../components/SeatLayout/SeatLayout";
 import CreateButton from "../../components/CreateButton/CreateButton";
 import {ReactComponent as ToIcon} from "../../assets/svg/ManageTicket/right_arrow.svg";
-import {useState} from "react";
+import {useState, useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import axios from 'axios';
 
 
 const ManageTicketPage = () => {
+    const tickets = useSelector((state) => state.ticketManaging.tickets); 
+    const dispatch = useDispatch();
     const [createTicket, setCreateTicket] = useState(false);
     const [placeChoosing, setPlaceChoosing] = useState({
         fromHCM: true,
         toHCM: false,
     })
+
+    const [locations, setLocations] = useState([]);
 
     const handleFirstPlaceChoosingClick = () => {
         setPlaceChoosing((pre) => {
@@ -39,21 +45,29 @@ const ManageTicketPage = () => {
         setCreateTicket(false);
     }
 
+    useEffect(() => {
+        async function fetchData() {
+            const res = await axios.get('http://localhost:5000/bus/api/v1/admin/ticket-managing/get-locations');
+            setLocations(res.data.locations);
+        }
+        fetchData();
+    }, [])
+
+   
 
     return  <>
         <div className={styles["wrapper"]}>
         {/* search bar */}
         <Searching onCreateTicket = {() => {
-            console.log('current crud state: ', createTicket    )
             setCreateTicket(true)}
             }/>
         {/* choose the place */}
         <div className={styles["place-choosing"]}>
             <div className={styles["from-HCM"]} onClick = {handleFirstPlaceChoosingClick}>
-                <PlaceChoosing text = "Đi từ TP.HCM đến" isActive = {placeChoosing.fromHCM ? true : false}/>
+                <PlaceChoosing where = "from_TP.HCM" locations = {locations} text = "Đi từ TP.HCM đến" isActive = {placeChoosing.fromHCM ? true : false}/>
             </div>
             <div className={styles["to-HCM"]} onClick = {handleSecondPlaceChoosingClick} >
-                <PlaceChoosing text = "Đi đến TP.HCM từ" isActive = {placeChoosing.toHCM ? true : false}/>
+                <PlaceChoosing where = "to_TP.HCM" locations = {locations} text = "Đi đến TP.HCM từ" isActive = {placeChoosing.toHCM ? true : false}/>
             </div>
         </div>
         {/* tickets table */}
@@ -109,13 +123,13 @@ const ManageTicketPage = () => {
                     <div className={styles["second-row"]}>
                         <select name="" id="" className = {styles["departure-depot"]}>
                                 <option value="" disabled selected>Điểm lên xe</option>
-                                <option value="">BX Miền Tây</option>
-                                <option value="">BX Đồng Tâm</option>
+                                {/* <option value="">BX Miền Tây</option>
+                                <option value="">BX Đồng Tâm</option> */}
                         </select>
                         <select name="" id="" className = {styles["arrival-depot"]}>
                             <option value="" disabled selected>Điểm xuống xe</option>
-                            <option value="">BX Cần Thơ</option>
-                            <option value="">BX Cà Mau</option>
+                            {/* <option value="">BX Cần Thơ</option>
+                            <option value="">BX Cà Mau</option> */}
                         </select>
                         <select name="" id="" className = {styles["bus-type"]}>
                             <option value="" disabled selected>Loại xe</option>

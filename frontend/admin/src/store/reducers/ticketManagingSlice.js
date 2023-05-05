@@ -1,6 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
+    tickets: [],
     currentTicketDetails: {
         departure_city: "",
         arrival_city: "",
@@ -25,9 +26,12 @@ const ticketManagingSlice = createSlice({
             state.currentTicketDetails.bus_type = action.payload.bus_type || "";
             state.currentTicketDetails.ticket_price = action.payload.ticket_price || "";
         },
+        setTickets: (state, action) => {
+            state.tickets = action.payload;
+        }
     }   
 })
 
-export const {setTicketManagingDetails} = ticketManagingSlice.actions;
+export const {setTicketManagingDetails, setTickets} = ticketManagingSlice.actions;
 
 export default ticketManagingSlice.reducer;
