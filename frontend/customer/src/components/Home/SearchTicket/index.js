@@ -42,11 +42,14 @@ const SearchTicket = () => {
 
     const dispatcher_departure = (value) => {
         setDeparture(value);
+        setLocationSuggest(prev => prev.filter(el => el !== departure))
         // setSuggessActive(false);
     };
 
     const dispatcher_arrival = (value) => {
         setArrival(value);
+        setLocationSuggest(prev => prev.filter(el => el !== arrival))
+
         // setSuggessActive(false);
     };
 
@@ -119,18 +122,30 @@ const SearchTicket = () => {
                                 onBlur={() => {
                                     setTimeout(() => {
                                         setSuggessActive(false);
-                                    }, 100);
+                                    }, 150);
                                 }}
                                 onFocus={() => {
                                     dispatcher.current = dispatcher_departure;
                                     
-                                    // setLocationSuggest(list_location.current.filter(el => el !== departure))
+                                    if (arrival !== "TP.Hồ Chí Minh") {
+                                        if (!list_location.current.includes(arrival))
+                                            setLocationSuggest(list_location.current);
+                                        else 
+                                            setLocationSuggest(['TP.Hồ Chí Minh']);
+                                    }
+                                    else 
+                                        setLocationSuggest(list_location.current.filter(el => el !== arrival));
 
                                     setTimeout(() => {
                                         setSuggessActive(true);
-                                    }, 110);
+                                    }, 160);
                                 }}
-                                onChange={(e) => setDeparture(e.target.value)}
+                                onChange={(e) => { 
+                                        const departureValue = e.target.value;
+                                        setDeparture(departureValue);
+                                        setLocationSuggest(list_location.current.filter(el => el.toLowerCase().indexOf(departureValue.toLowerCase()) > -1));
+                                    }
+                                }
                                 value={departure}
                             />
                         </div>
@@ -152,15 +167,32 @@ const SearchTicket = () => {
                                 onBlur={() => {
                                     setTimeout(() => {
                                         setSuggessActive(false);
-                                    }, 100);
+                                    }, 150);
                                 }}
                                 onFocus={() => {
                                     dispatcher.current = dispatcher_arrival;
+
+                                    if (departure !== "TP.Hồ Chí Minh") {
+                                        if (!list_location.current.includes(departure))
+                                            setLocationSuggest(list_location.current);
+                                        else 
+                                            setLocationSuggest(['TP.Hồ Chí Minh']);
+                                    }
+                                    else 
+                                        setLocationSuggest(list_location.current.filter(el => el !== departure));
+
                                     setTimeout(() => {
                                         setSuggessActive(true);
-                                    }, 110);
+                                    }, 160);
                                 }}
-                                onChange={(e) => setArrival(e.target.value)}
+                                onChange={
+                                    (e) => {
+                                        const arrivalValue = e.target.value;
+                                        setArrival(arrivalValue);
+
+                                        setLocationSuggest(list_location.current.filter(el => el.toLowerCase().indexOf(arrivalValue.toLowerCase()) > -1));
+                                    }
+                                }
                                 value={arrival}
                             />
                         </div>
