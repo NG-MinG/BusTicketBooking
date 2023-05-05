@@ -1,13 +1,13 @@
 import Station from '../models/stationModel.js';
 import catchAsync from '../utils/catchAsync.js';
+import Location from '../models/locationModel.js';
 import AppError from '../utils/appError.js';
 
 const getAllStation = catchAsync(async (req, res) => {
     const getStation = await Station.find();
-    const location = [];
+    const location = await Location.find();
     const station = [];
     for (let i = 0; i < getStation.length; i++) {
-        location.push({ location: getStation[i].location });
         for (let j = 0; j < getStation[i].stations.length; j++) {
             const detail = {
                 _id: getStation[i]._id,
