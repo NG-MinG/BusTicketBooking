@@ -68,7 +68,7 @@ const ChooseRoute = (props) => {
 
     let originalTickets = useRef([]);
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_API_HOST}/tickets/get-ticket/?departure_city=${props.departure_city}&arrival_city=${props.arrival_city}&date=${props.date}`)
+        axios.get(`${process.env.REACT_APP_API_HOST}/tickets/get-tickets/?departure_city=${props.departure_city}&arrival_city=${props.arrival_city}&date=${props.date}`)
         .then((res) => {
             originalTickets.current = [...res.data.tickets];
             setTickets(originalTickets.current.map((el, index) => {

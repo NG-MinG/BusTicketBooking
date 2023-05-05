@@ -1,5 +1,5 @@
 import {useState} from "react"
-import { useSearchParams } from "react-router-dom"
+    import { useSearchParams } from "react-router-dom"
 import ChooseRoute from "../../components/TicketBooking/ChooseRoute/ChooseRoute"
 import ConfirmRoute from "../../components/TicketBooking/ConfirmRoute/ConfirmRoute"
 import GuestInfo from "../../components/TicketBooking/GuestInfo/GuestInfo"
