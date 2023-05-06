@@ -1,16 +1,18 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import app from "./app.js";
+import { Server } from 'socket.io';
+
 
 const port = process.env.PORT || 5000;
 
 dotenv.config({ path: './config.env' });
 
 mongoose
-.connect(process.env.DATABASE)
-.then(() => {
-    console.log('Connected to DB successfully');
-});
+    .connect(process.env.DATABASE)
+    .then(() => {
+        console.log('Connected to DB successfully');
+    });
 
 const server = app.listen(port, () => {
     console.log(`App is running on port ${port}...`);
@@ -23,6 +25,22 @@ process.on('unhandledRejection', (err) => {
         process.exit(1); // 0 is success, 1 is uncaught exception
     });
 });
+
+export const io = new Server(server, {
+    cors: {
+        origin: "*"
+    }
+});
+
+// io.on('connection', (socket) => {
+// console.log("socket connected")
+// socket.on('book-ticket', async (data) => {
+//     io.emit("book-ticket", data)
+// })
+// const onBookTicket = function (data) {
+//     io.emit("book-ticket", data);
+// };
+// })
 
 // Import the functions you need from the SDKs you need
 // import { initializeApp } from "firebase/app";
