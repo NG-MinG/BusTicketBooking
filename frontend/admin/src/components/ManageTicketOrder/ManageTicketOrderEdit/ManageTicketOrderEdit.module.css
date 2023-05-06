@@ -17,7 +17,8 @@
   width: 50%;
   padding: 1rem 3rem;
   display: flex;
-  gap: 3rem;
+  flex-direction: column;
+  gap: 3.6rem;
 }
 
 .title{
@@ -28,7 +29,7 @@
   font-size: 1.5rem;
 }
 
-p{
+.ManageTicketOrderEdit p{
   margin: 0;
 }
 
@@ -44,31 +45,13 @@ p{
   cursor: pointer;
 }
 
-.content{
+.information-item{
   display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
+  align-items: center;
 }
 
-.content input{
-  padding: .8rem;
-  width: 35rem;
-  font-family: inherit;
-  border-radius: 3px;
-  border: 1px solid #8D8A8A;
-  margin-right: -30px;
-  font-size: 1.4rem;
-  height: 3.4rem;
-  box-sizing: border-box;
-}
-
-.content input:focus{
-  outline: none;
-}
-
-.content p{
-  line-height: 3.4rem;
-  vertical-align: middle;
+.information-item p:first-child{
+  width: 20rem;
 }
 
 .layout-seat {

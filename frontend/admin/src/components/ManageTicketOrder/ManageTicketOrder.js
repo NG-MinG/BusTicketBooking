@@ -5,195 +5,28 @@ import ManageTicketOrderItem from "./ManageTicketOrderItem/ManageTicketOrderItem
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom'
 import io from 'socket.io-client'
+import axios from "axios";
 
 
 
 const ManageTicketOrder = () => {
 
-  const ticketHistory = [
-    {
-      id: 'HCMBT1',
-      ten: 'Dinh Nguyen Duy Khang',
-      sodienthoai: '0976975548',
-      diemdi: 'TP.Hồ Chí Minh',
-      diemden: 'Bến Tre',
-      ngay: '31/12/2022',
-      gio: '13h30',
-      gia: '150.000đ',
-      trangthai: 'Đang xử lí'
-    },
-    {
-      id: 'HCMBT2',
-      ten: 'Khang Dinh',
-      sodienthoai: '0976975548',
-      diemdi: 'TP.Hồ Chí Minh',
-      diemden: 'Bến Tre',
-      ngay: '31/12/2022',
-      gio: '13h30',
-      gia: '150.000đ',
-      trangthai: 'Đã đặt'
-    },
-    {
-      id: 'HCMBT3',
-      ten: 'Khang Dinh',
-      sodienthoai: '0976975548',
-      diemdi: 'TP.Hồ Chí Minh',
-      diemden: 'Bến Tre',
-      ngay: '31/12/2022',
-      gio: '13h30',
-      gia: '150.000đ',
-      trangthai: 'Đã nhận'
-    },
-    {
-      id: 'HCMBT4',
-      ten: 'Khang Dinh',
-      sodienthoai: '0976975548',
-      diemdi: 'TP.Hồ Chí Minh',
-      diemden: 'Bến Tre',
-      ngay: '31/12/2022',
-      gio: '13h30',
-      gia: '150.000đ',
-      trangthai: 'Đã hủy'
-    },
-    {
-      id: 'HCMBT5',
-      ten: 'Dinh Nguyen Duy Khang',
-      sodienthoai: '0976975548',
-      diemdi: 'TP.Hồ Chí Minh',
-      diemden: 'Bến Tre',
-      ngay: '31/12/2022',
-      gio: '13h30',
-      gia: '150.000đ',
-      trangthai: 'Đang xử lí'
-    },
-    {
-      id: 'HCMBT6',
-      ten: 'Khang Dinh',
-      sodienthoai: '0976975548',
-      diemdi: 'TP.Hồ Chí Minh',
-      diemden: 'Bến Tre',
-      ngay: '31/12/2022',
-      gio: '13h30',
-      gia: '150.000đ',
-      trangthai: 'Đã đặt'
-    },
-    {
-      id: 'HCMBT7',
-      ten: 'Khang Dinh',
-      sodienthoai: '0976975548',
-      diemdi: 'TP.Hồ Chí Minh',
-      diemden: 'Bến Tre',
-      ngay: '31/12/2022',
-      gio: '13h30',
-      gia: '150.000đ',
-      trangthai: 'Đã nhận'
-    },
-    {
-      id: 'HCMBT8',
-      ten: 'Khang Dinh',
-      sodienthoai: '0976975548',
-      diemdi: 'TP.Hồ Chí Minh',
-      diemden: 'Bến Tre',
-      ngay: '31/12/2022',
-      gio: '13h30',
-      gia: '150.000đ',
-      trangthai: 'Đã hủy'
-    },
-    {
-      id: 'HCMBT9',
-      ten: 'Dinh Nguyen Duy Khang',
-      sodienthoai: '0976975548',
-      diemdi: 'TP.Hồ Chí Minh',
-      diemden: 'Bến Tre',
-      ngay: '31/12/2022',
-      gio: '13h30',
-      gia: '150.000đ',
-      trangthai: 'Đang xử lí'
-    },
-    {
-      id: 'HCMBT10',
-      ten: 'Khang Dinh',
-      sodienthoai: '0976975548',
-      diemdi: 'TP.Hồ Chí Minh',
-      diemden: 'Bến Tre',
-      ngay: '31/12/2022',
-      gio: '13h30',
-      gia: '150.000đ',
-      trangthai: 'Đã đặt'
-    },
-    {
-      id: 'HCMBT11',
-      ten: 'Khang Dinh',
-      sodienthoai: '0976975548',
-      diemdi: 'TP.Hồ Chí Minh',
-      diemden: 'Bến Tre',
-      ngay: '31/12/2022',
-      gio: '13h30',
-      gia: '150.000đ',
-      trangthai: 'Đã nhận'
-    },
-    {
-      id: 'HCMBT12',
-      ten: 'Khang Dinh',
-      sodienthoai: '0976975548',
-      diemdi: 'TP.Hồ Chí Minh',
-      diemden: 'Bến Tre',
-      ngay: '31/12/2022',
-      gio: '13h30',
-      gia: '150.000đ',
-      trangthai: 'Đã hủy'
-    },
-    {
-      id: 'HCMBT13',
-      ten: 'Dinh Nguyen Duy Khang',
-      sodienthoai: '0976975548',
-      diemdi: 'TP.Hồ Chí Minh',
-      diemden: 'Bến Tre',
-      ngay: '31/12/2022',
-      gio: '13h30',
-      gia: '150.000đ',
-      trangthai: 'Đang xử lí'
-    },
-    {
-      id: 'HCMBT14',
-      ten: 'Khang Dinh',
-      sodienthoai: '0976975548',
-      diemdi: 'TP.Hồ Chí Minh',
-      diemden: 'Bến Tre',
-      ngay: '31/12/2022',
-      gio: '13h30',
-      gia: '150.000đ',
-      trangthai: 'Đã đặt'
-    },
-    {
-      id: 'HCMBT15',
-      ten: 'Khang Dinh',
-      sodienthoai: '0976975548',
-      diemdi: 'TP.Hồ Chí Minh',
-      diemden: 'Bến Tre',
-      ngay: '31/12/2022',
-      gio: '3h30',
-      gia: '150.000đ',
-      trangthai: 'Đã nhận'
-    },
-    {
-      id: 'HCMBT16',
-      ten: 'Khang Dinh',
-      sodienthoai: '0976975548',
-      diemdi: 'TP.Hồ Chí Minh',
-      diemden: 'Bến Tre',
-      ngay: '31/12/2022',
-      gio: '15h30',
-      gia: '150.000đ',
-      trangthai: 'Đã hủy'
-    },
-  ]
+  const [ticketHistory, setTicketHistory] = useState([])
+
+  useEffect(() => {
+    axios.get(process.env.REACT_APP_API_HOST + '/admin/ticket-history/ticketHistory').then((res) => {
+      // console.log(res.data.data.ticketHistory)
+      setTicketHistory(res.data.data.ticketHistory)
+    }).catch(error => {
+      console.log(error)
+    })
+  }, [])
 
   const socket = io(process.env.REACT_APP_ipAddress)
 
   useEffect(() => {
     socket.on("book-ticket", (data) => {
-      console.log(data)
+      setTicketHistory(prev => [...prev, data])
     });
   }, [])
 
@@ -202,8 +35,12 @@ const ManageTicketOrder = () => {
   const navigate = useNavigate()
 
   const showDetail = (id) => {
-    setDetail(true)
-    setCurrentData(ticketHistory.filter(el => el.id === id)[0])
+    axios.get(process.env.REACT_APP_API_HOST + '/admin/ticket-history/ticketHistory').then((res) => {
+      setCurrentData(res.data.data.ticketHistory.filter(el => el.id === id)[0])
+      setDetail(true)
+    }).catch(error => {
+      console.log(error)
+    })
   }
 
   const editData = () => {
@@ -229,7 +66,7 @@ const ManageTicketOrder = () => {
         </div>
         <div className={styles.listItem}>
           {ticketHistory.map((value, index) => (
-            < ManageTicketOrderItem key={index} value={value} showDetail={showDetail} />
+            < ManageTicketOrderItem key={index} index={index + 1} value={value} showDetail={showDetail} />
           ))}
         </div>
       </div>
@@ -240,19 +77,22 @@ const ManageTicketOrder = () => {
           <FontAwesomeIcon onClick={() => setDetail(false)} className={styles.closeIcon} icon={faXmark} style={{ color: '#083F73', fontSize: '3.6rem' }} />
           <button onClick={editData} className={styles.editBtn}>Sửa</button>
           <div className={styles.left}>
-            <p>Tên: {currentData.ten}</p>
-            <p>Thời gian đặt vé: 13h20 15/02/2023</p>
-            <p>Thời gian khởi hành: {currentData.gio} {currentData.ngay}</p>
-            <p>Điểm khởi hành: {currentData.diemdi}</p>
-            <p>Điểm nhận vé: abcdhdhd</p>
-            <p style={{ color: "#FF0000" }}>Tổng tiền: 134.000đ</p>
+            <p>Tên: {currentData.guestInfo.name}</p>
+            <p>Thời gian đặt vé: {currentData.time} {new Date(currentData.date).toLocaleDateString('en-GB').toString()}</p>
+            <p>Thời gian khởi hành: {currentData.time_start} {new Date(currentData.date_start).toLocaleDateString('en-GB').toString()}</p>
+            <p>Điểm khởi hành: {currentData.departure_city}</p>
+            <p>Điểm nhận vé: {currentData.depot_address}</p>
+            <p style={{ color: "#FF0000" }}>Tổng tiền: {currentData.total_price}</p>
           </div>
           <div className={styles.right}>
-            <p>Số điện thoại: {currentData.sodienthoai}</p>
-            <p>Số lượng ghế: 3</p>
-            <p>Số ghế: B3, B4, B5</p>
-            <p>Điểm đến: {currentData.diemden}</p>
-            <p>Trạng thái: {currentData.trangthai}</p>
+            <p>Số điện thoại: {currentData.guestInfo.phoneNumber}</p>
+            <p>Số lượng ghế: {currentData.number_of_seats}</p>
+            <p className={styles['chosen-seat']}>Số ghế: &nbsp;
+              {currentData.chosen_seats.map((value, index) => (
+                <p>{value} &nbsp;</p>
+              ))}</p>
+            <p>Điểm đến: {currentData.arrival_city}</p>
+            <p>Trạng thái: {currentData.stage}</p>
           </div>
         </div>
       </div>}

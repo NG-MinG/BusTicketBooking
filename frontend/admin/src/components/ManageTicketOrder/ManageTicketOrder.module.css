@@ -134,6 +134,11 @@
   /* position: relative; */
 }
 
+.chosen-seat{
+  display: flex;
+
+}
+
 .closeIcon{
   position: absolute;
   top: 2%;
