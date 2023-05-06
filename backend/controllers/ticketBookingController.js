@@ -4,8 +4,13 @@ import Station from "../models/stationModel.js";
 import catchAsync from "../utils/catchAsync.js";
 import { io } from "../server.js"
 
+<<<<<<< HEAD
 const getTicket = catchAsync(async (req, res, next) => {
     const departure_city = req.query.departure_city;
+=======
+const getTickets = catchAsync(async(req,res,next) => {
+    const departure_city  = req.query.departure_city;
+>>>>>>> d0ab73cd7032fe3943273d2ade3c72e2e14c774f
     const arrival_city = req.query.arrival_city;
     const date = req.query.date;
     const tickets = await Ticket.find({ departure_city: departure_city, arrival_city: arrival_city, truncatedDate: date });
@@ -29,4 +34,8 @@ const bookTicket = catchAsync(async (req, res, next) => {
 })
 
 
+<<<<<<< HEAD
 export default { getTicket, bookTicket };
+=======
+export default {getTickets, bookTicket};
+>>>>>>> d0ab73cd7032fe3943273d2ade3c72e2e14c774f
