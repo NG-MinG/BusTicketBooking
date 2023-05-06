@@ -3,6 +3,7 @@ import Ticket from "../models/ticketModel.js";
 import Station from "../models/stationModel.js";
 import catchAsync from "../utils/catchAsync.js";
 import { io } from "../server.js"
+import TicketHistory from "../models/ticketHistoryModel.js";
 
 const getTickets = catchAsync(async (req, res, next) => {
     const departure_city = req.query.departure_city;
@@ -21,8 +22,14 @@ const bookTicket = catchAsync(async (req, res, next) => {
     const ticket = await Ticket.findById(req.body.ticket_id);
     ticket.booked_seats = [...ticket.booked_seats, ...req.body.chosen_seats];
     await ticket.save();
-    console.log(req.body)
-    io.emit("book-ticket", req.body);
+    // console.log(req.body)
+    const newBooking = await TicketHistory.create({
+        ...req.body,
+        "time_start": ticket.departure_time,
+        "date_start": ticket.date,
+        "stage": "Đang xử lí"
+    })
+    io.emit("book-ticket", newBooking);
     res.status(200).json({
         status: "success",
     })

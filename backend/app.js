@@ -11,6 +11,7 @@ import adminRouter from "./routes/adminRoutes.js"
 import authRouter from './routes/authRoutes.js';
 import ticketBookingRouter from "./routes/ticketBookingRoutes.js";
 import ticketManagingRouter from "./routes/ticketManagingRoutes.js";
+import ticketHistoryRouter from "./routes/ticketHistoryRoutes.js"
 import globalErrorhandler from "./controllers/ErrorController.js"
 import bodyParser from 'body-parser'
 
@@ -43,6 +44,7 @@ app.use('/bus/api/v1/tickets', ticketBookingRouter)
 
 app.use('/bus/api/v1/admin/ticket-managing', ticketManagingRouter);
 app.use('/bus/api/v1/admin', adminRouter);
+app.use('/bus/api/v1/admin/ticket-history', ticketHistoryRouter);
 
 app.use(globalErrorhandler);
 
