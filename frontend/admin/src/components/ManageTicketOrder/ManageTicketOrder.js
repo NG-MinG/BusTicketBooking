@@ -2,8 +2,9 @@ import styles from "./ManageTicketOrder.module.css";
 import { faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ManageTicketOrderItem from "./ManageTicketOrderItem/ManageTicketOrderItem";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom'
+import io from 'socket.io-client'
 
 
 
@@ -187,6 +188,14 @@ const ManageTicketOrder = () => {
       trangthai: 'Đã hủy'
     },
   ]
+
+  const socket = io(process.env.REACT_APP_ipAddress)
+
+  useEffect(() => {
+    socket.on("book-ticket", (data) => {
+      console.log(data)
+    });
+  }, [])
 
   const [detail, setDetail] = useState(false)
   const [currentData, setCurrentData] = useState()
