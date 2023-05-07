@@ -6,11 +6,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function MyTicketItem(props) {
   const date = new Date()
-  var dateParts = props.value.ngaydi.split("/");
+  const result1 = new Date(props.value.date_start).toLocaleDateString('en-GB');
+  var dateParts = result1.split("/");
 
   let dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
-  console.log(date)
-  console.log(dateObject)
 
   const [expire, setExpire] = useState(dateObject.getTime() < date.getTime());
 
@@ -18,46 +17,46 @@ export default function MyTicketItem(props) {
     <div className={styles.MyTicketItem}>
       <div className={styles.top}>
         <div className={styles.route}>
-          <p>{props.value.diemdi}</p>
+          <p>{props.value.departure_city}</p>
           <FontAwesomeIcon icon={faArrowRightLong} style={{ color: '#ffffff', fontSize: '2.6rem' }} />
-          <p>{props.value.diemden}</p>
+          <p>{props.value.arrival_city}</p>
         </div>
         <div className={styles.date}>
           <FontAwesomeIcon icon={faCalendarCheck} style={{ color: '#ffffff', fontSize: '2.6rem' }} />
-          <p>{props.value.ngaydi}</p>
+          <p>{result1}</p>
         </div>
         <div className={styles.hour}>
           <FontAwesomeIcon icon={faClock} style={{ color: '#ffffff', fontSize: '2.6rem' }} />
-          <p>{props.value.giodi}</p>
+          <p>{props.value.time_start}</p>
         </div>
       </div>
       <div className={styles.content}>
         <div className={styles.left}>
           <div className={styles.name}>
             <p>Tên hành khách:</p>
-            <p>{props.value.tenhanhkhach}</p>
+            <p>{props.value.guestInfo.name}</p>
           </div>
           <div className={styles.seats}>
             <p>Số lượng ghế:</p>
-            <p>{props.value.soluongghe}</p>
+            <p>{props.value.number_of_seats}</p>
           </div>
           <div className={styles.seatName}>
             <p>Số ghế:</p>
-            <p>{props.value.soghe}</p>
+            <p>{props.value.chosen_seats}</p>
           </div>
           <div className={styles.ticketPickUp}>
             <p>Nơi nhận vé:</p>
-            <p>{props.value.noinhanve}</p>
+            <p>{props.value.depot_address}</p>
           </div>
         </div>
         <div className={styles.right}>
           <div className={styles.phoneNumber}>
             <p>Số điện thoại:</p>
-            <p>{props.value.sodienthoai}</p>
+            <p>{props.value.guestInfo.phoneNumber}</p>
           </div>
           <div className={styles.expense}>
             <p>Giá:</p>
-            <p>{props.value.gia}</p>
+            <p>{props.value.total_price}</p>
           </div>
         </div>
         <div className={styles.cancelButton}>
