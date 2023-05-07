@@ -10,11 +10,9 @@ const TableView = () => {
     // const [tickets, setTickets] = useState([]);
     const tickets = useSelector((state) => state.ticketManaging.tickets);
     const [currentTickets, setCurrentTickets] = useState([]);
-    console.log("tickets in table view: ", tickets);
     useEffect(() => {
         setCurrentTickets([...tickets])
     }, [tickets])
-    console.log("currentTickets in table view: ", currentTickets);
     return (
         <>
         {currentTickets.length > 0 && <div className={styles["table-section"]}>
