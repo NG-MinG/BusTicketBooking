@@ -7,4 +7,4 @@ router.get('/get-tickets', ticketBookingController.getTickets);
 router.post('/book-ticket', authController.protect, ticketBookingController.bookTicket);
 
 
-export default router;
+export default router;  

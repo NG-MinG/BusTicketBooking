@@ -13,7 +13,10 @@ const ticketSchema = new mongoose.Schema({
     departure_depot: String,
     arrival_depot: String,
     bus_type: String,
-    reserved_seats: Number,
+    reserved_seats: {
+        type: Number,
+        default: 0
+    },
     total_seats: Number,
     booked_seats: [String],
 }, { toJSON: { virtuals: true } })
