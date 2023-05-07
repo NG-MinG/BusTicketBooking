@@ -10,10 +10,11 @@ export default function ManageTicketOrderItem(props) {
   const editData = () => {
     navigate("edit/" + props.value.id, { state: props.value })
   }
-  const result1 = new Date(props.value.date_start).toLocaleDateString('en-GB');
+  const [stage, setStage] = useState(props.value.stage)
+  console.log(props.value.date)
+  const result1 = new Date(props.value.date).toLocaleDateString('en-GB');
   // let dateObject = new Date();
 
-  const [stage, setStage] = useState(props.value.stage)
 
   const handleStage = () => {
     if (stage === "Đang xử lí") {
@@ -40,7 +41,7 @@ export default function ManageTicketOrderItem(props) {
       <p>{props.value.guestInfo.name}</p>
       <p>{props.value.guestInfo.phoneNumber}</p>
       <p>{props.value.departure_city} - {props.value.arrival_city}</p>
-      <p>{props.value.time_start} {result1.toString()}</p>
+      <p>{props.value.time} {result1.toString()}</p>
       <button onClick={handleStage} className={`${stage === 'Đã đặt' ? styles.green : ""} ${stage === 'Đã huỷ' ? styles.red : ""}`}>{stage}</button>
       <FontAwesomeIcon onClick={() => props.showDetail(props.value.id)} className={styles.icon} icon={faEye} style={{ color: '#1F84BD' }} />
       <FontAwesomeIcon onClick={editData} className={styles.icon} icon={faPenToSquare} style={{ color: '#1F84BD' }} />

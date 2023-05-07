@@ -47,13 +47,32 @@ const ManageTicketOrder = () => {
     navigate("edit/" + currentData.id, { state: currentData })
   }
 
+  const [search, setSearch] = useState()
+  const handleChangeSearch = (e) => {
+    setSearch(e.target.value)
+  }
+
+  const handleSearch = () => {
+    axios.patch(process.env.REACT_APP_API_HOST + '/admin/ticket-history/searchTicketHistory', { search: search }).then((res) => {
+      setTicketHistory(res.data.data.ticket_history_filter)
+    }).catch(error => {
+      console.log(error)
+    })
+  }
+
+  const handleKeyUp = (e) => {
+    if (e.key === "Enter") {
+      handleSearch()
+    }
+  };
+
 
   return <div className={styles.ManageTicketOrder}>
     <div className={styles['main-content']}>
       <p className={styles.title}>vé xe đã đặt</p>
       <div className={styles.search}>
-        <input placeholder="Tìm kiếm..." />
-        <FontAwesomeIcon className={styles.icon} icon={faMagnifyingGlass} style={{ color: '#737B83', fontSize: '2.1rem' }} />
+        <input onKeyDown={(e) => handleKeyUp(e)} onChange={handleChangeSearch} placeholder="Tìm kiếm..." />
+        <FontAwesomeIcon onClick={handleSearch} className={styles.icon} icon={faMagnifyingGlass} style={{ color: '#737B83', fontSize: '2.1rem' }} />
       </div>
       <div className={styles.table}>
         <div className={styles.header}>
@@ -61,12 +80,12 @@ const ManageTicketOrder = () => {
           <p>Tên</p>
           <p>Số điện thoại</p>
           <p>Tuyến</p>
-          <p>Thời gian</p>
+          <p>Thời gian đặt vé</p>
           <p>Trạng thái</p>
         </div>
         <div className={styles.listItem}>
           {ticketHistory.map((value, index) => (
-            < ManageTicketOrderItem key={index} index={index + 1} value={value} showDetail={showDetail} />
+            <ManageTicketOrderItem key={index} index={index + 1} value={value} showDetail={showDetail} />
           ))}
         </div>
       </div>
