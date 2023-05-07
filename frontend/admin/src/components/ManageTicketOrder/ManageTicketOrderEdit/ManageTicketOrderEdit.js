@@ -10,7 +10,8 @@ export default function ManageTicketOrderEdit() {
   const navigate = useNavigate();
   const location = useLocation();
   // const { data } = location.state;
-  // console.log(data)
+  console.log(location.state)
+  const [information, setInformation] = useState(location.state)
 
   const [choosingSeats, setChoosingSeats] = useState([]);
   const [price, setPrice] = useState(0);
@@ -31,25 +32,40 @@ export default function ManageTicketOrderEdit() {
       <FontAwesomeIcon onClick={() => navigate("/admin/manage-ticket/ticket-order")} className={styles.icon} icon={faArrowLeft} style={{ alignSelf: "flex-start", cursor: "pointer", fontSize: "3.2rem", color: '#083F73' }} />
       <div className={styles.main}>
         <div className={styles.information}>
-          <div className={styles.title}>
+          <div className={styles['information-item']}>
             <p>Họ và tên</p>
-            <p>Số điện thoại</p>
-            <p>Thời gian khởi hành</p>
-            <p>Điểm nhận vé</p>
-            <p>Điểm khởi hành</p>
-            <p>Điểm đến</p>
-            <p>Số lượng ghế</p>
-            <p>Số ghế</p>
+            <input value={information.guestInfo.name} />
           </div>
-          <div className={styles.content}>
-            <input value={"Đinh Nguyễn Duy Khang"} />
-            <input value={"0976975548"} />
-            <input value={"13h 12/01/1992"} />
-            <input value={"1647 Phạm Thế Hiển"} />
-            <input value={"TP. Hồ Chí Minh"} />
-            <input value={"Trà Vinh"} />
-            <p>3</p>
-            <p>B12 B15 B16</p>
+          <div className={styles['information-item']}>
+            <p>Số điện thoại</p>
+            <input value={information.guestInfo.phoneNumber} />
+          </div>
+          <div className={styles['information-item']}>
+            <p>Thời gian khởi hành</p>
+            <input value={information.time_start + " " + new Date(information.date).toLocaleDateString('en-GB').toString()} />
+          </div>
+          <div className={styles['information-item']}>
+            <p>Điểm nhận vé</p>
+            <input value={information.depot_address} />
+          </div>
+          <div className={styles['information-item']}>
+            <p>Điểm khởi hành</p>
+            <input value={information.departure_city} />
+          </div>
+          <div className={styles['information-item']}>
+            <p>Điểm đến</p>
+            <input value={information.arrival_city} />
+          </div>
+          <div className={styles['information-item']}>
+            <p>Số lượng ghế</p>
+            <p>{information.number_of_seats}</p>
+          </div>
+          <div className={styles['information-item']}>
+            <p>Số ghế</p>
+            {information.chosen_seats.map((value, index) => (
+              <p>{value} &nbsp;</p>
+            ))
+            }
           </div>
         </div>
         <div className={styles["layout-seat"]}>
