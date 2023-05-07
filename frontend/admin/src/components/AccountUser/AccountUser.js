@@ -11,8 +11,7 @@ const AccountUser = () => {
   const [accountData, setAccountData] = useState([])
 
   useEffect(() => {
-    console.log(process.env.REACT_APP_ipAddress + '/admin/getaccount')
-    axios.get(process.env.REACT_APP_ipAddress + '/admin/getaccount')
+    axios.get(process.env.REACT_APP_API_HOST + '/admin/getaccount')
     .then((res) => {
       setAccountData(res.data.data.account)
     }).catch(error => {
@@ -21,7 +20,7 @@ const AccountUser = () => {
   }, [])
 
   const onBan = (id) =>{
-    axios.post(process.env.REACT_APP_ipAddress + `/admin/banaccount/${id}`)
+    axios.post(process.env.REACT_APP_API_HOST + `/admin/banaccount/${id}`)
     .then((res) => {
       setAccountData(res.data.data.account)
     }).catch(error => {
@@ -30,7 +29,7 @@ const AccountUser = () => {
   }
 
   const onDelete = (id) =>{
-    axios.post(process.env.REACT_APP_ipAddress + `/admin/deleteaccount/${id}`)
+    axios.post(process.env.REACT_APP_API_HOST + `/admin/deleteaccount/${id}`)
     .then((res) => {
       setAccountData(res.data.data.account)
     }).catch(error => {
