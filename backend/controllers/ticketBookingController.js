@@ -8,13 +8,9 @@ const getTickets = catchAsync(async (req, res, next) => {
     const departure_city = req.query.departure_city;
     const arrival_city = req.query.arrival_city;
     const date = req.query.date;
-<<<<<<< HEAD
     const tickets = await Ticket.find({ departure_city: departure_city, arrival_city: arrival_city, truncatedDate: date});
+    console.log("tickets: ", tickets);
     const starting_depots = await Station.findOne({location: departure_city});
-=======
-    const tickets = await Ticket.find({ departure_city: departure_city, arrival_city: arrival_city, truncatedDate: date });
-    const starting_depots = await Station.findOne({ location: arrival_city });
->>>>>>> 537f6e53e9b86fbb139340cbd990d8669dabaee6
     res.status(200).json({
         status: "success",
         tickets: tickets,
