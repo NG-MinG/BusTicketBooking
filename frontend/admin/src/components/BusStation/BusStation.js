@@ -41,7 +41,7 @@ const BusStation = () => {
 
   useEffect(() => {
     axios
-      .get(process.env.REACT_APP_ipAddress + "/admin/getstation")
+      .get(process.env.REACT_APP_API_HOST + "/admin/getstation")
       .then((res) => {
         setStationData(res.data.data.station);
         setLocationData(res.data.data.location);
@@ -56,7 +56,7 @@ const BusStation = () => {
     console.log(bodyData);
     axios
       .post(
-        process.env.REACT_APP_ipAddress + `/admin/editstation/${station._id}`,
+        process.env.REACT_APP_API_HOST + `/admin/editstation/${station._id}`,
         bodyData
       )
       .then((res) => {
@@ -71,7 +71,7 @@ const BusStation = () => {
     const bodyData = { ...station };
     console.log(bodyData);
     axios
-      .post(process.env.REACT_APP_ipAddress + `/admin/createstation`, bodyData)
+      .post(process.env.REACT_APP_API_HOST + `/admin/createstation`, bodyData)
       .then((res) => {
         setStationData(res.data.data.station);
       })
@@ -83,7 +83,7 @@ const BusStation = () => {
   const onDelete = (data) => {
     axios
       .post(
-        process.env.REACT_APP_ipAddress +
+        process.env.REACT_APP_API_HOST +
           `/admin/deletestation?id=${data._id}&name=${data.name}`
       )
       .then((res) => {

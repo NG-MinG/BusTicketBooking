@@ -40,7 +40,7 @@ const BusRoute = () => {
 
   useEffect(() => {
     axios
-      .get(process.env.REACT_APP_ipAddress + "/admin/gettrip")
+      .get(process.env.REACT_APP_API_HOST + "/admin/gettrip")
       .then((res) => {
         setTripData(res.data.data.trip);
         setLocationData(res.data.data.location);
@@ -54,7 +54,7 @@ const BusRoute = () => {
     const bodyData = { ...trip };
     axios
       .post(
-        process.env.REACT_APP_ipAddress + `/admin/edittrip/${trip._id}`,
+        process.env.REACT_APP_API_HOST + `/admin/edittrip/${trip._id}`,
         bodyData
       )
       .then((res) => {
@@ -68,7 +68,7 @@ const BusRoute = () => {
   const onCreate = (e) => {
     const bodyData = { ...trip };
     axios
-      .post(process.env.REACT_APP_ipAddress + `/admin/createtrip`, bodyData)
+      .post(process.env.REACT_APP_API_HOST + `/admin/createtrip`, bodyData)
       .then((res) => {
         setTripData(res.data.data.trip);
       })
@@ -79,7 +79,7 @@ const BusRoute = () => {
 
   const onDelete = (data) => {
     axios
-      .post(process.env.REACT_APP_ipAddress + `/admin/deletetrip/${data._id}`)
+      .post(process.env.REACT_APP_API_HOST + `/admin/deletetrip/${data._id}`)
       .then((res) => {
         setTripData(res.data.data.trip);
       })
