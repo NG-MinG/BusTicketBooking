@@ -1,6 +1,7 @@
 import User from "../models/userModel.js";
 import catchAsync from "../utils/catchAsync.js"
 import AppError from "../utils/appError.js";
+import TicketHistory from "../models/ticketHistoryModel.js";
 
 
 const userProfile = catchAsync(async (req, res) => {
@@ -88,4 +89,17 @@ const changePassword = catchAsync(async (req, res, next) => {
   res.status(200).json({ status: 'success' });
 })
 
-export { userProfile, updateProfile, changePassword }
+const getMyTicket = catchAsync(async (req, res) => {
+  const user = await User.findById(req.user.id)
+  const myTicket = []
+  for (let i of user.myTicket) {
+    myTicket.push(await TicketHistory.findById(i))
+  }
+  console.log(myTicket)
+  res.status(200).json({
+    status: 'success',
+    data: myTicket
+  })
+})
+
+export { userProfile, updateProfile, changePassword, getMyTicket }

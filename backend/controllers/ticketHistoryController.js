@@ -11,19 +11,23 @@ const getAll = catchAsync(async (req, res) => {
 })
 
 const getBySearch = catchAsync(async (req, res) => {
-  // const search = req.body.search.toLowerCase()
-  // const schedule_filter = []
-  // const schedules = await Schedule.find()
-  // for (let i of schedules) {
-  //   if (i.departure_city.toLowerCase().includes(search) || i.arrival_city.toLowerCase().includes(search)) {
-  //     schedule_filter.push(i)
-  //   }
-  // }
-  // res.status(200).json({
-  //   status: 'success',
-  //   data: { schedule_filter }
-  // })
+  const search = req.body.search.toLowerCase()
+  const ticket_history_filter = []
+  const ticket_history = await TicketHistory.find()
+  for (let i of ticket_history) {
+    const result1 = new Date(i.date).toLocaleDateString('en-GB');
+    if (i.guestInfo.name.toLowerCase().includes(search) || i.guestInfo.phoneNumber.includes(search) || i.departure_city.toLowerCase().includes(search) || i.arrival_city.toLowerCase().includes(search)) {
+      ticket_history_filter.push(i)
+    }
+    else if (i.time.includes(search) || result1.toString().includes(search)) ticket_history_filter.push(i)
+    else if (i.stage.toLowerCase().includes(search)) ticket_history_filter.push(i)
+  }
+  res.status(200).json({
+    status: 'success',
+    data: { ticket_history_filter }
+  })
 })
+
 
 const updateStage = catchAsync(async (req, res) => {
   const ticketHistory = await TicketHistory.findById(req.body.id);
