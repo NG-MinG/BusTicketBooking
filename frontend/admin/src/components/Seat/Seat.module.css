@@ -1,5 +1,7 @@
 div.seat {
     position: relative;
+    margin-bottom: 1rem;
+    cursor: pointer;
 }
 
 div.seat > .seat-icon {
@@ -13,4 +15,5 @@ div.seat > span.seat-id {
     transform: translate(-50%,-70%);
     font-family: 'Open Sans';
     font-size: 1.2rem;
+    cursor: pointer;
 }
