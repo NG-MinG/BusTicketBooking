@@ -1,5 +1,6 @@
 import catchAsync from "../utils/catchAsync.js"
 import TicketHistory from "../models/ticketHistoryModel.js"
+import Ticket from "../models/ticketModel.js";
 
 const getAll = catchAsync(async (req, res) => {
   const ticketHistory = await TicketHistory.find()
@@ -33,6 +34,52 @@ const updateStage = catchAsync(async (req, res) => {
   const ticketHistory = await TicketHistory.findById(req.body.id);
   ticketHistory.stage = req.body.stage;
   ticketHistory.save()
+
+  if (req.body.stage === "Đã huỷ") {
+    const ticket = await Ticket.findById(ticketHistory.ticket_id);
+    ticket.booked_seats = ticket.booked_seats.filter(val => !ticketHistory.chosen_seats.includes(val))
+    ticket.save()
+  }
+  res.status(200).json({
+    status: 'success',
+  })
 })
 
-export { getAll, getBySearch, updateStage }
+const deleteItem = catchAsync(async (req, res) => {
+  const item = await TicketHistory.findById(req.body.id)
+  await TicketHistory.deleteOne({ _id: req.body.id })
+
+  const ticket = await Ticket.findById(item.ticket_id);
+  ticket.booked_seats = ticket.booked_seats.filter(val => !item.chosen_seats.includes(val))
+  ticket.save()
+  res.status(200).json({
+    status: 'success',
+    data: item
+  })
+  // const ticketHistory = await TicketHistory
+})
+
+const getTicketSeat = catchAsync(async (req, res) => {
+  const ticket = await Ticket.findById(req.body.id);
+  res.status(200).json({
+    status: 'success',
+    data: ticket
+  })
+})
+
+const update = catchAsync(async (req, res) => {
+  const ticket_history = await TicketHistory.findById(req.body.id)
+  ticket_history.chosen_seats = req.body.chosen_seats
+  ticket_history.number_of_seats = req.body.chosen_seats.length
+  ticket_history.guestInfo = req.body.guestInfo
+  ticket_history.save()
+
+  const ticket = await Ticket.findById(ticket_history.ticket_id);
+  ticket.booked_seats = ticket.booked_seats.filter(val => !req.body.chosen_seats.includes(val))
+  ticket.save()
+  res.status(200).json({
+    status: 'success',
+  })
+})
+
+export { getAll, getBySearch, updateStage, deleteItem, getTicketSeat, update }

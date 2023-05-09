@@ -92,14 +92,19 @@ const changePassword = catchAsync(async (req, res, next) => {
 const getMyTicket = catchAsync(async (req, res) => {
   const user = await User.findById(req.user.id)
   const myTicket = []
+
   for (let i of user.myTicket) {
-    myTicket.push(await TicketHistory.findById(i))
+    const ticket = await TicketHistory.findById(i)
+    if (ticket && ticket.stage === "Đã đặt") myTicket.push(ticket)
+    else user.myTicket.splice(user.myTicket.indexOf(i), 1)
   }
-  console.log(myTicket)
+  user.save()
+
   res.status(200).json({
     status: 'success',
     data: myTicket
   })
 })
+
 
 export { userProfile, updateProfile, changePassword, getMyTicket }
