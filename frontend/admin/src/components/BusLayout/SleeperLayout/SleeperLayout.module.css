@@ -14,8 +14,8 @@
 .layout-seat-title > .below, .layout-seat-title > .above {
     width: 28rem;
     text-align: center;
-    padding: 2rem 0rem;
-    font-size: 1.8rem;
+    padding: 1.2rem 0rem;
+    font-size: 1.6rem;
     font-weight: 600;
     color: #417DD8;
     /* background-color: yellow; */
@@ -24,6 +24,7 @@
 
 .seat-tables {
     margin: 0 auto;
+    margin-top: 3rem;
     border-bottom-right-radius: 6px;
     border-bottom-left-radius: 6px;
     display: flex;
@@ -40,7 +41,6 @@
 .seat-table {
     padding: 0;
     width: 100%;
-    padding: 3rem;
 }
 
 td.empty-seat-space {

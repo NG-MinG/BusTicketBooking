@@ -26,6 +26,7 @@ const ManageTicketOrder = () => {
 
   useEffect(() => {
     socket.on("book-ticket", (data) => {
+      console.log(data)
       setTicketHistory(prev => [...prev, data])
     });
   }, [])
@@ -47,31 +48,39 @@ const ManageTicketOrder = () => {
     navigate("edit/" + currentData.id, { state: currentData })
   }
 
-  const [search, setSearch] = useState()
-  const handleChangeSearch = (e) => {
-    setSearch(e.target.value)
-  }
+  // const [search, setSearch] = useState()
+  // const handleChangeSearch = (e) => {
+  //   setSearch(e.target.value)
+  // }
 
-  const handleSearch = () => {
-    axios.patch(process.env.REACT_APP_API_HOST + '/admin/ticket-history/searchTicketHistory', { search: search }).then((res) => {
+  const handleSearch = (e) => {
+    axios.patch(process.env.REACT_APP_API_HOST + '/admin/ticket-history/searchTicketHistory', { search: e.target.value }).then((res) => {
       setTicketHistory(res.data.data.ticket_history_filter)
     }).catch(error => {
       console.log(error)
     })
   }
 
-  const handleKeyUp = (e) => {
-    if (e.key === "Enter") {
-      handleSearch()
-    }
-  };
+  // const handleKeyUp = (e) => {
+  //   if (e.key === "Enter") {
+  //     handleSearch()
+  //   }
+  // };
+
+  const deleteItem = (id) => {
+    axios.patch(process.env.REACT_APP_API_HOST + '/admin/ticket-history/deleteItem', { id: id }).then((res) => {
+      setTicketHistory(prev => prev.filter(val => val.id !== id))
+    }).catch(error => {
+      console.log(error)
+    })
+  }
 
 
   return <div className={styles.ManageTicketOrder}>
     <div className={styles['main-content']}>
       <p className={styles.title}>vé xe đã đặt</p>
       <div className={styles.search}>
-        <input onKeyDown={(e) => handleKeyUp(e)} onChange={handleChangeSearch} placeholder="Tìm kiếm..." />
+        <input onChange={handleSearch} placeholder="Tìm kiếm..." />
         <FontAwesomeIcon onClick={handleSearch} className={styles.icon} icon={faMagnifyingGlass} style={{ color: '#737B83', fontSize: '2.1rem' }} />
       </div>
       <div className={styles.table}>
@@ -85,7 +94,7 @@ const ManageTicketOrder = () => {
         </div>
         <div className={styles.listItem}>
           {ticketHistory.map((value, index) => (
-            <ManageTicketOrderItem key={index} index={index + 1} value={value} showDetail={showDetail} />
+            <ManageTicketOrderItem key={index} index={index + 1} value={value} showDetail={showDetail} deleteItem={deleteItem} />
           ))}
         </div>
       </div>
