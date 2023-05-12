@@ -7,7 +7,7 @@ import CreateButton from "../../components/CreateButton/CreateButton";
 import {ReactComponent as ToIcon} from "../../assets/svg/ManageTicket/right_arrow.svg";
 import {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {setCurrentTicketDetails} from "../../store/reducers/ticketManagingSlice.js";
+import {setCurrentTicketDetails, addNewTicket, updateTicket} from "../../store/reducers/ticketManagingSlice.js";
 import axios from 'axios';
 import ChairLayout from "../../components/BusLayout/ChairLayout/ChairLayout";
 import SleeperLayout from "../../components/BusLayout/SleeperLayout/SleeperLayout";
@@ -23,7 +23,8 @@ const ManageTicketPage = () => {
     
     const tickets = useSelector((state) => state.ticketManaging.tickets); 
     const currentTicketDetails = useSelector((state) => state.ticketManaging.currentTicketDetails);
-    console.log("this currentTicket details: ", currentTicketDetails);
+    console.log("currentTicketDetails: " + currentTicketDetails.departure_city);
+    const updatingTicket = useSelector((state) => state.ticketManaging.updatingTicket);
     // used for crud ticket form
     const [selectedChange, setSelectedChange] = useState({
         departure_city: '',
@@ -39,7 +40,7 @@ const ManageTicketPage = () => {
         price: '',
     })
     // show modal form when creating new ticket
-    const [createTicket, setCreateTicket] = useState(false);
+    const [IsCRUDTicket, setIsCRUDTicket] = useState(false);
     // distinguish between fromHCM and toHCM state
     const [placeChoosing, setPlaceChoosing] = useState({
         fromHCM: true,
@@ -71,7 +72,8 @@ const ManageTicketPage = () => {
     } 
 
     const cancelCRUDTicket = () => {
-        setCreateTicket(false);
+        dispatch(setCurrentTicketDetails({}));
+        setIsCRUDTicket(false);
     }
 
     // handle select changes in CRUD ticket form
@@ -117,7 +119,7 @@ const ManageTicketPage = () => {
                         ...currentTicketDetails,
                         date: isoDateString,
                     }))
-                }
+                } 
             }
             else if (name === "time") {
                 const regex =/^\d{1,2}:\d{2}-\d{1,2}:\d{2}$/;
@@ -137,50 +139,75 @@ const ManageTicketPage = () => {
                     [name]: value,
                 }))
             }
-           
         })
     }
 
 
     const handleCreateTicket = () => {
-        const data = currentTicketDetails;
-        const isEmptyProperty = Object.values(data).some(value => value === '' || value === 0);
-        // if data has any properties which have empty value
+        let data = {...currentTicketDetails};
+        if (data._id === '') delete data._id; // remove the id if it's empty, and let the backend processing do its thing (when creating a new ticket)
+        const isEmptyProperty = Object.values(data).some(value => (value === ''));
+        //if data has any properties which have empty value
         if (isEmptyProperty) { 
-            console.log("current ticket: ", data);
-            alert("Please fill out all the fields in the form.");
+            console.log("this ticket data: ", data);
+            alert("Vui lòng điền đầy đủ thông tin trong form.");
             return;
         }
         // if data is valid
-        axios.post('http://localhost:5000/bus/api/v1/admin/ticket-managing/create-ticket', data).then((res) => {
-            console.log("res");
+        axios.post(`${process.env.REACT_APP_API_HOST}/admin/ticket-managing/create-ticket`, data).then((res) => {
             dispatch(setCurrentTicketDetails({}));
-            alert('You created a new ticket successfully!');
+            console.log("ticketCreated: ", res.data.ticketCreated);
+            dispatch(addNewTicket(res.data.ticketCreated));
+            alert('Vé đã được tạo thành công!');
             navigate("/admin/manage-ticket/ticket");
-            setCreateTicket(false);
+            setIsCRUDTicket(false);
         }).catch((err) => {
             console.error(err);
         })
     }
 
+    const handleUpdateTicket = () => {
+        let data = {...currentTicketDetails};
+        const isEmptyProperty = Object.values(data).some(value => (value === ''));
+        //if data has any properties which have empty value
+        if (isEmptyProperty) { 
+            alert("Vui lòng điền đầy đủ thông tin trong form.");
+            return;
+        }
+        // if the data is valid
+        axios.put(`${process.env.REACT_APP_API_HOST}/admin/ticket-managing/update-ticket/${data._id}`, data).then((res) => {
+            if (res.data.status === "success") {
+                dispatch(updateTicket(res.data.updatedTicket));
+                alert("Cập nhật thành công");
+                navigate("/admin/manage-ticket/ticket");
+                setIsCRUDTicket(false);
+            }
+        }).catch((err) => {
+            console.log(err);
+        }) ;
+    }
+
+
     useEffect(() => {
         async function fetchData() {
-            let res = await axios.get('http://localhost:5000/bus/api/v1/admin/ticket-managing/get-locations');
+            let res = await axios.get(`${process.env.REACT_APP_API_HOST}/admin/ticket-managing/get-locations`);
             setLocations(res.data.locations);
-            res = await axios.get("http://localhost:5000/bus/api/v1/admin/ticket-managing/get-stations");
+            res = await axios.get(`${process.env.REACT_APP_API_HOST}/admin/ticket-managing/get-stations`);
             setStations(res.data.stations);
         }
         fetchData();
     }, [])
 
     
+    console.log("this current TicketDETAILS: ", currentTicketDetails);
+    
    
 
     return  <>
         <div className={styles["wrapper"]}>
         {/* search bar */}
-        <Searching onCreateTicket = {() => {
-            setCreateTicket(true)}
+        <Searching onCRUDTicket = {() => {
+            setIsCRUDTicket(true)}
             }/>
         {/* choose the place */}
         <div className={styles["place-choosing"]}>
@@ -192,40 +219,44 @@ const ManageTicketPage = () => {
             </div>
         </div>
         {/* tickets table */}
-        <TableView/>
+        <TableView onCRUDTicket = {() => {
+            setIsCRUDTicket(true)}
+            }/>
     </div>
-    {createTicket &&  <div className={styles["ticket-managing"]}>
+    {IsCRUDTicket &&  <div className={styles["ticket-managing"]}>
         <div className={styles["overlay"]}  onClick = {cancelCRUDTicket}></div>
         <div className={styles["crud-ticket-form"]}>
-            <div className={styles["title"]}>Tạo vé</div>
+            {currentTicketDetails._id === '' ? <div className={styles["title"]}>Tạo vé</div> : <div className={styles["title"]}>Thông tin vé</div>}
             <div className={styles["ticket-details"]}>
                 <div className = {styles["form"]}>
                     <div className={styles["first-row"]}>
                         <select name="departure_city" onChange = {handleSelectChange} id="" className = {styles["departure-cỉty"]}>
-                            <option value="" disabled selected>Điểm đi</option>
-                            {locations.length > 0 ? locations.map((el, index) => <option key = {el.id} value = {el.location}>{el.location} </option>) : null }
+                            {currentTicketDetails._id === '' ?  <option value="" disabled selected>Điểm đi</option> :  <option value={currentTicketDetails.departure_city} disabled selected>{currentTicketDetails.departure_city}</option>}
+                            {locations.length > 0 ? locations.map((el, index) => <option key = {el.id} value = {el.location}>{el.location}</option>) : null }
                         </select>
                         <span className={styles["to-icon"]}><ToIcon/></span>
                         <select name="arrival_city" onChange = {handleSelectChange} id="" className = {styles["arrival-cỉty"]}>
-                            <option value="" disabled selected>Điểm đến</option>
-                            {locations.length > 0 ? locations.map((el, index) => <option key = {el.id} value = {el.location}>{el.location} </option>) : null }
-                        </select>
+                            {currentTicketDetails._id === '' ?  <option value="" disabled selected>Điểm đến</option> :  <option value={currentTicketDetails.arrival_city} disabled selected>{currentTicketDetails.arrival_city}</option>}
+                            {locations.length > 0 ? locations.map((el, index) => <option key = {el.id} value = {el.location}>{el.location}</option>) : null }
+                        </select>   
                         <div className={styles["date-time"]}>
-                            <input name = "date" onChange = {handleInputChange} type="text" className = {styles["date"]} placeholder="dd-mm-yyyy"/>
-                            <input name = "time" onChange = {handleInputChange} type="text" className = {styles["hour"]} placeholder="time"/>
+                            <input name = "date" onChange = {handleInputChange} type="text" className = {styles["date"]} placeholder={currentTicketDetails.date ? `${currentTicketDetails.date.slice(0,10)}` : "yyyy-mm-dd"}/>
+                            <input name = "time" onChange = {handleInputChange} type="text" className = {styles["hour"]} placeholder={currentTicketDetails.departure_time ? `${currentTicketDetails.departure_time}-${currentTicketDetails.arrival_time}` : "start-end time"}/>
                         </div>
                     </div>
                     <div className={styles["second-row"]}>
                         <select name="departure_depot" onChange = {handleSelectChange} id="" className = {styles["departure-depot"]}>
-                                <option value="" disabled selected>Điểm lên xe</option>
+                                {/* <option value="" disabled selected>Điểm lên xe</option> */}
+                                {currentTicketDetails._id === '' ?  <option value="" disabled selected>Điểm lên xe</option> :  <option value={currentTicketDetails.departure_depot} disabled selected>{currentTicketDetails.departure_depot}</option>}
                                 {stations.length > 0 ? 
-                                stations.find((el) => el.location === selectedChange.departure_city)?.stations
+                                stations.find((el) => el.location === currentTicketDetails.departure_city || el.location === selectedChange.departure_city)?.stations
                                 .map((station) => <option key = {station.name} value = {station.name}>
                                     {station.name}
                                 </option>) : null}
                         </select>
                         <select name="arrival_depot" onChange = {handleSelectChange} id="" className = {styles["arrival-depot"]}>
-                            <option value="" disabled selected>Điểm xuống xe</option>
+                            {/* <option value="" disabled selected>Điểm xuống xe</option> */}
+                            {currentTicketDetails._id === '' ?  <option value="" disabled selected>Điểm xuống xe</option> :  <option value={currentTicketDetails.arrival_depot} disabled selected>{currentTicketDetails.arrival_depot}</option>}
                             {stations.length > 0 ? 
                                 stations.find((el) => el.location === selectedChange.arrival_city)?.stations
                                 .map((station) => <option key = {station.name} value = {station.name}>
@@ -233,25 +264,21 @@ const ManageTicketPage = () => {
                                 </option>) : null}
                         </select>
                         <select name="bus_type" onChange = {handleSelectChange} id="" className = {styles["bus-type"]}>
-                            <option value="" disabled selected>Loại xe</option>
+                            {/* <option value="" disabled selected>Loại xe</option> */}
+                            {currentTicketDetails._id === '' ?  <option value="" disabled selected>Loại xe</option> :  <option value={currentTicketDetails.bus_type} disabled selected>{currentTicketDetails.bus_type}</option>}
                             <option value="Ghế">Ghế</option>
                             <option value="Giường">Giường</option>
                             <option value="Limousine">Limousine</option>
                         </select>
                     </div>
                     <div className={styles["third-row"]}>
-                        <input type="text" name = "price" onChange = {handleInputChange} className={styles["ticket-price"]} placeholder="Giá vé (vnđ)"/>
+                        <input type="text" name = "price" onChange = {handleInputChange} className={styles["ticket-price"]} placeholder= {currentTicketDetails.price ? `${String(currentTicketDetails.price).replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "đ"}` : "Giá vé (vnđ)"} />
                     </div>
                 </div>
-                {/* <SeatLayout/> */}
-                {/* <div className={styles["bus-layout"]}> */}
-                    {/* <LimousineLayout bookedSeats = {[]}/> */}
-                    {/* <ChairLayout bookedSeats = {[]}/> */}
-                    {/* <SeatLayout/> */}
-                {/* </div> */}
             </div>
             <div className={styles["create-btn"]}>
-                <CreateButton onCreateTicket = {handleCreateTicket}/>
+                {currentTicketDetails._id !== '' ? <CreateButton action = "update" onUpdateTicket = {handleUpdateTicket}/>
+                 : <CreateButton action = "create" onCreateTicket = {handleCreateTicket}/>} 
             </div>
         </div>
       

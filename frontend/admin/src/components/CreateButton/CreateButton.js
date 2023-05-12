@@ -3,10 +3,17 @@ import { ReactComponent as CreateIcon } from "../../assets/svg/ManageTicket/plus
 
 const CreateButton = (props) => {
     return (
-    <button className={styles["create-btn"]} onClick = {props.onCreateTicket}>
+    <button className={styles["create-btn"]} onClick = {props.action === "create" ? props.onCreateTicket : props.onUpdateTicket}>
             <div className={styles["content"]}>
-                <span className={styles["text"]}>Create</span>
-                <span className={styles["icon"]}><CreateIcon/></span>
+                {props.action === "create" &&  
+                 <>
+                    <span className={styles["text"]}>Tạo vé</span>
+                    <span className={styles["icon"]}><CreateIcon/></span>
+                 </>
+                }
+                {props.action === "update" && <span className={styles["text"]}>Cập nhật</span>
+                }
+               
             </div>
     </button>
     ) 

@@ -46,7 +46,7 @@ div.ticket-managing > div.crud-ticket-form {
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    width: 84rem;
+    width: 87rem;
     overflow: auto;
     background-color: white;
     border-radius: 12px;
@@ -109,7 +109,7 @@ div.ticket-managing > div.crud-ticket-form > div.ticket-details > div.form > div
 }
 
 div.ticket-managing > div.crud-ticket-form > div.ticket-details > div.form > div.first-row > div.date-time > input {
-    width: 12rem;
+    width: 14rem;
     padding: 0.6rem;
     outline: none;
     border: 1px solid #767676;

@@ -3,7 +3,7 @@ import {createSlice} from "@reduxjs/toolkit";
 const initialState = {
     tickets: [],
     currentTicketDetails: {
-        // _id: "",
+        _id: "",
         date: "",
         departure_time: "",
         arrival_time: "",
@@ -17,7 +17,7 @@ const initialState = {
         arrival_depot: "",
         bus_type: "",
         booked_seats: [],
-        // reserved_seats: 0,
+        reserved_seats: 0,
         total_seats: 0,
     }
 }
@@ -27,7 +27,7 @@ const ticketManagingSlice = createSlice({
     initialState,
     reducers: {
         setCurrentTicketDetails: (state,action) => {
-            // state.currentTicketDetails._id = action.payload._id || "";
+            state.currentTicketDetails._id = action.payload._id || "";
             state.currentTicketDetails.date = action.payload.date || "";
             state.currentTicketDetails.departure_time = action.payload.departure_time || "";
             state.currentTicketDetails.arrival_time = action.payload.arrival_time || "";
@@ -41,10 +41,40 @@ const ticketManagingSlice = createSlice({
         },
         setTickets: (state, action) => {
             state.tickets = action.payload;
+        },
+        getTicketUpdating: (state,action) => {
+            const ticket = state.tickets.find((el) => el.id === action.payload);
+            state.currentTicketDetails = ticket;
+        },
+
+        deleteTicket: (state, action) => {
+            const ticketId = action.payload;
+            state.tickets = state.tickets.filter((el) => {
+                return el._id !== ticketId;
+            })
+        },
+        addNewTicket: (state, action) => {
+            const newTicket = action.payload;
+            state.tickets = [...state.tickets, newTicket];
+        },
+        updateTicket: (state, action) => {
+            const updatedTicket = action.payload;
+            console.log("this updated ticket: ", updatedTicket);
+            const ticketIndex = state.tickets.findIndex((ticket) => ticket._id === updatedTicket._id);
+            state.tickets[ticketIndex] = {...updatedTicket};
+            // for (let ticket of state.tickets) {
+            //     if (ticket._id === updatedTicket._id) {
+            //         console.log("found it: ", ticket._id);
+            //         ticket = {...updatedTicket};
+            //         return;
+            //     }
+            // }
+
         }
     }   
 })
 
-export const {setCurrentTicketDetails, setTickets} = ticketManagingSlice.actions;
+export const {setCurrentTicketDetails, setUpdatingTicket, setTickets, deleteTicket, addNewTicket, getTicketUpdating, updateTicket} 
+= ticketManagingSlice.actions;
 
 export default ticketManagingSlice.reducer;

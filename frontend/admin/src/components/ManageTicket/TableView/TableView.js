@@ -3,16 +3,42 @@ import {ReactComponent as EditIcon} from "../../../assets/svg/ManageTicket/edit.
 import {ReactComponent as RemoveIcon} from "../../../assets/svg/ManageTicket/remove.svg";
 import {useSelector, useDispatch} from "react-redux";
 import {useState,useEffect} from "react";
-import styles from "./TableView.module.css"
+import { useNavigate } from "react-router-dom";
+import { deleteTicket, getTicketUpdating } from "../../../store/reducers/ticketManagingSlice";
+import styles from "./TableView.module.css";
+import axios from "axios";
 
 
-const TableView = () => {
+const TableView = (props) => {
     // const [tickets, setTickets] = useState([]);
     const tickets = useSelector((state) => state.ticketManaging.tickets);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [currentTickets, setCurrentTickets] = useState([]);
+
     useEffect(() => {
         setCurrentTickets([...tickets])
     }, [tickets])
+
+    const handleDeleteTicket = (ticketId) => {
+        axios.delete(`${process.env.REACT_APP_API_HOST}/admin/ticket-managing/delete-ticket/${ticketId}`).then((res) => {
+            if (res.data.status === "success") {
+                alert("Vé đã được xóa thành công!");
+                dispatch(deleteTicket(ticketId));
+                navigate("/admin/manage-ticket/ticket");
+                
+            }
+        }).catch((err) => {
+            console.error(err);
+        });
+    }
+
+    const handleUpdateTicket = (ticketId) => {
+        dispatch(getTicketUpdating(ticketId));
+        props.onCRUDTicket();
+    }
+
+    
     return (
         <>
         {currentTickets.length > 0 && <div className={styles["table-section"]}>
@@ -30,15 +56,11 @@ const TableView = () => {
                         <th className = {styles["departure-depot-heading"]}>
                             <select name="departure-depot" id="" className={styles["select-custom"]}>
                                 <option value="" disabled selected>Điểm lên</option>
-                                {/* <option value="increasing">BX Đồng Tâm</option>
-                                <option value="decreasing">BX Miền Tây</option> */}
                             </select>
                         </th>
                         <th className = {styles["arrival-depot-heading"]}>
                             <select name="arrival-depot" id="" className={styles["select-custom"]}>
                                 <option value="" disabled selected>Điểm xuống</option>
-                                {/* <option value="increasing">BX Đồng Tâm</option>
-                                <option value="decreasing">BX Miền Tây</option> */}
                             </select>
                         </th>
                         <th className = {styles["bus-type-heading"]}>
@@ -62,7 +84,7 @@ const TableView = () => {
                 </thead>
                 <tbody>
                     {currentTickets.length > 0 ? currentTickets.map((el, index) => {
-                        return <tr>    
+                        return <tr key = {el.id}>    
                         <td className = {styles["date-time"]} style = {{display: "flex", gap: "1.5rem"}}>
                             <span className={styles["date"]}>
                                 {el.truncatedDate}
@@ -76,162 +98,13 @@ const TableView = () => {
                         <td className = {styles["bus-type"]}>{el.bus_type}</td>
                         <td className = {styles["ticket-price"]}>{String(el.price).replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "đ"}</td>
                         <td className = {styles["crud"]}><button className={styles["edit-btn"]}>
-                            <EditIcon className = {styles["edit-icn"]}/>
+                            <EditIcon onClick = {() => handleUpdateTicket(el.id)} className = {styles["edit-icn"]}/>
                         </button></td>
                         <td className = {styles["crud"]}><button className={styles["remove-btn"]}>
-                            <RemoveIcon className = {styles["edit-icn"]}/>
+                            <RemoveIcon onClick = {() => handleDeleteTicket(el.id)} className = {styles["edit-icn"]}/>
                         </button></td>
                     </tr>
                     }) : null}
-                    {/* <tr>    
-                        <td className = {styles["date-time"]}>
-                        03-12-2023 05:00-09:00
-                        </td>
-                        <td className = {styles["departure-depot"]}>BX Miền Tây</td>
-                        <td className = {styles["arrival-depot"]}>BX Cà Mau</td>
-                        <td className = {styles["bus-type"]}>Limousine</td>
-                        <td className = {styles["ticket-price"]}>185.000đ</td>
-                        <td className = {styles["crud"]}><button className={styles["edit-btn"]}>
-                            <EditIcon className = {styles["edit-icn"]}/>
-                        </button></td>
-                        <td className = {styles["crud"]}><button className={styles["remove-btn"]}>
-                            <RemoveIcon className = {styles["edit-icn"]}/>
-                        </button></td>
-                    </tr>
-                    <tr>    
-                        <td className = {styles["date-time"]}>
-                        03-12-2023 05:00-09:00
-                        </td>
-                        <td className = {styles["departure-depot"]}>BX Miền Tây</td>
-                        <td className = {styles["arrival-depot"]}>BX Cà Mau</td>
-                        <td className = {styles["bus-type"]}>Limousine</td>
-                        <td className = {styles["ticket-price"]}>185.000đ</td>
-                        <td className = {styles["crud"]}><button className={styles["edit-btn"]}>
-                            <EditIcon className = {styles["edit-icn"]}/>
-                        </button></td>
-                        <td className = {styles["crud"]}><button className={styles["remove-btn"]}>
-                            <RemoveIcon className = {styles["edit-icn"]}/>
-                        </button></td>
-                    </tr>
-                    <tr>    
-                        <td className = {styles["date-time"]}>
-                        03-12-2023 05:00-09:00
-                        </td>
-                        <td className = {styles["departure-depot"]}>BX Miền Tây</td>
-                        <td className = {styles["arrival-depot"]}>BX Cà Mau</td>
-                        <td className = {styles["bus-type"]}>Limousine</td>
-                        <td className = {styles["ticket-price"]}>185.000đ</td>
-                        <td className = {styles["crud"]}><button className={styles["edit-btn"]}>
-                            <EditIcon className = {styles["edit-icn"]}/>
-                        </button></td>
-                        <td className = {styles["crud"]}><button className={styles["remove-btn"]}>
-                            <RemoveIcon className = {styles["edit-icn"]}/>
-                        </button></td>
-                    </tr>
-                    <tr>    
-                        <td className = {styles["date-time"]}>
-                        03-12-2023 05:00-09:00
-                        </td>
-                        <td className = {styles["departure-depot"]}>BX Miền Tây</td>
-                        <td className = {styles["arrival-depot"]}>BX Cà Mau</td>
-                        <td className = {styles["bus-type"]}>Limousine</td>
-                        <td className = {styles["ticket-price"]}>185.000đ</td>
-                        <td className = {styles["crud"]}><button className={styles["edit-btn"]}>
-                            <EditIcon className = {styles["edit-icn"]}/>
-                        </button></td>
-                        <td className = {styles["crud"]}><button className={styles["remove-btn"]}>
-                            <RemoveIcon className = {styles["edit-icn"]}/>
-                        </button></td>
-                    </tr>
-                    <tr>    
-                        <td className = {styles["date-time"]}>
-                        03-12-2023 05:00-09:00
-                        </td>
-                        <td className = {styles["departure-depot"]}>BX Miền Tây</td>
-                        <td className = {styles["arrival-depot"]}>BX Cà Mau</td>
-                        <td className = {styles["bus-type"]}>Limousine</td>
-                        <td className = {styles["ticket-price"]}>185.000đ</td>
-                        <td className = {styles["crud"]}><button className={styles["edit-btn"]}>
-                            <EditIcon className = {styles["edit-icn"]}/>
-                        </button></td>
-                        <td className = {styles["crud"]}><button className={styles["remove-btn"]}>
-                            <RemoveIcon className = {styles["edit-icn"]}/>
-                        </button></td>
-                    </tr>
-                    <tr>    
-                        <td className = {styles["date-time"]}>03-12-2023 05:00-09:00
-                        </td>
-                        <td className = {styles["departure-depot"]}>BX Miền Tây</td>
-                        <td className = {styles["arrival-depot"]}>BX Cà Mau</td>
-                        <td className = {styles["bus-type"]}>Limousine</td>
-                        <td className = {styles["ticket-price"]}>185.000đ</td>
-                        <td className = {styles["crud"]}><button className={styles["edit-btn"]}>
-                            <EditIcon className = {styles["edit-icn"]}/>
-                        </button></td>
-                        <td className = {styles["crud"]}><button className={styles["remove-btn"]}>
-                            <RemoveIcon className = {styles["edit-icn"]}/>
-                        </button></td>
-                    </tr>
-                    <tr>    
-                        <td className = {styles["date-time"]}>
-                        03-12-2023 05:00-09:00
-                        </td>
-                        <td className = {styles["departure-depot"]}>BX Miền Tây</td>
-                        <td className = {styles["arrival-depot"]}>BX Cà Mau</td>
-                        <td className = {styles["bus-type"]}>Limousine</td>
-                        <td className = {styles["ticket-price"]}>185.000đ</td>
-                        <td className = {styles["crud"]}><button className={styles["edit-btn"]}>
-                            <EditIcon className = {styles["edit-icn"]}/>
-                        </button></td>
-                        <td className = {styles["crud"]}><button className={styles["remove-btn"]}>
-                            <RemoveIcon className = {styles["edit-icn"]}/>
-                        </button></td>
-                    </tr>
-                    <tr>    
-                        <td className = {styles["date-time"]}>
-                        03-12-2023 05:00-09:00
-                        </td>
-                        <td className = {styles["departure-depot"]}>BX Miền Tây</td>
-                        <td className = {styles["arrival-depot"]}>BX Cà Mau</td>
-                        <td className = {styles["bus-type"]}>Limousine</td>
-                        <td className = {styles["ticket-price"]}>185.000đ</td>
-                        <td className = {styles["crud"]}><button className={styles["edit-btn"]}>
-                            <EditIcon className = {styles["edit-icn"]}/>
-                        </button></td>
-                        <td className = {styles["crud"]}><button className={styles["remove-btn"]}>
-                            <RemoveIcon className = {styles["edit-icn"]}/>
-                        </button></td>
-                    </tr>
-                    <tr>    
-                        <td className = {styles["date-time"]}>
-                        03-12-2023 05:00-09:00
-                        </td>
-                        <td className = {styles["departure-depot"]}>BX Miền Tây</td>
-                        <td className = {styles["arrival-depot"]}>BX Cà Mau</td>
-                        <td className = {styles["bus-type"]}>Limousine</td>
-                        <td className = {styles["ticket-price"]}>185.000đ</td>
-                        <td className = {styles["crud"]}><button className={styles["edit-btn"]}>
-                            <EditIcon className = {styles["edit-icn"]}/>
-                        </button></td>
-                        <td className = {styles["crud"]}><button className={styles["remove-btn"]}>
-                            <RemoveIcon className = {styles["edit-icn"]}/>
-                        </button></td>
-                    </tr>
-                    <tr>    
-                        <td className = {styles["date-time"]}>
-                        03-12-2023 05:00-09:00
-                        </td>
-                        <td className = {styles["departure-depot"]}>BX Miền Tây</td>
-                        <td className = {styles["arrival-depot"]}>BX Cà Mau</td>
-                        <td className = {styles["bus-type"]}>Limousine</td>
-                        <td className = {styles["ticket-price"]}>185.000đ</td>
-                        <td className = {styles["crud"]}><button className={styles["edit-btn"]}>
-                            <EditIcon className = {styles["edit-icn"]}/>
-                        </button></td>
-                        <td className = {styles["crud"]}><button className={styles["remove-btn"]}>
-                            <RemoveIcon className = {styles["edit-icn"]}/>
-                        </button></td>
-                    </tr> */}
                 </tbody>
             </table>
         </div>
