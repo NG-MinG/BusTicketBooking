@@ -1,5 +1,5 @@
 import express from 'express'
-import { getAll } from '../controllers/scheduleController.js';
+import { getAll, getBySearch } from '../controllers/scheduleController.js';
 
 const router = express.Router()
 
@@ -7,5 +7,6 @@ const router = express.Router()
 
 // Get user information
 router.get('/schedules', getAll);
+router.patch('/searchSchedule', getBySearch);
 
 export default router;

@@ -14,12 +14,12 @@ const getBySearch = catchAsync(async (req, res) => {
   const stations_filter = []
   const stations = await Station.find()
   for (let i of stations) {
-    if (i.location.toLowerCase().includes(req.body.search)) {
+    if (i.location.toLowerCase().includes(search)) {
       stations_filter.push(i)
       continue
     }
     for (let j of i.stations) {
-      if (j.address.toLowerCase().includes(req.body.search) || j.phone.toLowerCase().includes(req.body.search)) stations_filter.push(i)
+      if (j.address.toLowerCase().includes(search) || j.phone.toLowerCase().includes(search)) stations_filter.push(i)
     }
   }
   res.status(200).json({
