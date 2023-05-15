@@ -19,7 +19,7 @@ export default function ScheduleItem({ diem, value }) {
     <div className={styles.ScheduleItem}>
       <p>{diem}</p>
       <p>{value.bus_type}</p>
-      <p>{parseFloat(value.distance) / 1000}km</p>
+      <p>{Math.round(parseFloat(value.distance) / 1000)}km</p>
       <p>{toHoursAndMinutes(parseFloat(value.duration))}</p>
       <button>Đặt vé</button>
     </div>

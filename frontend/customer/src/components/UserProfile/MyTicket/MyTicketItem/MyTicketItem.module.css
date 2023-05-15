@@ -45,7 +45,7 @@
 
 .content{
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   background-color: #417DD8;
   padding: 1.4rem 2rem;
   position: relative;
@@ -57,13 +57,28 @@
   gap: 1.2rem;
 }
 
+.left{
+  width: 52rem;
+  /* background-color: #b22f2f; */
+}
+
+.right{
+  padding-left: 1.5rem;
+}
+
 .content p{
   font-size: 1.5rem;
 }
 
-.name, .seats, .seatName, .ticketPickUp{
+.name, .seats, .seatName{
   display: flex;
   align-items: center;
+  color: white;
+  gap: .5rem;
+}
+
+.ticketPickUp{
+  display: flex;
   color: white;
   gap: .5rem;
 }
@@ -83,7 +98,7 @@
   font-weight: 500;
 }
 
-.cancelButton{
+/* .cancelButton{
   cursor: pointer;
   position: absolute;
   background-color: #CD3E3E;
@@ -95,7 +110,7 @@
   align-items: center;
   gap:0.5rem;
   border-radius: 5px;
-}
+} */
 
 .cancelButton:hover{
   background-color: #b22f2f;
