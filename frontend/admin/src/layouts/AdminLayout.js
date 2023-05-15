@@ -54,10 +54,13 @@ const AdminPage = () => {
   let navigate = useNavigate();
   useEffect(() => {
     if (location.pathname === "/admin/manage-ticket") navigate("/admin/manage-ticket/ticket")
-  })
+  }, [location]);
 
   return (
     <div className={styles["container"]}>
+      <div className={styles["navbar"]}>
+
+      </div>
       <div className={styles["sidebar-container"]}>
         <div className={styles["menu-container"]}>
           {sidebarData.map((data, index) => (

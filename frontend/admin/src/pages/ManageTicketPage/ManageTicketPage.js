@@ -147,14 +147,12 @@ const ManageTicketPage = () => {
         const isEmptyProperty = Object.values(data).some(value => (value === ''));
         //if data has any properties which have empty value
         if (isEmptyProperty) { 
-            console.log("this ticket data: ", data);
             alert("Vui lòng điền đầy đủ thông tin trong form.");
             return;
         }
         // if data is valid
         axios.post(`${process.env.REACT_APP_API_HOST}/admin/ticket-managing/create-ticket`, data).then((res) => {
             dispatch(setCurrentTicketDetails({}));
-            console.log("ticketCreated: ", res.data.ticketCreated);
             dispatch(addNewTicket(res.data.ticketCreated));
             alert('Vé đã được tạo thành công!');
             navigate("/admin/manage-ticket/ticket");
@@ -196,10 +194,6 @@ const ManageTicketPage = () => {
         fetchData();
     }, [])
 
-    
-    console.log("this current TicketDETAILS: ", currentTicketDetails);
-    
-   
 
     return  <>
         <div className={styles["wrapper"]}>
