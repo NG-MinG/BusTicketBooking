@@ -5,7 +5,7 @@
 }
 
 .wrapper > .place-choosing {
-    width: 75%;
+    width: 81.3%;
     height: 8rem;
     border-radius: 3px;
     margin: 3.6rem auto;
@@ -45,7 +45,8 @@ div.ticket-managing > div.crud-ticket-form {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
     width: 87rem;
     overflow: auto;
     background-color: white;

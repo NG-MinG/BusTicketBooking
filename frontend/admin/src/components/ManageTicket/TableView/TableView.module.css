@@ -1,6 +1,6 @@
 
 div.table-section {
-    width: 75%;
+    width: 90%;
     margin: 0 auto;
     /* background-color: red; */
 }
@@ -34,6 +34,7 @@ div.table-container > table.ticket-table > thead {
     height: 5rem;
     border: 2px solid transparent; 
     /* to make thead fixed when overflow situation */
+    position: -webkit-sticky;
     position: sticky;
     top: 0;
 }
@@ -64,7 +65,9 @@ div.table-container > table.ticket-table > thead > tr > th:nth-last-child(2) {
 
 /*  custom arrow of select */
 .select-custom {
-    appearance: none;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
     background-image: url('../../../assets/svg/ManageTicket/white_down_arrow.svg');
     /* background-position: 70% 65%; */
     background-position: 100% 55%;
