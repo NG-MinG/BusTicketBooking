@@ -73,6 +73,14 @@ const AdminPage = () => {
     titleArr.push(<span>{subDataPage.title}</span>);
   };
 
+  if (location.pathname.indexOf('admin/manage-ticket/ticket/details')> -1) {
+    titleArr.splice(0, titleArr.length);
+
+    titleArr.push(<span>Quản lý vé xe</span>);
+    titleArr.push(<ChevronRight width={13} />);
+    titleArr.push(<span>Chi tiết vé xe</span>);
+  }
+
   return (
     <div className={styles["container"]}>
       <div className={styles["sidebar-container"]}>

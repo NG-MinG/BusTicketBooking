@@ -2,7 +2,7 @@ import React from 'react';
 
 import classes from './AnalystCard.module.css';
 
-const AnalystCard = ({ title, value, yellow, blue, green, red }) => {
+const AnalystCard = ({ title, value, yellow, blue, green, red, className, ...attribute }) => {
 
     const classArr = [classes.analyst_card];
     const classStr = () => {
@@ -23,10 +23,12 @@ const AnalystCard = ({ title, value, yellow, blue, green, red }) => {
             classArr.push(classes.red);
         }
 
+        classArr.push(className);
+
         return classArr.join(' ');
     };
 
-    return <div className={classStr()}>
+    return <div {...attribute} className={classStr()}>
         <b>{ title }</b>
         <div>{ value }</div>
     </div>

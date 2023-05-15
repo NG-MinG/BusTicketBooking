@@ -187,7 +187,7 @@ const TableView = (props) => {
                         <td className = {styles["ticket-price"]}>{String(el.price).replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "đ"}</td>
                         <td className = {styles["crud"]}><button className={styles["edit-btn"]}>
                             {currentDate.slice(0,10) <= el.date.slice(0,10) ?  <EditIcon onClick = {() => handleUpdateTicket(el.id)} className = {styles["edit-icn"]}/>
-                             : <FontAwesomeIcon onClick={() => {}} icon={faEye} style={{ color: '#1F84BD', fontSize: "1.5em", marginTop: "0.2em" }} />}
+                             : <FontAwesomeIcon onClick={() => { navigate(`details/${el.id}`) }} icon={faEye} style={{ color: '#1F84BD', fontSize: "1.5em", marginTop: "0.2em" }} />}
                         </button></td>
                         <td className = {styles["crud"]}><button className={styles["remove-btn"]}>
                             <RemoveIcon onClick = {() => handleDeleteTicket(el.id)} className = {styles["edit-icn"]}/>
