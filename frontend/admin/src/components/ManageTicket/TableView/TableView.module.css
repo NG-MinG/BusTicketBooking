@@ -46,7 +46,8 @@ div.table-container > table.ticket-table > thead{
 
 div.table-container > table.ticket-table > thead > tr > th {
     text-align: left;
-    padding-left: 1.5rem;
+    /* padding-left: 1.5rem; */
+    padding-left: 1.15rem;
 }
 
 div.table-container > table.ticket-table > thead > tr > th:first-child {
@@ -90,7 +91,7 @@ div.table-container > table.ticket-table > thead > tr > th > select {
     width: 40%;
 } */
 
-div.table-container > table.ticket-table > thead > tr > th:first-child > select {
+/* div.table-container > table.ticket-table > thead > tr > th:first-child > select {
     width: 45%;
 }
 
@@ -108,7 +109,7 @@ div.table-container > table.ticket-table > thead > tr > th:nth-child(4) > select
 
 div.table-container > table.ticket-table > thead > tr > th:nth-child(5) > select {
     width: 76%;
-} 
+}  */
 
 div.table-container > table.ticket-table > thead > tr > th > select > option {
     color: black;

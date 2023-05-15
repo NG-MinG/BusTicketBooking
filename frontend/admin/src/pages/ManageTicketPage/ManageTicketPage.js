@@ -23,8 +23,6 @@ const ManageTicketPage = () => {
     
     const tickets = useSelector((state) => state.ticketManaging.tickets); 
     const currentTicketDetails = useSelector((state) => state.ticketManaging.currentTicketDetails);
-    console.log("currentTicketDetails: " + currentTicketDetails.departure_city);
-    const updatingTicket = useSelector((state) => state.ticketManaging.updatingTicket);
     // used for crud ticket form
     const [selectedChange, setSelectedChange] = useState({
         departure_city: '',
@@ -149,14 +147,12 @@ const ManageTicketPage = () => {
         const isEmptyProperty = Object.values(data).some(value => (value === ''));
         //if data has any properties which have empty value
         if (isEmptyProperty) { 
-            console.log("this ticket data: ", data);
             alert("Vui lòng điền đầy đủ thông tin trong form.");
             return;
         }
         // if data is valid
         axios.post(`${process.env.REACT_APP_API_HOST}/admin/ticket-managing/create-ticket`, data).then((res) => {
             dispatch(setCurrentTicketDetails({}));
-            console.log("ticketCreated: ", res.data.ticketCreated);
             dispatch(addNewTicket(res.data.ticketCreated));
             alert('Vé đã được tạo thành công!');
             navigate("/admin/manage-ticket/ticket");
@@ -198,10 +194,6 @@ const ManageTicketPage = () => {
         fetchData();
     }, [])
 
-    
-    console.log("this current TicketDETAILS: ", currentTicketDetails);
-    
-   
 
     return  <>
         <div className={styles["wrapper"]}>
@@ -232,12 +224,12 @@ const ManageTicketPage = () => {
                     <div className={styles["first-row"]}>
                         <select name="departure_city" onChange = {handleSelectChange} id="" className = {styles["departure-cỉty"]}>
                             {currentTicketDetails._id === '' ?  <option value="" disabled selected>Điểm đi</option> :  <option value={currentTicketDetails.departure_city} disabled selected>{currentTicketDetails.departure_city}</option>}
-                            {locations.length > 0 ? locations.map((el, index) => <option key = {el.id} value = {el.location}>{el.location}</option>) : null }
+                            {locations.length > 0 && currentTicketDetails._id === '' ? locations.map((el, index) => <option key = {el.id} value = {el.location}>{el.location}</option>) : null }
                         </select>
                         <span className={styles["to-icon"]}><ToIcon/></span>
                         <select name="arrival_city" onChange = {handleSelectChange} id="" className = {styles["arrival-cỉty"]}>
                             {currentTicketDetails._id === '' ?  <option value="" disabled selected>Điểm đến</option> :  <option value={currentTicketDetails.arrival_city} disabled selected>{currentTicketDetails.arrival_city}</option>}
-                            {locations.length > 0 ? locations.map((el, index) => <option key = {el.id} value = {el.location}>{el.location}</option>) : null }
+                            {locations.length > 0 && currentTicketDetails._id === '' ? locations.map((el, index) => <option key = {el.id} value = {el.location}>{el.location}</option>) : null }
                         </select>   
                         <div className={styles["date-time"]}>
                             <input name = "date" onChange = {handleInputChange} type="text" className = {styles["date"]} placeholder={currentTicketDetails.date ? `${currentTicketDetails.date.slice(0,10)}` : "yyyy-mm-dd"}/>
@@ -249,7 +241,7 @@ const ManageTicketPage = () => {
                                 {/* <option value="" disabled selected>Điểm lên xe</option> */}
                                 {currentTicketDetails._id === '' ?  <option value="" disabled selected>Điểm lên xe</option> :  <option value={currentTicketDetails.departure_depot} disabled selected>{currentTicketDetails.departure_depot}</option>}
                                 {stations.length > 0 ? 
-                                stations.find((el) => el.location === currentTicketDetails.departure_city || el.location === selectedChange.departure_city)?.stations
+                                stations.find((el) => el.location === selectedChange.departure_city || el.location === currentTicketDetails.departure_city)?.stations
                                 .map((station) => <option key = {station.name} value = {station.name}>
                                     {station.name}
                                 </option>) : null}
@@ -258,7 +250,7 @@ const ManageTicketPage = () => {
                             {/* <option value="" disabled selected>Điểm xuống xe</option> */}
                             {currentTicketDetails._id === '' ?  <option value="" disabled selected>Điểm xuống xe</option> :  <option value={currentTicketDetails.arrival_depot} disabled selected>{currentTicketDetails.arrival_depot}</option>}
                             {stations.length > 0 ? 
-                                stations.find((el) => el.location === selectedChange.arrival_city)?.stations
+                                stations.find((el) => el.location === selectedChange.arrival_city || el.location === currentTicketDetails.arrival_city)?.stations
                                 .map((station) => <option key = {station.name} value = {station.name}>
                                     {station.name}
                                 </option>) : null}
