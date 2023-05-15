@@ -20,7 +20,6 @@ const AppRoutes = () => {
                 <Route path="manage-ticket/ticket" element={<ManageTicketPage />} />
                 <Route path="manage-ticket/ticket-order" element={<ManageTicketOrderPage />} />
                 <Route path="manage-ticket/ticket-order/edit/:id" element={<ManageTicketOrderEditPage />} />
-
             </Route>
         </Routes>
     )

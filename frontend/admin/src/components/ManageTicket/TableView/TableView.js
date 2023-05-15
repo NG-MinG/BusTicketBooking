@@ -5,16 +5,21 @@ import {useSelector, useDispatch} from "react-redux";
 import {useState,useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import { deleteTicket, getTicketUpdating } from "../../../store/reducers/ticketManagingSlice";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import styles from "./TableView.module.css";
 import axios from "axios";
 
 
 const TableView = (props) => {
-    // const [tickets, setTickets] = useState([]);
     const tickets = useSelector((state) => state.ticketManaging.tickets);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [currentTickets, setCurrentTickets] = useState([]);
+    const [selectedTimeRange, setSelectedTimeRange] = useState('');
+    const [selectedPrice, setSelectedPrice] = useState('');
+    const [selectedBusType, setSelectedBusType] = useState('');
+    const currentDate = new Date().toISOString();
 
     useEffect(() => {
         setCurrentTickets([...tickets])
@@ -37,45 +42,128 @@ const TableView = (props) => {
         dispatch(getTicketUpdating(ticketId));
         props.onCRUDTicket();
     }
+    //------ FILTER PROCESSING ------
+    // filter based on hours
+    const handleTimeSelectChange = (e) => {
+        let ticketsFiltered = [...tickets];
+        if (e.target.value !== "Thời gian") {
+            ticketsFiltered = ticketsFiltered.filter((el) => {
+                return parseInt(el.departure_time.split(":")[0]) >= parseInt(e.target.value.split("-")[0]) 
+                && parseInt(el.departure_time.split(":")[0]) <= parseInt(e.target.value.split("-")[1]);
+            })
+            ticketsFiltered = ticketsFiltered.sort((a,b) => parseInt(a.departure_time.split(":")[0]) - parseInt(b.departure_time.split(":")[0]));
+        }
+        if (selectedPrice && selectedPrice !== "Giá vé") {
+            if (selectedPrice === "LowToHigh") {
+                ticketsFiltered = ticketsFiltered.sort((a,b) => a.price - b.price);
+            } else if (selectedPrice === "HighToLow") { 
+                ticketsFiltered = ticketsFiltered.sort((a,b) => b.price - a.price);
+            }
+        } 
+        if (selectedBusType && selectedBusType !== "Loại xe") {
+            ticketsFiltered = ticketsFiltered.filter((el) => {
+                return el.bus_type === selectedBusType;
+            })
+        }
+        setCurrentTickets(ticketsFiltered);
+        setSelectedTimeRange(e.target.value);
+    }
+
+    // sort based on price
+    const handlePriceChange = (e) => {
+        let ticketsFiltered = [...tickets];
+        if (e.target.value !== "Giá vé") {
+            if (e.target.value === "LowToHigh") {
+                console.log("low to high");
+                ticketsFiltered = ticketsFiltered.sort((a,b) => a.price - b.price);
+            }
+            else if (e.target.value === "HighToLow") {
+                console.log("high to low");
+                ticketsFiltered = ticketsFiltered.sort((a,b) => b.price - a.price);
+            }
+        }
+        if (selectedTimeRange && selectedTimeRange !== "Thời gian") {
+            ticketsFiltered = ticketsFiltered.filter((el) => {
+                return parseInt(el.departure_time.split(":")[0]) >= parseInt(selectedTimeRange.split("-")[0]) 
+                && parseInt(el.departure_time.split(":")[0]) <= parseInt(selectedTimeRange.split("-")[1]);
+            })
+            // ticketsFiltered = ticketsFiltered.sort((a,b) => parseInt(a.departure_time.split(":")[0]) - parseInt(b.departure_time.split(":")[0]));
+        }
+        if (selectedBusType && selectedBusType !== "Loại xe") {
+            ticketsFiltered = ticketsFiltered.filter((el) => {
+                return el.bus_type === selectedBusType;
+            })
+        }
+        setCurrentTickets(ticketsFiltered);
+        setSelectedPrice(e.target.value);
+    }
+
+    // filter based on bus type
+    const handleBusTypeChange = (e) => {
+        let ticketsFiltered = [...tickets];
+        if (e.target.value !== "Loại xe") {
+            ticketsFiltered = ticketsFiltered.filter((el) => {
+                return el.bus_type === e.target.value;
+            })
+        }
+        if (selectedPrice && selectedPrice !== "Giá vé") {
+            if (selectedPrice === "LowToHigh") {
+                ticketsFiltered = ticketsFiltered.sort((a,b) => a.price - b.price);
+            } else if (selectedPrice === "HighToLow") { 
+                ticketsFiltered = ticketsFiltered.sort((a,b) => b.price - a.price);
+            }
+        } 
+        if (selectedTimeRange && selectedTimeRange !== "Thời gian") {
+            ticketsFiltered = ticketsFiltered.filter((el) => {
+                return parseInt(el.departure_time.split(":")[0]) >= parseInt(selectedTimeRange.split("-")[0]) 
+                && parseInt(el.departure_time.split(":")[0]) <= parseInt(selectedTimeRange.split("-")[1]);
+            })
+            ticketsFiltered = ticketsFiltered.sort((a,b) => parseInt(a.departure_time.split(":")[0]) - parseInt(b.departure_time.split(":")[0]));
+        }
+        setCurrentTickets(ticketsFiltered);
+        setSelectedBusType(e.target.value);
+    }
 
     
     return (
         <>
-        {currentTickets.length > 0 && <div className={styles["table-section"]}>
+        <div className={styles["table-section"]}>
         <div className={styles["table-container"]}>
             <table className = {styles["ticket-table"]}>
                 <thead className = {styles["thead"]}>
                     <tr>
                         <th className = {styles["time-heading"]}>
-                            <select name="date-time" id="" className={styles["select-custom"]}>
-                                <option value="" disabled selected>Thời gian</option>
-                                <option value="increasing">Tăng dần</option>
-                                <option value="decreasing">Giảm dần</option>
+                            <select value = {selectedTimeRange} onChange = {handleTimeSelectChange} name="date-time" id="" className={null}>
+                                <option value="Thời gian">Thời gian</option>
+                                <option value="0-6">0h-6h</option>
+                                <option value="6-12">6h-12h</option>
+                                <option value="12-18">12h-18h</option>
+                                <option value="18-24">18h-24h</option>
                             </select>
                         </th>
                         <th className = {styles["departure-depot-heading"]}>
-                            <select name="departure-depot" id="" className={styles["select-custom"]}>
+                            <select name="departure-depot" id="" className={null}>
                                 <option value="" disabled selected>Điểm lên</option>
                             </select>
                         </th>
                         <th className = {styles["arrival-depot-heading"]}>
-                            <select name="arrival-depot" id="" className={styles["select-custom"]}>
+                            <select name="arrival-depot" id="" className={null}>
                                 <option value="" disabled selected>Điểm xuống</option>
                             </select>
                         </th>
                         <th className = {styles["bus-type-heading"]}>
-                            <select name="bus-type" id="" className={styles["select-custom"]}>
-                                <option value="" disabled selected>Loại xe</option>
-                                <option value="chair">Ghế</option>
-                                <option value="sleeper">Giường</option>
-                                <option value="limousine">Limousine</option>
+                            <select value = {selectedBusType} onChange = {handleBusTypeChange} name="bus-type" id="" className={null}>
+                                <option value="Loại xe">Loại xe</option>
+                                <option value="Ghế">Ghế</option>
+                                <option value="Giường">Giường</option>
+                                <option value="Limousine">Limousine</option>
                             </select>
                         </th>
                         <th className = {styles["ticket-price-heading"]}>
-                            <select name="departure-depot" id="" className={styles["select-custom"]}>
-                                <option value="" disabled selected>Giá vé</option>
-                                <option value="increasing">Tăng dần</option>
-                                <option value="decreasing">Giảm dần</option>
+                            <select value = {selectedPrice} onChange = {handlePriceChange} name="departure-depot" id="" className={null}>
+                                <option value="Giá vé">Giá vé</option>
+                                <option value="LowToHigh">Tăng dần</option>
+                                <option value="HighToLow">Giảm dần</option>
                             </select>
                         </th>
                         <th className = {styles["temp-heading"]}></th>
@@ -98,7 +186,8 @@ const TableView = (props) => {
                         <td className = {styles["bus-type"]}>{el.bus_type}</td>
                         <td className = {styles["ticket-price"]}>{String(el.price).replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "đ"}</td>
                         <td className = {styles["crud"]}><button className={styles["edit-btn"]}>
-                            <EditIcon onClick = {() => handleUpdateTicket(el.id)} className = {styles["edit-icn"]}/>
+                            {currentDate.slice(0,10) <= el.date.slice(0,10) ?  <EditIcon onClick = {() => handleUpdateTicket(el.id)} className = {styles["edit-icn"]}/>
+                             : <FontAwesomeIcon onClick={() => {}} icon={faEye} style={{ color: '#1F84BD', fontSize: "1.5em", marginTop: "0.2em" }} />}
                         </button></td>
                         <td className = {styles["crud"]}><button className={styles["remove-btn"]}>
                             <RemoveIcon onClick = {() => handleDeleteTicket(el.id)} className = {styles["edit-icn"]}/>
@@ -107,8 +196,9 @@ const TableView = (props) => {
                     }) : null}
                 </tbody>
             </table>
+            {currentTickets.length === 0 && <div style ={{fontSize: "2rem", marginTop: "1rem", textAlign: "center"}}>Không tìm thấy thông tin chuyến!</div>}
         </div>
-    </div>}
+    </div>
     </>
     ) 
     
