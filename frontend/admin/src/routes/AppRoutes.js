@@ -11,7 +11,6 @@ import ManageTicketOrderEditPage from "../pages/ManageTicketOrderPage/ManageTick
 const AppRoutes = () => {
     return (
         <Routes>
-            <Route path="/" element={<Navigate to='/admin' />} />
             <Route path="/admin" element={<AdminLayout />}>
                 <Route path="dashboard" element={<DashboardPage />} />
                 <Route path="account" element={<AccountUserPage />} />
@@ -21,8 +20,9 @@ const AppRoutes = () => {
                 <Route path="manage-ticket/ticket" element={<ManageTicketPage />} />
                 <Route path="manage-ticket/ticket-order" element={<ManageTicketOrderPage />} />
                 <Route path="manage-ticket/ticket-order/edit/:id" element={<ManageTicketOrderEditPage />} />
-
+                <Route path="*" element={<Navigate to='/admin/dashboard' />} />
             </Route>
+            <Route path="*" element={<Navigate to='/admin/dashboard' />} />
         </Routes>
     )
 }
