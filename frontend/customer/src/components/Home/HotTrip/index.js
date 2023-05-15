@@ -17,12 +17,16 @@ const HotTrip = () => {
             img: RGImg,
             title: 'Sài gòn - Rạch giá',
             distance: 235,
+            departure_city: 'TP.Hồ Chí Minh',
+            arrival_city: 'Rạch Giá',
             duration: 8,
             price: 190000
         },
         {
             img: CTImg,
             title: 'Sài gòn - Cần thơ',
+            departure_city: 'TP.Hồ Chí Minh',
+            arrival_city: 'Cần Thơ',
             distance: 190,
             duration: 4,
             price: 165000
@@ -30,6 +34,8 @@ const HotTrip = () => {
         {
             img: BTImg,
             title: 'Sài gòn - Bến tre',
+            departure_city: 'TP.Hồ Chí Minh',
+            arrival_city: 'Bến Tre',
             distance: 75,
             duration: 3,
             price: 90000
@@ -37,6 +43,8 @@ const HotTrip = () => {
         {
             img: CMImg,
             title: 'Sài gòn - Cà mau',
+            departure_city: 'TP.Hồ Chí Minh',
+            arrival_city: 'Cà Mau',
             distance: 357,
             duration: 8,
             price: 230000
@@ -44,6 +52,8 @@ const HotTrip = () => {
         {
             img: CDImg,
             title: 'Sài gòn - Châu đốc',
+            departure_city: 'TP.Hồ Chí Minh',
+            arrival_city: 'Châu Đốc',
             distance: 240,
             duration: 6,
             price: 175000
@@ -51,6 +61,8 @@ const HotTrip = () => {
         {
             img: BLImg,
             title: 'Sài gòn - Bạc liêu',
+            departure_city: 'TP.Hồ Chí Minh',
+            arrival_city: 'Bạc Liêu',
             distance: 280,
             duration: 7,
             price: 190000

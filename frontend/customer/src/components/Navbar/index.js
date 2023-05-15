@@ -75,11 +75,11 @@ const Navbar = () => {
                             <div className={classes['user-box']}>
                                 <div className={`${classes.link} ${classes['user-details']}`}>
                                     <FontAwesomeIcon className={classes['no-avatar']} icon={faUserCircle} />
-                                    <span class="name">Hello, </span>
+                                    <span class="name">{ auth.getUserProfile().phone }</span>
                                 </div>
                                 <hr />
                                 <Link className={classes.link} to="/user-profile"><FontAwesomeIcon icon={faUser} /> <span>Edit profile</span></Link>
-                                <Link className={classes.link} to="/account/logout"><FontAwesomeIcon icon={faSignOut} /> <span>Sign out</span></Link>
+                                <Link className={classes.link} onClick={auth.logout}><FontAwesomeIcon icon={faSignOut} /> <span>Sign out</span></Link>
                             </div>
                         </div>
                     </div>
