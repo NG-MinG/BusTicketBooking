@@ -1,29 +1,70 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './ManageTicketOrderEdit.module.css'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useNavigate, useLocation, useParams } from 'react-router-dom'
 import Seat from './Seat/Seat'
 import Status from './Status/Status'
+import SleeperLayout from '../../BusLayout/SleeperLayout/SleeperLayout'
+import LimousineLayout from '../../BusLayout/LimousineLayout/LimousineLayout'
+import ChairLayout from '../../BusLayout/ChairLayout/ChairLayout'
+import axios from 'axios'
 
 export default function ManageTicketOrderEdit() {
   const navigate = useNavigate();
   const location = useLocation();
-  // const { data } = location.state;
-  // console.log(data)
 
-  const [choosingSeats, setChoosingSeats] = useState([]);
-  const [price, setPrice] = useState(0);
+  const [information, setInformation] = useState(location.state)
+  const [choosingSeats, setChoosingSeats] = useState(location.state.chosen_seats);
+  const [ticketInformation, setTicketInformation] = useState({})
+
+  useEffect(() => {
+    axios.patch(process.env.REACT_APP_API_HOST + '/admin/ticket-history/getTicketSeat', { id: information.ticket_id }).then((res) => {
+      // setTicketInformation(res.data.data)
+      const _info = res.data.data
+      _info.booked_seats = res.data.data.booked_seats.filter(val => !location.state.chosen_seats.includes(val))
+      setTicketInformation(_info)
+    }).catch(error => {
+      console.log(error)
+    })
+  }, [])
+
   const chooseSeat = (seatID) => {
     return setChoosingSeats((pre) => {
       if (pre.includes(seatID)) {
-        setPrice((pre) => pre - 150000)
+        // setPrice((pre) => pre - parseInt(props.ticketDetails.price.replace(/\D/g, '')))
         return pre.filter((el, index) => el !== seatID);
       }
-      setPrice((pre) => pre + 150000)
+      // setPrice((pre) => pre + parseInt(props.ticketDetails.price.replace(/\D/g, '')))
       return [...pre, seatID];
     })
   }
+
+  const handleChangeInputName = (e) => {
+    const _info = information.guestInfo
+    _info.name = e.target.value
+    setInformation(prev => ({ ...prev, guestInfo: _info }));
+  }
+
+  const handleChangeInputPhone = (e) => {
+    const _info = information.guestInfo
+    _info.phoneNumber = e.target.value
+    setInformation(prev => ({ ...prev, guestInfo: _info }));
+  }
+
+  const handleSave = () => {
+    const ticket_update = {
+      id: information._id,
+      guestInfo: information.guestInfo,
+      chosen_seats: choosingSeats
+    }
+    axios.patch(process.env.REACT_APP_API_HOST + '/admin/ticket-history/update', ticket_update).then((res) => {
+      console.log("successfully!")
+    }).catch(error => {
+      console.log(error)
+    })
+  }
+
 
 
   return (
@@ -31,106 +72,21 @@ export default function ManageTicketOrderEdit() {
       <FontAwesomeIcon onClick={() => navigate("/admin/manage-ticket/ticket-order")} className={styles.icon} icon={faArrowLeft} style={{ alignSelf: "flex-start", cursor: "pointer", fontSize: "3.2rem", color: '#083F73' }} />
       <div className={styles.main}>
         <div className={styles.information}>
-          <div className={styles.title}>
+          <div className={styles['information-item']}>
             <p>Họ và tên</p>
-            <p>Số điện thoại</p>
-            <p>Thời gian khởi hành</p>
-            <p>Điểm nhận vé</p>
-            <p>Điểm khởi hành</p>
-            <p>Điểm đến</p>
-            <p>Số lượng ghế</p>
-            <p>Số ghế</p>
+            <input onChange={handleChangeInputName} value={information.guestInfo.name} />
           </div>
-          <div className={styles.content}>
-            <input value={"Đinh Nguyễn Duy Khang"} />
-            <input value={"0976975548"} />
-            <input value={"13h 12/01/1992"} />
-            <input value={"1647 Phạm Thế Hiển"} />
-            <input value={"TP. Hồ Chí Minh"} />
-            <input value={"Trà Vinh"} />
-            <p>3</p>
-            <p>B12 B15 B16</p>
+          <div className={styles['information-item']}>
+            <p>Số điện thoại</p>
+            <input onChange={handleChangeInputPhone} value={information.guestInfo.phoneNumber} />
           </div>
         </div>
         <div className={styles["layout-seat"]}>
-          <div className={styles["layout-seat-title"]}>
-            <div className={styles["below"]}>Tầng dưới</div>
-            <div className={styles["above"]}>Tầng trên</div>
-          </div>
-          <div className={styles["seat-tables"]}>
-            <div className={styles["seat-table-container"]}>
-              <table className={styles["seat-table"]}>
-                <tbody>
-                  <tr>
-                    <td><Seat color="#737B83" seatID="A01" isChoosing={choosingSeats.includes("A01")} onChooseSeat={chooseSeat} /></td>
-                    <td className={styles["empty-seat-space"]}><Seat color="#737B83" /></td>
-                    <td><Seat color="#737B83" seatID="A02" isChoosing={choosingSeats.includes("A02")} onChooseSeat={chooseSeat} /></td>
-                  </tr>
-                  <tr>
-                    <td><Seat color="#737B83" seatID="A03" isChoosing={choosingSeats.includes("A03")} onChooseSeat={chooseSeat} /></td>
-                    <td><Seat color="red" seatID="A04" isChoosing={choosingSeats.includes("A04")} onChooseSeat={chooseSeat} /></td>
-                    <td><Seat color="#737B83" seatID="A05" isChoosing={choosingSeats.includes("A05")} onChooseSeat={chooseSeat} /></td>
-                  </tr>
-                  <tr>
-                    <td><Seat color="#737B83" seatID="A06" isChoosing={choosingSeats.includes("A06")} onChooseSeat={chooseSeat} /></td>
-                    <td><Seat color="red" seatID="A07" isChoosing={choosingSeats.includes("A07")} onChooseSeat={chooseSeat} /></td>
-                    <td><Seat color="#737B83" seatID="A08" isChoosing={choosingSeats.includes("A08")} onChooseSeat={chooseSeat} /></td>
-                  </tr>
-                  <tr>
-                    <td><Seat color="#737B83" seatID="A09" isChoosing={choosingSeats.includes("A09")} onChooseSeat={chooseSeat} /></td>
-                    <td><Seat color="red" seatID="A10" isChoosing={choosingSeats.includes("A10")} onChooseSeat={chooseSeat} /></td>
-                    <td><Seat color="#737B83" seatID="A11" isChoosing={choosingSeats.includes("A11")} onChooseSeat={chooseSeat} /></td>
-                  </tr>
-                  <tr>
-                    <td><Seat color="#737B83" seatID="A12" isChoosing={choosingSeats.includes("A12")} onChooseSeat={chooseSeat} /></td>
-                    <td><Seat color="red" seatID="A13" isChoosing={choosingSeats.includes("A13")} onChooseSeat={chooseSeat} /></td>
-                    <td><Seat color="#737B83" seatID="A14" isChoosing={choosingSeats.includes("A14")} onChooseSeat={chooseSeat} /></td>
-                  </tr>
-                  <tr>
-                    <td><Seat color="#737B83" seatID="A15" isChoosing={choosingSeats.includes("A15")} onChooseSeat={chooseSeat} /></td>
-                    <td><Seat color="red" seatID="A16" isChoosing={choosingSeats.includes("A16")} onChooseSeat={chooseSeat} /></td>
-                    <td><Seat color="#737B83" seatID="A17" isChoosing={choosingSeats.includes("A17")} onChooseSeat={chooseSeat} /></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div className={styles["seat-table-container"]}>
-              <table className={styles["seat-table"]}>
-                <tbody>
-                  <tr>
-                    <td><Seat color="#737B83" seatID="B01" isChoosing={choosingSeats.includes("B01")} onChooseSeat={chooseSeat} /></td>
-                    <td className={styles["empty-seat-space"]}><Seat color="#737B83" /></td>
-                    <td><Seat color="#737B83" seatID="B02" isChoosing={choosingSeats.includes("B02")} onChooseSeat={chooseSeat} /></td>
-                  </tr>
-                  <tr>
-                    <td><Seat color="#737B83" seatID="B03" isChoosing={choosingSeats.includes("B03")} onChooseSeat={chooseSeat} /></td>
-                    <td><Seat color="red" seatID="B04" isChoosing={choosingSeats.includes("B04")} onChooseSeat={chooseSeat} /></td>
-                    <td><Seat color="#737B83" seatID="B05" isChoosing={choosingSeats.includes("B05")} onChooseSeat={chooseSeat} /></td>
-                  </tr>
-                  <tr>
-                    <td><Seat color="#737B83" seatID="B06" isChoosing={choosingSeats.includes("B06")} onChooseSeat={chooseSeat} /></td>
-                    <td><Seat color="red" seatID="B07" isChoosing={choosingSeats.includes("B07")} onChooseSeat={chooseSeat} /></td>
-                    <td><Seat color="#737B83" seatID="B08" isChoosing={choosingSeats.includes("B08")} onChooseSeat={chooseSeat} /></td>
-                  </tr>
-                  <tr>
-                    <td><Seat color="#737B83" seatID="B09" isChoosing={choosingSeats.includes("B09")} onChooseSeat={chooseSeat} /></td>
-                    <td><Seat color="red" seatID="B10" isChoosing={choosingSeats.includes("B10")} onChooseSeat={chooseSeat} /></td>
-                    <td><Seat color="#737B83" seatID="B11" isChoosing={choosingSeats.includes("B11")} onChooseSeat={chooseSeat} /></td>
-                  </tr>
-                  <tr>
-                    <td><Seat color="#737B83" seatID="B12" isChoosing={choosingSeats.includes("B12")} onChooseSeat={chooseSeat} /></td>
-                    <td><Seat color="red" seatID="B13" isChoosing={choosingSeats.includes("B13")} onChooseSeat={chooseSeat} /></td>
-                    <td><Seat color="#737B83" seatID="B14" isChoosing={choosingSeats.includes("B14")} onChooseSeat={chooseSeat} /></td>
-                  </tr>
-                  <tr>
-                    <td><Seat color="#737B83" seatID="B15" isChoosing={choosingSeats.includes("B15")} onChooseSeat={chooseSeat} /></td>
-                    <td><Seat color="red" seatID="B16" isChoosing={choosingSeats.includes("B16")} onChooseSeat={chooseSeat} /></td>
-                    <td><Seat color="#737B83" seatID="B17" isChoosing={choosingSeats.includes("B17")} onChooseSeat={chooseSeat} /></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+          {ticketInformation.bus_type === "Limousine" && <LimousineLayout bookedSeats={ticketInformation.booked_seats} choosingSeats={choosingSeats} onChooseSeat={chooseSeat} />}
+          {ticketInformation.bus_type === "Giường" && <SleeperLayout bookedSeats={ticketInformation.booked_seats} choosingSeats={choosingSeats} onChooseSeat={chooseSeat} />}
+          {ticketInformation.bus_type === "Ghế" && <ChairLayout bookedSeats={ticketInformation.booked_seats} choosingSeats={choosingSeats} onChooseSeat={chooseSeat} />}
+
+
           <div className={styles["notes"]}>
             <div className={styles["status"]}>
               <span className={styles["color-indicate"]}><Status color="#C0C6CC" /></span>
@@ -146,8 +102,9 @@ export default function ManageTicketOrderEdit() {
             </div>
           </div>
         </div>
+        <button className={styles.save} onClick={handleSave}>Lưu</button>
+
       </div>
-      <button className={styles.save}>Lưu</button>
 
     </div>
   )

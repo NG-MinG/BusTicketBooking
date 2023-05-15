@@ -8,7 +8,7 @@ const Searching = (props) => {
             <button className={styles["searching-btn"]}><MagnifyingGlassIcon/></button> 
             <input type="text" className = {styles["search-input"]} placeholder="Tìm kiếm"/>
         </form>
-        <CreateButton onCreateTicket = {props.onCreateTicket}/>
+        <CreateButton action = "create" onCreateTicket = {props.onCRUDTicket}/>
     </div>
 }
 export default Searching;

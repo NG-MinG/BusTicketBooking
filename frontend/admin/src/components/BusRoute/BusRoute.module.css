@@ -55,6 +55,32 @@
     color: white;
 }
 
+.add-button{
+    border: #417DD8 solid 1px;
+    background: #417DD8;
+    color: white;
+    font-size: 1.3rem;
+    font-weight: 600;
+    height: 3.6rem;
+    width: 12rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.add-button:hover{
+    background: #5892e9;
+    cursor: pointer;
+    color: white;
+}
+
 .filter-icon{
     padding: 0;
     border: #417DD8 solid 1px;
@@ -82,7 +108,11 @@
 .table-containter td, .table-containter th {
     padding: 0.8rem;
   }
-  
+
+.small-space{
+    width: 2rem;
+}
+
 .table-containter tr:nth-child(even){background-color: #EAF5FF;}
   
 .table-containter tr:hover {background-color: #E6ECF1;}
@@ -96,6 +126,10 @@
 
 .table-containter > tbody > tr > td {
     padding: 1rem; 
+}
+
+.table-containter > tbody > tr > td > a {
+    cursor: pointer;
 }
 
 .table-containter > tbody > tr > td > a :hover {
@@ -121,4 +155,90 @@
   
 .listAccount::-webkit-scrollbar-track {
     background: #f1f1f1; 
+}
+
+.foot-new{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.modal-head{
+    font-size: 1.7rem;
+    color: #417DD8;
+    font-weight: 700;
+    margin-top: 0.5rem;
+}
+
+.modal-save-button{
+    background: #417DD8;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    height: 3rem;
+    width: 10rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border: none;
+    margin-top: 1rem;
+}
+
+.modal-save-button:hover{
+    background: #5892e9;
+    cursor: pointer;
+    color: white;
+}
+
+.modal-cancel-button{
+    background: #868e96;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    height: 3rem;
+    width: 5rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border: none;
+    margin-top: 1rem;
+}
+
+.modal-cancel-button:hover{
+    background: #adb5bd;
+    cursor: pointer;
+    color: white;
+}
+
+
+.modal-body-container{
+    margin: 1rem 2.5rem;
+}
+
+.modal-row-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.4rem;
+    margin-top: 2rem;
+}
+
+.modal-row-container > div{
+font-weight: 600;
+}
+
+.modal-row-container > select, input{
+    height: 3rem;
+    width: 30rem;
 }

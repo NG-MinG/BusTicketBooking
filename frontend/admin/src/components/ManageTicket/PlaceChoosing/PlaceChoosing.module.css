@@ -1,6 +1,4 @@
 .wrapper {
-    /* background-color: azure; */
-    background-color: white;
     border: 2px solid #ededed;
     border-radius: 8px;
     display: flex;
@@ -25,6 +23,7 @@
     border: 1px solid #d7d7d7;
     border-radius: 8px;
     padding: 1rem;
+    outline: none;
 }
 
 .wrapper > select#choose-place > option {

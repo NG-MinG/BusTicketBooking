@@ -5,7 +5,7 @@
 }
 
 .wrapper > .place-choosing {
-    width: 68%;
+    width: 75%;
     height: 8rem;
     border-radius: 3px;
     margin: 3.6rem auto;
@@ -46,9 +46,8 @@ div.ticket-managing > div.crud-ticket-form {
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    width: 78rem;
+    width: 87rem;
     overflow: auto;
-    height: 70rem;
     background-color: white;
     border-radius: 12px;
     padding-bottom: 2rem;
@@ -86,7 +85,7 @@ div.ticket-managing > div.crud-ticket-form > div.ticket-details > div.form > div
     -webkit-appearance: none;
     -moz-appearance: none;
     padding: 0.6rem 1rem;
-    width: 13rem;
+    width: 17rem;
     border-radius: 6px;
     outline: none;
     font-family: 'Montserrat', sans-serif;
@@ -110,7 +109,7 @@ div.ticket-managing > div.crud-ticket-form > div.ticket-details > div.form > div
 }
 
 div.ticket-managing > div.crud-ticket-form > div.ticket-details > div.form > div.first-row > div.date-time > input {
-    width: 12rem;
+    width: 14rem;
     padding: 0.6rem;
     outline: none;
     border: 1px solid #767676;
@@ -168,7 +167,7 @@ div.ticket-managing > div.crud-ticket-form > div.ticket-details > div.form > div
 }
 
 div.ticket-managing > div.crud-ticket-form > div.ticket-details > div.form > div.second-row  > select.bus-type {
-    margin-left: 4.2rem;
+    margin-left: 12.2rem;
     width: 14rem;
     border-radius: 6px;
 }
@@ -192,7 +191,16 @@ div.ticket-managing > div.crud-ticket-form > div.ticket-details > div.form > div
 
 
 div.ticket-managing > div.crud-ticket-form > div.create-btn{
-    margin: 0 auto;
+    margin: 2rem auto;
     width: 80%;
-    text-align: right;
+    text-align: center;
+}
+
+
+
+.bus-layout {
+    margin: 0 auto;
+    margin-top: 2.4rem;
+    width: 80%;
+    /* background-color: red; */
 }
