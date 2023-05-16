@@ -11,12 +11,10 @@ export default function BranchItem({ value }) {
         <div className={styles.items}>
           <div className={`${styles.item} ${styles.address}`}>
             <FontAwesomeIcon icon={faLocationDot} style={{ color: '#000', fontSize: '2rem' }} />
-
             <p>{values.address}</p>
           </div>
-          <div className={styles.item}>
+          <div className={`${styles.item} ${styles.phone}`}>
             <FontAwesomeIcon icon={faPhone} style={{ color: '#000', fontSize: '1.9rem' }} />
-
             <p>{values.phone}</p>
           </div>
         </div>

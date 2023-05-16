@@ -3,6 +3,8 @@ import styles from './MyTicketItem.module.css'
 import { faCalendarCheck, faClock } from '@fortawesome/free-regular-svg-icons'
 import { faArrowRightLong, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { toDateFormat, toPriceFormat } from "../../../../utilities/format";
+
 
 export default function MyTicketItem(props) {
   const date = new Date()
@@ -41,11 +43,13 @@ export default function MyTicketItem(props) {
             <p>{props.value.number_of_seats}</p>
           </div>
           <div className={styles.seatName}>
-            <p>Số ghế:</p>
-            <p>{props.value.chosen_seats}</p>
+            <p style={{ display: 'flex', fontWeight: '500' }} >Số ghế: &nbsp;
+              {props.value.chosen_seats.map((value, index) => (
+                <p key={index} style={{ fontWeight: '400' }}>{value} &nbsp;</p>
+              ))}</p>
           </div>
           <div className={styles.ticketPickUp}>
-            <p>Nơi nhận vé:</p>
+            <p style={{ minWidth: '9.6rem' }}>Nơi nhận vé:</p>
             <p>{props.value.depot_address}</p>
           </div>
         </div>
@@ -54,18 +58,22 @@ export default function MyTicketItem(props) {
             <p>Số điện thoại:</p>
             <p>{props.value.guestInfo.phoneNumber}</p>
           </div>
+          <div className={styles.busType}>
+            <p>Loại xe:</p>
+            <p>{props.value.bus_type}</p>
+          </div>
           <div className={styles.expense}>
-            <p>Giá:</p>
-            <p>{props.value.total_price}</p>
+            {/* <p>Giá:</p> */}
+            <p>{toPriceFormat(props.value.total_price)}đ</p>
           </div>
         </div>
-        <div className={styles.cancelButton}>
+        {/* <div className={styles.cancelButton}>
           <FontAwesomeIcon icon={faTrash} style={{ color: '#ffffff', fontSize: '2.1rem' }} />
           <p>hủy chuyến</p>
-        </div>
+        </div> */}
       </div>
-      {expire && <div className={styles.expire}></div>}
-      {expire && <p className={styles['expire-text']}>Hết hạn</p>}
+      {/* {expire && <div className={styles.expire}></div>} */}
+      {/* {expire && <p className={styles['expire-text']}>Hết hạn</p>} */}
     </div>
   )
 }

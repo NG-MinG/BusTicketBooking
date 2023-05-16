@@ -4,6 +4,8 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import axios from 'axios'
 import { auth } from '../../../utilities/storage'
+import user_avatart from '../../../assets/images/User/user_avatart.png'
+
 
 
 export default function EditInformation() {
@@ -62,7 +64,7 @@ export default function EditInformation() {
         <div className={styles.addIcon}>
           <FontAwesomeIcon icon={faPlus} style={{ color: '#417DD8', fontSize: '3.5rem', cursor: "pointer" }} />
         </div>
-        <img alt="" src='' />
+        <img alt="" src={user_avatart} />
       </div>
       <button type='submit'>Lưu</button>
       {nameError.length > 0 ? <p className={styles['error']}>{nameError}</p> : <p className={styles['success']}>Successfully!</p>}

@@ -45,10 +45,11 @@
 
 .content{
   display: flex;
-  justify-content: space-between;
-  background-color: #417DD8;
+  /* justify-content: space-between; */
+  background-color: #e7f5ff;
   padding: 1.4rem 2rem;
   position: relative;
+  padding-bottom: 2rem;
 }
 
 .left,.right{
@@ -57,33 +58,59 @@
   gap: 1.2rem;
 }
 
+.left{
+  width: 52rem;
+}
+
+.right{
+  padding-left: 1.5rem;
+}
+
 .content p{
   font-size: 1.5rem;
 }
 
-.name, .seats, .seatName, .ticketPickUp{
+.name, .seats, .seatName,.busType{
   display: flex;
   align-items: center;
-  color: white;
+  color: #083F73;
   gap: .5rem;
 }
 
-.name p:last-child, .seats p:last-child, .seatName p:last-child, .ticketPickUp p:last-child{
+.ticketPickUp{
+  display: flex;
+  color: #083F73;
+  gap: .5rem;
+}
+
+.name p:first-child, .seats p:first-child, .seatName p:first-child, .ticketPickUp p:first-child, .phoneNumber p:first-child, .busType p:first-child{
   font-weight: 500;
 }
 
 .phoneNumber, .expense{
   display: flex;
   align-items: center;
-  color: white;
+  color: #083F73;
   gap: .5rem;
 }
 
-.phoneNumber p:last-child,.expense p:last-child{
+.phoneNumber p:first-child p:first-child{
   font-weight: 500;
 }
 
-.cancelButton{
+.expense{
+  position: absolute;
+  color: #ff0000;
+  top: 70%;
+  right: 3%;
+  font-weight: 600;
+}
+
+.expense p{
+  font-size: 21px;
+}
+
+/* .cancelButton{
   cursor: pointer;
   position: absolute;
   background-color: #CD3E3E;
@@ -95,7 +122,7 @@
   align-items: center;
   gap:0.5rem;
   border-radius: 5px;
-}
+} */
 
 .cancelButton:hover{
   background-color: #b22f2f;
