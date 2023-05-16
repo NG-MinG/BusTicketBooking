@@ -1,6 +1,7 @@
 import catchAsync from "../utils/catchAsync.js"
 import TicketHistory from "../models/ticketHistoryModel.js"
 import Ticket from "../models/ticketModel.js";
+import User from "../models/userModel.js";
 
 const getAll = catchAsync(async (req, res) => {
   const ticketHistory = await TicketHistory.find()
@@ -49,9 +50,14 @@ const deleteItem = catchAsync(async (req, res) => {
   const item = await TicketHistory.findById(req.body.id)
   await TicketHistory.deleteOne({ _id: req.body.id })
 
+  const user = await User.findById(item.user_id)
+  user.myTicket.splice(user.myTicket.indexOf(req.body.id.toString()), 1)
+  user.save()
+
   const ticket = await Ticket.findById(item.ticket_id);
   ticket.booked_seats = ticket.booked_seats.filter(val => !item.chosen_seats.includes(val))
   ticket.save()
+
   res.status(200).json({
     status: 'success',
     data: item
@@ -60,23 +66,34 @@ const deleteItem = catchAsync(async (req, res) => {
 })
 
 const getTicketSeat = catchAsync(async (req, res) => {
-  const ticket = await Ticket.findById(req.body.id);
+  const ticket = await Ticket.findById(req.body.ticket_id);
+  const ticket_history = await TicketHistory.findById(req.body.history_id);
   res.status(200).json({
     status: 'success',
-    data: ticket
+    data: {
+      ticket: ticket,
+      ticket_history: ticket_history
+    }
   })
 })
 
 const update = catchAsync(async (req, res) => {
   const ticket_history = await TicketHistory.findById(req.body.id)
+
+  const ticket = await Ticket.findById(ticket_history.ticket_id);
+  ticket.booked_seats = ticket.booked_seats.filter(val => !ticket_history.chosen_seats.includes(val))
+  ticket.booked_seats = [...ticket.booked_seats, ...req.body.chosen_seats]
+  ticket.save()
+
+  // console.log(ticket.booked_seats)
+
   ticket_history.chosen_seats = req.body.chosen_seats
   ticket_history.number_of_seats = req.body.chosen_seats.length
   ticket_history.guestInfo = req.body.guestInfo
+  ticket_history.total_price = req.body.chosen_seats.length * ticket.price
   ticket_history.save()
 
-  const ticket = await Ticket.findById(ticket_history.ticket_id);
-  ticket.booked_seats = ticket.booked_seats.filter(val => !req.body.chosen_seats.includes(val))
-  ticket.save()
+
   res.status(200).json({
     status: 'success',
   })

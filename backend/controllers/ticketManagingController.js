@@ -35,7 +35,6 @@ const updateTicket = catchAsync(async(req,res,next) => {
     const ticket_id = req.params.id;
     // console.log("req.body: ", req.body);
     const updatedTicket = await Ticket.findByIdAndUpdate(ticket_id, req.body, {new: true})
-    console.log("this updated ticket: ", updatedTicket);
     res.status(200).json({
         status: "success",
         updatedTicket: updatedTicket
@@ -65,4 +64,12 @@ const getDetails = catchAsync(async (req, res, next) => {
     })
 });
 
-export {getLocations, getStations, createTicket, updateTicket, deleteTicket, getDetails};
+const searchTicket = catchAsync(async(req,res,next) => {
+    const tickets = await Ticket.find({$text: {$search: req.query.q}});
+    res.status(200).json({
+        status: 'success',
+        tickets: tickets,
+    })
+})
+
+export {getLocations, getStations, createTicket, updateTicket, deleteTicket, searchTicket, getDetails};

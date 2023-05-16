@@ -2,6 +2,7 @@ import User from "../models/userModel.js";
 import catchAsync from "../utils/catchAsync.js"
 import AppError from "../utils/appError.js";
 import TicketHistory from "../models/ticketHistoryModel.js";
+import Ticket from "../models/ticketModel.js";
 
 
 const userProfile = catchAsync(async (req, res) => {
@@ -95,10 +96,12 @@ const getMyTicket = catchAsync(async (req, res) => {
 
   for (let i of user.myTicket) {
     const ticket = await TicketHistory.findById(i)
-    if (ticket && ticket.stage === "Đã đặt") myTicket.push(ticket)
-    else user.myTicket.splice(user.myTicket.indexOf(i), 1)
+    // if (ticket && ticket.stage === "Đã đặt") 
+    myTicket.push(ticket)
+    // else user.myTicket.splice(user.myTicket.indexOf(i), 1)
   }
-  user.save()
+
+  console.log(myTicket)
 
   res.status(200).json({
     status: 'success',
