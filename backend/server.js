@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import app from "./app.js";
-import { Server } from 'socket.io';
+// import { Server } from 'socket.io';
+import io from './socket.js';
 
 
 const port = process.env.PORT || 5000;
@@ -18,6 +19,9 @@ const server = app.listen(port, () => {
     console.log(`App is running on port ${port}...`);
 });
 
+// init socket
+io.init(server);
+
 process.on('unhandledRejection', (err) => {
     console.log('Unhandled Rejection. Shutting down...');
     console.log(err.name, err.message);
@@ -26,20 +30,20 @@ process.on('unhandledRejection', (err) => {
     });
 });
 
-export const io = new Server(server, {
-    cors: {
-        origin: "*"
-    }
-});
+// export const io = new Server(server, {
+//     cors: {
+//         origin: "*"
+//     }
+// });
 
 // io.on('connection', (socket) => {
-// console.log("socket connected")
-// socket.on('book-ticket', async (data) => {
-//     io.emit("book-ticket", data)
-// })
-// const onBookTicket = function (data) {
-//     io.emit("book-ticket", data);
-// };
+//     console.log("socket connected")
+//     socket.on('book-ticket', async (data) => {
+//         io.emit("book-ticket", data)
+//     })
+//     const onBookTicket = function (data) {
+//         io.emit("book-ticket", data);
+//     };
 // })
 
 // Import the functions you need from the SDKs you need

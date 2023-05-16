@@ -3,7 +3,7 @@ import Ticket from "../models/ticketModel.js";
 import Station from "../models/stationModel.js";
 import User from "../models/userModel.js";
 import catchAsync from "../utils/catchAsync.js";
-import { io } from "../server.js"
+import io from "../socket.js"
 import TicketHistory from "../models/ticketHistoryModel.js";
 
 const getTickets = catchAsync(async (req, res, next) => {
@@ -45,8 +45,9 @@ const bookTicket = catchAsync(async (req, res, next) => {
         "date_start": ticket.date,
         "stage": "Đang xử lí"
     })
+    const socket = io.getIO();
     // using socket_io for displaying the ticket ordered in admin view dashboard
-    io.emit("book-ticket", newBooking);
+    socket.emit("book-ticket", newBooking);
     user.myTicket.push(newBooking._id)
     user.save()
 

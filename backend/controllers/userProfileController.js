@@ -101,7 +101,7 @@ const getMyTicket = catchAsync(async (req, res) => {
     // else user.myTicket.splice(user.myTicket.indexOf(i), 1)
   }
 
-  console.log(myTicket)
+  // console.log(myTicket)
 
   res.status(200).json({
     status: 'success',
