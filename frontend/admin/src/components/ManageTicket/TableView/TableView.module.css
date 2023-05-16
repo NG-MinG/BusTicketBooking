@@ -1,6 +1,6 @@
 
 div.table-section {
-    width: 75%;
+    width: 90%;
     margin: 0 auto;
     /* background-color: red; */
 }
@@ -34,6 +34,7 @@ div.table-container > table.ticket-table > thead {
     height: 5rem;
     border: 2px solid transparent; 
     /* to make thead fixed when overflow situation */
+    position: -webkit-sticky;
     position: sticky;
     top: 0;
 }
@@ -45,7 +46,8 @@ div.table-container > table.ticket-table > thead{
 
 div.table-container > table.ticket-table > thead > tr > th {
     text-align: left;
-    padding-left: 1.5rem;
+    /* padding-left: 1.5rem; */
+    padding-left: 1.15rem;
 }
 
 div.table-container > table.ticket-table > thead > tr > th:first-child {
@@ -64,7 +66,9 @@ div.table-container > table.ticket-table > thead > tr > th:nth-last-child(2) {
 
 /*  custom arrow of select */
 .select-custom {
-    appearance: none;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
     background-image: url('../../../assets/svg/ManageTicket/white_down_arrow.svg');
     /* background-position: 70% 65%; */
     background-position: 100% 55%;
@@ -87,7 +91,7 @@ div.table-container > table.ticket-table > thead > tr > th > select {
     width: 40%;
 } */
 
-div.table-container > table.ticket-table > thead > tr > th:first-child > select {
+/* div.table-container > table.ticket-table > thead > tr > th:first-child > select {
     width: 45%;
 }
 
@@ -105,7 +109,7 @@ div.table-container > table.ticket-table > thead > tr > th:nth-child(4) > select
 
 div.table-container > table.ticket-table > thead > tr > th:nth-child(5) > select {
     width: 76%;
-} 
+}  */
 
 div.table-container > table.ticket-table > thead > tr > th > select > option {
     color: black;

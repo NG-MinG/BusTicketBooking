@@ -41,7 +41,7 @@ const Dashboard = () => {
   });
 
     return <div className={classes.main_content}>
-      <h1 className={classes.dashboard_title}>Dashboard</h1>
+      {/* <h1 className={classes.dashboard_title}>Dashboard</h1> */}
       <div className={classes.dashboard_section}>
         <Calendar />
         <div className={classes.dashboard_analyst}>

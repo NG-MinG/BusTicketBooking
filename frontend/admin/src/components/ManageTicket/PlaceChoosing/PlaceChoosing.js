@@ -10,13 +10,13 @@ const PlaceChoosing = (props) => {
     const dispatch = useDispatch();
     const handleSelectChange = (event) => {
         if (props.where === "from_TP.HCM") {
-            axios.get(`http://localhost:5000/bus/api/v1/tickets/get-tickets/?departure_city=TP.Hồ Chí Minh&arrival_city=${event.target.value}`)
+            axios.get(`${process.env.REACT_APP_API_HOST}/tickets/get-tickets/?departure_city=TP.Hồ Chí Minh&arrival_city=${event.target.value}`)
             .then((res) => {
             dispatch(setTickets([...res.data.tickets]))
         }).catch((err) => console.error(err));
         }
         else if (props.where === "to_TP.HCM") {
-            axios.get(`http://localhost:5000/bus/api/v1/tickets/get-tickets/?departure_city=${event.target.value}&arrival_city=TP.Hồ Chí Minh`)
+            axios.get(`${process.env.REACT_APP_API_HOST}/tickets/get-tickets/?departure_city=${event.target.value}&arrival_city=TP.Hồ Chí Minh`)
             .then((res) => {
                 dispatch(setTickets([...res.data.tickets]))
             }).catch((err) => console.error(err));
