@@ -74,11 +74,9 @@ const TableView = (props) => {
         let ticketsFiltered = [...tickets];
         if (e.target.value !== "Giá vé") {
             if (e.target.value === "LowToHigh") {
-                console.log("low to high");
                 ticketsFiltered = ticketsFiltered.sort((a,b) => a.price - b.price);
             }
             else if (e.target.value === "HighToLow") {
-                console.log("high to low");
                 ticketsFiltered = ticketsFiltered.sort((a,b) => b.price - a.price);
             }
         }

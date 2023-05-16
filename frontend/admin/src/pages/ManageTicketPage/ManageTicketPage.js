@@ -20,7 +20,7 @@ const ManageTicketPage = () => {
     
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
+    const [trips, setTrips] = useState([]);
     const tickets = useSelector((state) => state.ticketManaging.tickets); 
     const currentTicketDetails = useSelector((state) => state.ticketManaging.currentTicketDetails);
     // used for crud ticket form
@@ -95,10 +95,27 @@ const ManageTicketPage = () => {
                 [name]: value,
             }
         })
+        let travel_time = currentTicketDetails.travel_time;
+        let distance =  currentTicketDetails.distance;
+        
+        if (selectedChange.departure_city !== '' && name === "arrival_city") {
+            const trip = trips.find(el => el.departure_city === selectedChange.departure_city 
+                && el.arrival_city === value);
+            travel_time = trip.duration;
+            distance = trip.distance;
+        }
+        else if (selectedChange.arrival_city !== '' && name === "departure_city") {
+            const trip = trips.find(el => el.arrival_city === selectedChange.arrival_city && el.departure_city === value);
+            travel_time = trip.duration;
+            distance = trip.distance;
+        }
+
         dispatch(setCurrentTicketDetails({
             ...currentTicketDetails,
             [name]: value,
             total_seats: total_seats,
+            travel_time: travel_time,
+            distance: distance,
         }));
     }
     // handle input changes in CRUD ticket form
@@ -176,6 +193,7 @@ const ManageTicketPage = () => {
                 dispatch(updateTicket(res.data.updatedTicket));
                 alert("Cập nhật thành công");
                 navigate("/admin/manage-ticket/ticket");
+                dispatch(setCurrentTicketDetails({}));
                 setIsCRUDTicket(false);
             }
         }).catch((err) => {
@@ -190,6 +208,8 @@ const ManageTicketPage = () => {
             setLocations(res.data.locations);
             res = await axios.get(`${process.env.REACT_APP_API_HOST}/admin/ticket-managing/get-stations`);
             setStations(res.data.stations);
+            res = await axios.get(`${process.env.REACT_APP_API_HOST}/admin/ticket-managing/get-trips`);
+            setTrips(res.data.trips);
         }
         fetchData();
     }, [])
