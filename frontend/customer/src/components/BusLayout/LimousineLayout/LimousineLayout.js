@@ -41,7 +41,7 @@ const LimousineLayout = (props) => {
                         <td><Seat color = {props.bookedSeats.includes("A15") ? "red" : "#737B83"} seatID = "A15" isChoosing = {props.choosingSeats.includes("A15")} onChooseSeat = {props.onChooseSeat}/></td>
                         <td className = {styles["empty-seat-space"]}><Seat color = "#737B83"/></td>
                         {/* <td><Seat color = "red" seatID = "A16" isChoosing = {props.choosingSeats.includes("A16")} onChooseSeat = {props.onChooseSeat}/></td> */}
-                        <td><Seat color = {props.bookedSeats.includes("A17") ? "red" : "#737B83"} seatID = "A16" isChoosing = {props.choosingSeats.includes("A17")} onChooseSeat = {props.onChooseSeat}/></td>
+                        <td><Seat color = {props.bookedSeats.includes("A16") ? "red" : "#737B83"} seatID = "A16" isChoosing = {props.choosingSeats.includes("A16")} onChooseSeat = {props.onChooseSeat}/></td>
                     </tr>
                 </tbody>
             </table>

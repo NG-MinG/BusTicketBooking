@@ -5,6 +5,7 @@ import ConfirmRoute from "../../components/TicketBooking/ConfirmRoute/ConfirmRou
 import GuestInfo from "../../components/TicketBooking/GuestInfo/GuestInfo"
 import Payment from "../../components/TicketBooking/Payment/Payment"
 
+
 const TicketBookingPage = () => {
     const [searchParams] = useSearchParams();
     const departure_city = searchParams.get('departure_city');
@@ -18,7 +19,6 @@ const TicketBookingPage = () => {
     })
     
     const setStep = (newState) => {
-        console.log("new State: ", newState)
         setProcess(pre => ({
             ...pre,
             ...newState
