@@ -3,6 +3,7 @@ import Ticket from "../models/ticketModel.js";
 import Station from "../models/stationModel.js";
 import catchAsync from "../utils/catchAsync.js";
 import AppError from "../utils/appError.js";
+import TicketHistory from '../models/ticketHistoryModel.js';
 
 
 const getLocations = catchAsync(async (req,res,next) => {
@@ -48,6 +49,21 @@ const deleteTicket = catchAsync(async(req,res,next) => {
     })
 })
 
+const getDetails = catchAsync(async (req, res, next) => {
+    const ticket = await Ticket.findById(req.params.id);
+    
+    if (!ticket)
+        return next(new AppError('No ticket found with that ID', 404));
+
+    const ticketHistory = await TicketHistory.find({ ticket_id: ticket._id.toString() });
+
+    res.status(200).json({
+        status: 'success',
+        ticket: ticket,
+        ticketHistory: ticketHistory
+    })
+});
+
 const searchTicket = catchAsync(async(req,res,next) => {
     const tickets = await Ticket.find({$text: {$search: req.query.q}});
     res.status(200).json({
@@ -56,4 +72,4 @@ const searchTicket = catchAsync(async(req,res,next) => {
     })
 })
 
-export {getLocations, getStations, createTicket, updateTicket, deleteTicket, searchTicket};
+export {getLocations, getStations, createTicket, updateTicket, deleteTicket, searchTicket, getDetails};
