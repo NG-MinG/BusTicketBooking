@@ -67,6 +67,7 @@
     overflow: hidden;
     border-radius: 50%;
     border: none;
+    background-color: white;
 }
 
 .navbar > .foot > .user-dropdown {
@@ -104,7 +105,9 @@
 .navbar > .foot > .user-dropdown > .user-dropdown-list > .user-box hr {
     width: 80%;
     margin: auto;
-    padding: .5rem 0rem;
+    border: none;   
+    border-top: 1px solid lightgray;
+    margin-bottom: .5rem;
 }
 
 .navbar > .foot > .user-dropdown > .user-dropdown-list > .user-box > .link.user-details { 
@@ -150,5 +153,5 @@
 
 .navbar > .foot > .user-dropdown > .user-dropdown-list > .user-box > .link:hover,
 .navbar > .foot > .user-dropdown > .user-dropdown-list > .user-box > .link:hover i {
-    color: #007C3D;
+    color: #083F73;
 }

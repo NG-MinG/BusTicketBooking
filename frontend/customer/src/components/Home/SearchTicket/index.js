@@ -221,7 +221,7 @@ const SearchTicket = () => {
                         <div className={classes.departure_time}>
                             <div className={classes.choose_title}>Ngày đi</div>
                             <div className={classes.time_choosen}>
-                                <TimePicker name="departure_date" />
+                                <TimePicker required name="departure_date" />
                             </div>
                         </div>
                         <div className={classes.line_spec}></div>

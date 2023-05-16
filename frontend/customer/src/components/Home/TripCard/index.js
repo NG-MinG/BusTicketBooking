@@ -1,12 +1,15 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import classes from './TripCard.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClockRotateLeft, faLocationDot, faTicket } from '@fortawesome/free-solid-svg-icons';
 
 const TripCard = ({ trip }) => {
+    const navigate = useNavigate();
+    
     return (
-        <a href='#trip' className={classes.trip_card}>
+        <div onClick={() => { navigate(`/ticket-booking?departure_city=${trip.departure_city}&arrival_city=${trip.arrival_city}&date=${new Date().toISOString().split('T')[0]}`) }} className={classes.trip_card}>
             <div className={classes.trip_card_img}>
                 <img src={trip.img} alt={trip.title} />
             </div>
@@ -26,7 +29,7 @@ const TripCard = ({ trip }) => {
                         <span>{trip.price}đ</span></div>
                 </div>
             </div>
-        </a>
+        </div>
     );
 };
 

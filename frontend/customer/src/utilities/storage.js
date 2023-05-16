@@ -1,10 +1,12 @@
 const auth = {
     login(userInfo) {
+        userInfo.password = '';
         localStorage.setItem('auth', JSON.stringify(userInfo));
     },
 
     getUserProfile() {
-        return delete JSON.parse(localStorage.getItem('auth')).access_token;
+        const authData = JSON.parse(localStorage.getItem('auth'));
+        return authData.user;
     },
 
     getAccessToken() {
