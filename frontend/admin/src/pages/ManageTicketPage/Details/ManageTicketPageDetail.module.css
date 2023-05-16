@@ -53,8 +53,56 @@
     text-transform: uppercase;
     color: #417DD8;
 }
+
 .main_content > .ticket_info > .ticket_info_left {
     display: flex;
     flex-direction: column;
     width: 100%;
+}
+
+.main_content > .ticket_info > .ticket_info_left > .ticket_info_table {
+    margin-top: 3.5rem;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.main_content > .ticket_info > .ticket_info_left > .ticket_info_table th {
+    border: 1px solid #EEEEEE;
+    border-style: solid none solid none;
+    padding: 2rem 3rem;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1.4rem;
+    background-color: #083F73;
+    color: white;
+}
+
+.main_content > .ticket_info > .ticket_info_left > .ticket_info_table th:first-child {
+    border-left-style: solid;
+    border-top-left-radius: .8rem;
+}
+
+.main_content > .ticket_info > .ticket_info_left > .ticket_info_table th:last-child {
+    border-right-style: solid;
+    border-top-right-radius: .8rem;
+}
+
+.main_content > .ticket_info > .ticket_info_left > .ticket_info_table td {
+    font-weight: 500;
+    font-size: 1.5rem;  
+    padding: 1.2rem;
+    text-align: center;
+}
+
+.main_content > .ticket_info > .ticket_info_left > .ticket_info_table td:last-child {
+    font-weight: 700;
+}
+
+.main_content > .ticket_info > .ticket_info_left > .ticket_info_table td > div:last-child {
+    font-weight: 500;
+    color: #696969;
+}
+
+.main_content > .ticket_info > .ticket_info_left > .ticket_info_table td:last-child.green_price {
+    color: #099742;
 }
