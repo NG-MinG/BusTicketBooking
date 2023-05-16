@@ -91,6 +91,7 @@ const Payment = (props) => {
             stepThree: false,
             stepFour: true,
         })
+        navigate('/user-profile/my-ticket');
     }
 
     const closeConfirmForm = () => {
@@ -146,7 +147,7 @@ const Payment = (props) => {
                     <div className={styles["time"]}>
                         <span className={styles["label"]}>Thời gian:</span>
                         <span className={styles["time-info"]}>
-                           <span className={styles["current-time"]}>{hours}:{minutes}</span>
+                           <span className={styles["current-time"]}>{`${ticketBookingDetails.departure_time} - ${ticketBookingDetails.arrival_time}`}</span>
                            <span className={styles["date"]}>{date_now}</span>     
                         </span> 
                     </div>

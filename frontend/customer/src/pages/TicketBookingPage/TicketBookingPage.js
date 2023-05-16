@@ -18,7 +18,6 @@ const TicketBookingPage = () => {
     })
     
     const setStep = (newState) => {
-        console.log("new State: ", newState)
         setProcess(pre => ({
             ...pre,
             ...newState
