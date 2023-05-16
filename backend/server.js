@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import app from "./app.js";
 import { Server } from 'socket.io';
+import bcrypt from 'bcryptjs';
 
 
 const port = process.env.PORT || 5000;
@@ -14,8 +15,9 @@ mongoose
         console.log('Connected to DB successfully');
     });
 
-const server = app.listen(port, () => {
+const server = app.listen(port, async () => {
     console.log(`App is running on port ${port}...`);
+    // console.log(await bcrypt.hash('11111111', 12));
 });
 
 process.on('unhandledRejection', (err) => {
