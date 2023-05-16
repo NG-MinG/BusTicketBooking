@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styles from './Information.module.css'
 import axios from 'axios'
 import { auth } from '../../../utilities/storage'
-
+import user_avatart from '../../../assets/images/User/user_avatart.png'
 export default function Information() {
 
   const [information, setInformation] = useState({})
@@ -36,7 +36,7 @@ export default function Information() {
         {information.address ? <p>{information.address}</p> : <p>&nbsp;</p>}
       </div>
       <div className={styles['avatar']}>
-        <img alt="" src='' />
+        <img alt="" src={user_avatart} />
       </div>
     </div>
   )

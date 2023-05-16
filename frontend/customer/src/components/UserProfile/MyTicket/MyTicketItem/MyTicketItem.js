@@ -3,6 +3,8 @@ import styles from './MyTicketItem.module.css'
 import { faCalendarCheck, faClock } from '@fortawesome/free-regular-svg-icons'
 import { faArrowRightLong, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { toDateFormat, toPriceFormat } from "../../../../utilities/format";
+
 
 export default function MyTicketItem(props) {
   const date = new Date()
@@ -40,9 +42,15 @@ export default function MyTicketItem(props) {
             <p>Số lượng ghế:</p>
             <p>{props.value.number_of_seats}</p>
           </div>
+          <div className={styles.seatName}>
+            <p style={{ display: 'flex', fontWeight: '500' }} >Số ghế: &nbsp;
+              {props.value.chosen_seats.map((value, index) => (
+                <p key={index} style={{ fontWeight: '400' }}>{value} &nbsp;</p>
+              ))}</p>
+          </div>
           <div className={styles.ticketPickUp}>
-            <p style={{ width: '10rem !important' }}>Nơi nhận vé:</p>
-            <p style={{ width: '42rem' }}>{props.value.depot_address}</p>
+            <p style={{ minWidth: '9.6rem' }}>Nơi nhận vé:</p>
+            <p>{props.value.depot_address}</p>
           </div>
         </div>
         <div className={styles.right}>
@@ -50,15 +58,13 @@ export default function MyTicketItem(props) {
             <p>Số điện thoại:</p>
             <p>{props.value.guestInfo.phoneNumber}</p>
           </div>
-          <div className={styles.seatName}>
-            <p style={{ display: 'flex' }}>Số ghế: &nbsp;
-              {props.value.chosen_seats.map((value, index) => (
-                <p>{value} &nbsp;</p>
-              ))}</p>
+          <div className={styles.busType}>
+            <p>Loại xe:</p>
+            <p>{props.value.bus_type}</p>
           </div>
           <div className={styles.expense}>
-            <p>Giá:</p>
-            <p>{props.value.total_price}</p>
+            {/* <p>Giá:</p> */}
+            <p>{toPriceFormat(props.value.total_price)}đ</p>
           </div>
         </div>
         {/* <div className={styles.cancelButton}>
@@ -66,8 +72,8 @@ export default function MyTicketItem(props) {
           <p>hủy chuyến</p>
         </div> */}
       </div>
-      {expire && <div className={styles.expire}></div>}
-      {expire && <p className={styles['expire-text']}>Hết hạn</p>}
+      {/* {expire && <div className={styles.expire}></div>} */}
+      {/* {expire && <p className={styles['expire-text']}>Hết hạn</p>} */}
     </div>
   )
 }

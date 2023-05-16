@@ -46,9 +46,10 @@
 .content{
   display: flex;
   /* justify-content: space-between; */
-  background-color: #417DD8;
+  background-color: #e7f5ff;
   padding: 1.4rem 2rem;
   position: relative;
+  padding-bottom: 2rem;
 }
 
 .left,.right{
@@ -59,7 +60,6 @@
 
 .left{
   width: 52rem;
-  /* background-color: #b22f2f; */
 }
 
 .right{
@@ -70,32 +70,44 @@
   font-size: 1.5rem;
 }
 
-.name, .seats, .seatName{
+.name, .seats, .seatName,.busType{
   display: flex;
   align-items: center;
-  color: white;
+  color: #083F73;
   gap: .5rem;
 }
 
 .ticketPickUp{
   display: flex;
-  color: white;
+  color: #083F73;
   gap: .5rem;
 }
 
-.name p:last-child, .seats p:last-child, .seatName p:last-child, .ticketPickUp p:last-child{
+.name p:first-child, .seats p:first-child, .seatName p:first-child, .ticketPickUp p:first-child, .phoneNumber p:first-child, .busType p:first-child{
   font-weight: 500;
 }
 
 .phoneNumber, .expense{
   display: flex;
   align-items: center;
-  color: white;
+  color: #083F73;
   gap: .5rem;
 }
 
-.phoneNumber p:last-child,.expense p:last-child{
+.phoneNumber p:first-child p:first-child{
   font-weight: 500;
+}
+
+.expense{
+  position: absolute;
+  color: #ff0000;
+  top: 70%;
+  right: 3%;
+  font-weight: 600;
+}
+
+.expense p{
+  font-size: 21px;
 }
 
 /* .cancelButton{

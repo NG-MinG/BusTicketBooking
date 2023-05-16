@@ -18,13 +18,13 @@ export default function MyTicket() {
 
   return (
     <div className={styles.MyTicket}>
-      <div className={styles.listTicket}>
+      {tickets.length > 0 && <div className={styles.listTicket}>
         {
           tickets.map((item, index) => (
             <MyTicketItem key={item.id} value={item} />
           ))
         }
-      </div>
+      </div>}
     </div>
   )
 }
