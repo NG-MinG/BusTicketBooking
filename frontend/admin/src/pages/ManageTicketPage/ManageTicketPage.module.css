@@ -27,6 +27,7 @@ div.ticket-managing {
     right: 0;
     left: 0; 
     bottom: 0;
+    z-index: 12;
 }
 
 div.overlay {
@@ -53,6 +54,7 @@ div.ticket-managing > div.crud-ticket-form {
     background-color: white;
     border-radius: 12px;
     padding-bottom: 2rem;
+    z-index: 13;
 }
 
 div.ticket-managing > div.crud-ticket-form  > div.title {

@@ -4,7 +4,7 @@
 
 .main_content > .list_analyst {
     display: flex;
-    width: 89%;
+    width: 95%;
     justify-content: space-around;
     border: 1px solid #EEEEEE;
     border-radius: .5rem;
@@ -25,11 +25,11 @@
 .main_content > .list_analyst > .analyst_card > div {
     font-weight: bold;
     font-size: 1.9rem;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
 }
 
 .main_content > .ticket_info {
-    width: 89%;
+    width: 95%;
     margin: auto;
     display: flex;
     justify-content: space-between;
@@ -40,6 +40,48 @@
     border: 1px solid #EEEEEE;
     padding: 1.5rem 4rem;
     border-radius: .5rem;
+    width: 100%;
+}
+
+.main_content > .ticket_info > .ticket_info_seats > .description_status {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    margin-top: 2.8rem;
+    margin-bottom: 2rem;
+}
+
+.main_content > .ticket_info > .ticket_info_seats > .description_status > div {
+    display: flex;
+    gap: .8rem;
+    font-weight: 500;
+}
+
+.main_content > .ticket_info > .ticket_info_seats > .description_status > div > span:first-child {
+    display: inline-block;
+    padding: 1rem 1.15rem;
+    border-radius: .5rem;
+    background-color: #C0C6CC;
+}
+
+.main_content > .ticket_info > .ticket_info_seats > .description_status > div > span:first-child + span{
+    color: #737B83;
+}
+
+.main_content > .ticket_info > .ticket_info_seats > .description_status > div > span:first-child.order_color {
+    background-color: red;
+}
+
+.main_content > .ticket_info > .ticket_info_seats > .description_status > div > span:first-child.order_color + span{
+    color: red;
+}
+
+.main_content > .ticket_info > .ticket_info_seats > .description_status > div > span:first-child.choose_color {
+    background-color: #35BE3B;
+}
+
+.main_content > .ticket_info > .ticket_info_seats > .description_status > div > span:first-child.choose_color + span{
+    color: #35BE3B;
 }
 
 .main_content > .ticket_info > .ticket_info_seats > .seats_title {
@@ -48,7 +90,7 @@
     padding: 1.3rem 0rem;
     font-size: 1.4rem;
     border-bottom: 1px solid #EEEEEE;
-    margin-bottom: 3rem;
+    margin-bottom: .5rem;
     font-weight: 600;
     text-transform: uppercase;
     color: #417DD8;
@@ -57,7 +99,7 @@
 .main_content > .ticket_info > .ticket_info_left {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    min-width: 50%;
 }
 
 .main_content > .ticket_info > .ticket_info_left > .ticket_info_table {
@@ -92,6 +134,58 @@
     font-size: 1.5rem;  
     padding: 1.2rem;
     text-align: center;
+    border: 1px solid #EEEEEE;
+    border-style: none none solid none;
+}
+
+.main_content > .ticket_info > .ticket_info_left > .ticket_info_table tr:nth-child(odd).active_row,
+.main_content > .ticket_info > .ticket_info_left > .ticket_info_table tr.active_row {
+    background-color: #F5F9FF;
+}
+
+.main_content > .ticket_info > .ticket_info_left > .ticket_info_table tr:nth-child(odd).active_row td,
+.main_content > .ticket_info > .ticket_info_left > .ticket_info_table tr.active_row td {
+    border: 2px solid #417DD8;
+    border-style: solid none solid none;
+}
+
+.main_content > .ticket_info > .ticket_info_left > .ticket_info_table tr:nth-child(odd).active_row td:first-child,
+.main_content > .ticket_info > .ticket_info_left > .ticket_info_table tr.active_row td:first-child {
+    border-top-left-radius: .8rem;
+}
+
+.main_content > .ticket_info > .ticket_info_left > .ticket_info_table tr:nth-child(odd).active_row td:last-child,
+.main_content > .ticket_info > .ticket_info_left > .ticket_info_table tr.active_row td:last-child {
+    border-bottom-right-radius: .8rem;
+    border-top-right-radius: .8rem;
+}
+
+.main_content > .ticket_info > .ticket_info_left > .ticket_info_table tr:hover,
+.main_content > .ticket_info > .ticket_info_left > .ticket_info_table tr:nth-child(odd):hover {
+    background-color: #F5F9FF;
+    cursor: pointer;
+}
+
+.main_content > .ticket_info > .ticket_info_left > .ticket_info_table tr:nth-child(odd) {
+    background-color: #F9F9F9;
+}
+
+.main_content > .ticket_info > .ticket_info_left > .ticket_info_table tr:last-child > td:last-child {
+    border-right-style: solid;
+    border-bottom-right-radius: .8rem;
+}
+
+.main_content > .ticket_info > .ticket_info_left > .ticket_info_table tr:last-child > td:first-child {
+    border-left-style: solid;
+    border-bottom-left-radius: .8rem;
+}
+
+.main_content > .ticket_info > .ticket_info_left > .ticket_info_table td:first-child {
+    border-left-style: solid;
+}
+
+.main_content > .ticket_info > .ticket_info_left > .ticket_info_table td:last-child {
+    border-right-style: solid;
 }
 
 .main_content > .ticket_info > .ticket_info_left > .ticket_info_table td:last-child {
@@ -105,4 +199,8 @@
 
 .main_content > .ticket_info > .ticket_info_left > .ticket_info_table td:last-child.green_price {
     color: #099742;
+}
+
+.main_content > .ticket_info > .ticket_info_left > .ticket_info_table td:last-child.red_price {
+    color: red;
 }

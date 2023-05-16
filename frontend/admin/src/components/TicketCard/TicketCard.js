@@ -24,7 +24,7 @@ const TicketCard = ({ ticket }) => {
                     <LocationIcon />
                     <div className={classes.ticket_info_trips}>
                         <span>{ticket.departure_depot}</span>
-                        <span className={classes.ticket_info_remaining}>{(Math.trunc(ticket.distance / 1000))} KM - {(Math.trunc(17940 / 60**2))} tiếng</span>
+                        <span className={classes.ticket_info_remaining}>{(Math.trunc(ticket.distance / 1000))}km - {(Math.trunc(17940 / 60**2))} tiếng</span>
                         <span>{ticket.arrival_depot}</span>
                     </div>
                 </div>  
@@ -33,7 +33,7 @@ const TicketCard = ({ ticket }) => {
                         <span><FontAwesomeIcon icon={faCouch} /> Còn { ticket.total_seats - ticket.booked_seats.length } chỗ</span>
                         <span><FontAwesomeIcon icon={faBusSimple} /> { ticket.bus_type }</span>
                     </div>
-                    <b className={classes.ticket_info_price}>{ toPriceFormat(ticket.price) } VND</b>
+                    <b className={classes.ticket_info_price}>{ toPriceFormat(ticket.price) }đ</b>
                 </div>
             </div>
         </div>

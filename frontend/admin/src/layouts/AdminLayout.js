@@ -124,8 +124,8 @@ const AdminPage = () => {
       <div className={styles["main_content"]}>
         <div className={styles["navbar"]}>
           <div className={styles['controls']}>
-            <button><FontAwesomeIcon icon={faArrowLeft} /></button>
-            <button><FontAwesomeIcon icon={faRotateRight} /></button>
+            <button type='button' onClick={() => navigate(-1)}><FontAwesomeIcon icon={faArrowLeft} /></button>
+            <button type='button' onClick={() => navigate(0)}><FontAwesomeIcon icon={faRotateRight} /></button>
           </div>
           <div className={styles["navbar_title"]}>
             {titleArr}
