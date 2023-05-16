@@ -8,7 +8,7 @@ import { faBusSimple, faCouch } from "@fortawesome/free-solid-svg-icons";
 import { toDateFormat, toPriceFormat } from "../../utils/format";
  
 const TicketCard = ({ ticket }) => {
-    return (
+    return (Object.keys(ticket).length > 0) && (
         <div className={classes.ticket_card}>
             <div className={classes.ticket_card_heading}>
                 <span className={classes.ticket_card_title}>

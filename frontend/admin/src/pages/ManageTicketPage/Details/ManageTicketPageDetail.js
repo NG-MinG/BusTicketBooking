@@ -1,45 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import classes from './ManageTicketPageDetail.module.css';
 import AnalystCard from '../../../components/Dashboard/AnalystCard';
 import ChairLayout from '../../../components/BusLayout/ChairLayout/ChairLayout';
 import TicketCard from '../../../components/TicketCard/TicketCard';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const ManageTicketPageDetail = () => {
 
-    const ticket ={
-        "_id": "645f6d0ba6a76dbf24387f4c",
-        "date": new Date("2023-04-28T07:14:05.738Z"),
-        "departure_time": "16:30",
-        "arrival_time": "21:29",
-        "departure_city": "TP.Hồ Chí Minh",
-        "arrival_city": "Tri Tôn",
-        "ticket_type": 1,
-        "price": 180000,
-        "travel_time": 17940,
-        "distance": 232000,
-        "departure_depot": "BX Miền Tây",
-        "arrival_depot": "BX Tri Tôn",
-        "bus_type": "Giường",
-        "booked_seats": [
-            "A01",
-            "A02",
-            "A01",
-            "A02",
-            "A03",
-            "A06",
-            "A05",
-            "A04",
-            "A09",
-            "A08",
-            "A07",
-            "A10",
-            "A11",
-            "A12"
-        ],
-        "reserved_seats": 0,
-        "total_seats": 34,
-    }
+    const ticketId = useParams().id;
+    const [ticket, setTicket] = useState({});
+
+    useEffect(() => {
+    
+        axios.get(`${process.env.REACT_APP_API_HOST}/admin/ticket-managing/details/${ticketId}`)
+        .then((res) => {
+            setTicket(res.data.ticket);
+        })
+        .catch(err => console.log(err));
+    
+    }, [ticketId]);
 
     return (<>
         <div className={classes.main_content}>
@@ -52,13 +33,32 @@ const ManageTicketPageDetail = () => {
             <div className={classes.ticket_info}>
                 <div className={classes.ticket_info_left}>
                     <TicketCard ticket={ticket} />
+                    <table className={classes.ticket_info_table}>
+                        <thead>
+                            <th>Thời gian</th>
+                            <th>Họ tên</th>
+                            <th>Số lượng</th>
+                            <th>Tổng tiền</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div>10 : 14</div>
+                                    <div>24 / 03 / 2022</div>
+                                </td>
+                                <td>Nguyễn Văn An</td>
+                                <td>3 vé</td>
+                                <td className={classes.green_price}>+ 495.000 VND</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
                 <div className={classes.ticket_info_seats}>
                     <div className={classes.seats_title}>
                         <span>Tầng dưới</span>
                         <span>Tầng trên</span>
                     </div>
-                    <ChairLayout bookedSeats={ticket.booked_seats} choosingSeats={[]} />
+                    { Object.keys(ticket).length > 0 && <ChairLayout bookedSeats={ticket.booked_seats} choosingSeats={[]} /> }
                 </div>
             </div>
         </div>
