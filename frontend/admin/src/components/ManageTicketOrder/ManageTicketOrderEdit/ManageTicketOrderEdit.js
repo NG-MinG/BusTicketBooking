@@ -73,7 +73,7 @@ export default function ManageTicketOrderEdit() {
 
   return (
     <div className={styles.ManageTicketOrderEdit}>
-      <FontAwesomeIcon onClick={() => navigate("/admin/manage-ticket/ticket-order")} className={styles.icon} icon={faArrowLeft} style={{ alignSelf: "flex-start", cursor: "pointer", fontSize: "3.2rem", color: '#083F73' }} />
+      {/* <FontAwesomeIcon onClick={() => navigate("/admin/manage-ticket/ticket-order")} className={styles.icon} icon={faArrowLeft} style={{ alignSelf: "flex-start", cursor: "pointer", fontSize: "3.2rem", color: '#083F73' }} /> */}
       <div className={styles.main}>
         <div className={styles.information}>
           <div className={styles['information-item']}>
