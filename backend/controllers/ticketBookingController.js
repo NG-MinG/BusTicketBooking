@@ -10,7 +10,6 @@ const getTickets = catchAsync(async (req, res, next) => {
     const departure_city = req.query.departure_city;
     const arrival_city = req.query.arrival_city;
     const date = req.query.date;
-    // const tickets = await Ticket.find({ departure_city: departure_city, arrival_city: arrival_city, truncatedDate: date });
     const startDate = new Date(`${date}T00:00:00.000Z`);
     const endDate = new Date(`${date}T23:59:59.999Z`);
     const tickets = date ? await Ticket.find({
@@ -18,7 +17,7 @@ const getTickets = catchAsync(async (req, res, next) => {
         arrival_city: arrival_city,
         date: {
             $gte: startDate,
-            $lte: endDate
+            $lt: endDate
         }
     }) : await Ticket.find({
         departure_city: departure_city,
