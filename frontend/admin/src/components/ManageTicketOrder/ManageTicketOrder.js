@@ -102,11 +102,20 @@ const ManageTicketOrder = () => {
         <div onClick={() => setDetail(false)} className={styles.overlay}>
         </div>
         <div className={styles.popup}>
-          <FontAwesomeIcon onClick={() => setDetail(false)} className={styles.closeIcon} icon={faXmark} style={{ color: '#083F73', fontSize: '3.6rem' }} />
+          <div className={styles["user-information"]}>
+            <p style={{ fontWeight: '600', marginBottom: '0.8rem', fontSize: '1.7rem' }}>Thông tin khách hàng</p>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <p>Tên: {currentData.guestInfo.name}</p>
+              <p>Số điện thoại: {currentData.guestInfo.phoneNumber}</p>
+            </div>
+            <p>Thời gian đặt vé: {currentData.time} {currentData.date}</p>
+          </div>
+          {/* <FontAwesomeIcon onClick={() => setDetail(false)} className={styles.closeIcon} icon={faXmark} style={{ color: '#083F73', fontSize: '3.6rem' }} />
           <button onClick={editData} className={styles.editBtn}>Sửa</button>
           <div className={styles.left}>
             <p>Tên: {currentData.guestInfo.name}</p>
-            <p>Thời gian đặt vé: {currentData.time} {new Date(currentData.date).toLocaleDateString('en-GB').toString()}</p>
+            <p>Thời gian đặt vé: {currentData.time} {currentData.date}</p>
+            <p>Thời gian khởi hành: {currentData.time_start} {new Date(currentData.date_start).toLocaleDateString('en-GB').toString()}</p>
             <p>Thời gian khởi hành: {currentData.time_start} {new Date(currentData.date_start).toLocaleDateString('en-GB').toString()}</p>
             <p>Điểm khởi hành: {currentData.departure_city}</p>
             <p>Điểm nhận vé: {currentData.depot_address}</p>
@@ -121,7 +130,7 @@ const ManageTicketOrder = () => {
               ))}</p>
             <p>Điểm đến: {currentData.arrival_city}</p>
             <p>Trạng thái: {currentData.stage}</p>
-          </div>
+          </div> */}
         </div>
       </div>}
     </div>

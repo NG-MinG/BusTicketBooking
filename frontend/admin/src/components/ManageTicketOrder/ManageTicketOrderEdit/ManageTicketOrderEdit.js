@@ -3,26 +3,27 @@ import styles from './ManageTicketOrderEdit.module.css'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useNavigate, useLocation, useParams } from 'react-router-dom'
-import Seat from './Seat/Seat'
-import Status from './Status/Status'
 import SleeperLayout from '../../BusLayout/SleeperLayout/SleeperLayout'
 import LimousineLayout from '../../BusLayout/LimousineLayout/LimousineLayout'
 import ChairLayout from '../../BusLayout/ChairLayout/ChairLayout'
 import axios from 'axios'
+import Status from '../../Seat/Status'
 
 export default function ManageTicketOrderEdit() {
   const navigate = useNavigate();
   const location = useLocation();
 
   const [information, setInformation] = useState(location.state)
-  const [choosingSeats, setChoosingSeats] = useState(location.state.chosen_seats);
+  const [choosingSeats, setChoosingSeats] = useState([]);
   const [ticketInformation, setTicketInformation] = useState({})
 
   useEffect(() => {
-    axios.patch(process.env.REACT_APP_API_HOST + '/admin/ticket-history/getTicketSeat', { id: information.ticket_id }).then((res) => {
+    axios.patch(process.env.REACT_APP_API_HOST + '/admin/ticket-history/getTicketSeat', { ticket_id: information.ticket_id, history_id: information._id }).then((res) => {
       // setTicketInformation(res.data.data)
-      const _info = res.data.data
-      _info.booked_seats = res.data.data.booked_seats.filter(val => !location.state.chosen_seats.includes(val))
+      setInformation(res.data.data.ticket_history)
+      setChoosingSeats(res.data.data.ticket_history.chosen_seats)
+      const _info = res.data.data.ticket
+      _info.booked_seats = res.data.data.ticket.booked_seats.filter(val => !res.data.data.ticket_history.chosen_seats.includes(val))
       setTicketInformation(_info)
     }).catch(error => {
       console.log(error)
@@ -52,6 +53,8 @@ export default function ManageTicketOrderEdit() {
     setInformation(prev => ({ ...prev, guestInfo: _info }));
   }
 
+  const [message, setMessage] = useState('')
+
   const handleSave = () => {
     const ticket_update = {
       id: information._id,
@@ -60,6 +63,7 @@ export default function ManageTicketOrderEdit() {
     }
     axios.patch(process.env.REACT_APP_API_HOST + '/admin/ticket-history/update', ticket_update).then((res) => {
       console.log("successfully!")
+      setMessage("Successfully!")
     }).catch(error => {
       console.log(error)
     })
@@ -103,7 +107,7 @@ export default function ManageTicketOrderEdit() {
           </div>
         </div>
         <button className={styles.save} onClick={handleSave}>Lưu</button>
-
+        {message.length > 0 && <p style={{ color: '#51cf66', marginTop: '1rem' }}>Successfully!</p>}
       </div>
 
     </div>

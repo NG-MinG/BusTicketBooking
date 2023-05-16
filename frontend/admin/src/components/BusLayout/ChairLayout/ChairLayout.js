@@ -4,6 +4,10 @@ import Seat from "../../Seat/Seat";
 
 const ChairLayout = (props) => {
     return <>
+        <div className={styles["layout-seat-title"]}>
+            <div className={styles["below"]}>Tầng dưới</div>
+            <div className={styles["above"]}>Tầng trên</div>
+        </div>
         <div className={styles["seat-tables"]}>
             <div className={styles["seat-table-container"]}>
                 <table className={styles["seat-table"]}>
