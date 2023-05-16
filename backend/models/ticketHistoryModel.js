@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const ticketHistorySchema = new mongoose.Schema({
   ticket_id: String,
-  date: Date,
+  date: String,
   time: String,
   departure_city: String,
   arrival_city: String,
@@ -24,7 +24,7 @@ const ticketHistorySchema = new mongoose.Schema({
 }, { toJSON: { virtuals: true } })
 
 ticketHistorySchema.virtual('truncatedDate').get(function () {
-  return this.date.toISOString().substring(0, 10);
+  return new Date(this.date.split('/').reverse().join('-')).toISOString().substring(0, 10);
 })
 
 const TicketHistory = mongoose.model('ticket-histories', ticketHistorySchema);
