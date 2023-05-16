@@ -15,14 +15,15 @@ const getTickets = catchAsync(async (req, res, next) => {
     const endDate = new Date(`${date}T23:59:59.999Z`);
     const tickets = date ? await Ticket.find({
         departure_city: departure_city,
-         arrival_city: arrival_city,
-          date: {
+        arrival_city: arrival_city,
+        date: {
             $gte: startDate,
             $lte: endDate
-        }}) : await Ticket.find({
-            departure_city: departure_city,
-            arrival_city: arrival_city,
-        })
+        }
+    }) : await Ticket.find({
+        departure_city: departure_city,
+        arrival_city: arrival_city,
+    })
     const starting_depots = await Station.findOne({ location: arrival_city });
     res.status(200).json({
         status: "success",
@@ -39,6 +40,8 @@ const bookTicket = catchAsync(async (req, res, next) => {
     const user = await User.findById(req.user.id)
     const newBooking = await TicketHistory.create({
         ...req.body,
+        "user_id": req.user.id,
+        "bus_type": ticket.bus_type,
         "time_start": ticket.departure_time,
         "date_start": ticket.date,
         "stage": "Đang xử lí"
@@ -47,6 +50,7 @@ const bookTicket = catchAsync(async (req, res, next) => {
     io.emit("book-ticket", newBooking);
     user.myTicket.push(newBooking._id)
     user.save()
+
     res.status(200).json({
         status: "success",
     })
