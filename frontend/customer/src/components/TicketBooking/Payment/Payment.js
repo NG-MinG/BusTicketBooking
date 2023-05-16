@@ -72,12 +72,13 @@ const Payment = (props) => {
             number_of_seats: ticketBookingDetails.choosing_seats.length,
             chosen_seats: ticketBookingDetails.choosing_seats,
             total_price: ticketBookingDetails.total_price,
+            user_id: auth.isLogin() ? auth.getUserProfile()._id : '',
             guestInfo: {
                 ...guestInfo
             }
         }
 
-        axios.post(`${process.env.REACT_APP_API_HOST}/tickets/book-ticket`, data, { headers: { Authorization: 'Bearer ' + auth.getAccessToken() } })
+        axios.post(`${process.env.REACT_APP_API_HOST}/tickets/book-ticket`, data)
             .then((res) => {
                 console.log(res)
                 setIsPayment(true)
@@ -93,7 +94,7 @@ const Payment = (props) => {
             stepThree: false,
             stepFour: true,
         })
-        navigate('/user-profile/my-ticket');
+        !auth.isLogin() ? navigate('/') : navigate('/user-profile/my-ticket');
     }
 
     const closeConfirmForm = () => {
