@@ -7,6 +7,7 @@ import BusRoutePage from "../pages/BusRoutePage/BusRoutePage";
 import ManageTicketPage from "../pages/ManageTicketPage/ManageTicketPage";
 import ManageTicketOrderPage from "../pages/ManageTicketOrderPage/ManageTicketOrderPage";
 import ManageTicketOrderEditPage from "../pages/ManageTicketOrderPage/ManageTicketOrderEditPage/ManageTicketOrderEditPage";
+import ManageTicketPageDetail from "../pages/ManageTicketPage/Details/ManageTicketPageDetail";
 
 const AppRoutes = () => {
     return (
@@ -18,6 +19,7 @@ const AppRoutes = () => {
                 <Route path="bus-route" element={<BusRoutePage />} />
                 <Route path="manage-ticket" element={<ManageTicketPage />} />
                 <Route path="manage-ticket/ticket" element={<ManageTicketPage />} />
+                <Route path="manage-ticket/ticket/details/:id" element={<ManageTicketPageDetail />} />
                 <Route path="manage-ticket/ticket-order" element={<ManageTicketOrderPage />} />
                 <Route path="manage-ticket/ticket-order/edit/:id" element={<ManageTicketOrderEditPage />} />
                 <Route path="*" element={<Navigate to='/admin/dashboard' />} />

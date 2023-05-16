@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom'
 import io from 'socket.io-client'
 import axios from "axios";
+import { toDateFormat, toPriceFormat } from "../../utils/format";
 
 
 
@@ -26,7 +27,6 @@ const ManageTicketOrder = () => {
 
   useEffect(() => {
     socket.on("book-ticket", (data) => {
-      console.log(data)
       setTicketHistory(prev => [...prev, data])
     });
   }, [])
@@ -78,7 +78,7 @@ const ManageTicketOrder = () => {
 
   return <div className={styles.ManageTicketOrder}>
     <div className={styles['main-content']}>
-      <p className={styles.title}>vé xe đã đặt</p>
+      {/* <p className={styles.title}>vé xe đã đặt</p> */}
       <div className={styles.search}>
         <input onChange={handleSearch} placeholder="Tìm kiếm..." />
         <FontAwesomeIcon onClick={handleSearch} className={styles.icon} icon={faMagnifyingGlass} style={{ color: '#737B83', fontSize: '2.1rem' }} />
@@ -102,25 +102,47 @@ const ManageTicketOrder = () => {
         <div onClick={() => setDetail(false)} className={styles.overlay}>
         </div>
         <div className={styles.popup}>
-          <FontAwesomeIcon onClick={() => setDetail(false)} className={styles.closeIcon} icon={faXmark} style={{ color: '#083F73', fontSize: '3.6rem' }} />
-          <button onClick={editData} className={styles.editBtn}>Sửa</button>
-          <div className={styles.left}>
-            <p>Tên: {currentData.guestInfo.name}</p>
-            <p>Thời gian đặt vé: {currentData.time} {new Date(currentData.date).toLocaleDateString('en-GB').toString()}</p>
-            <p>Thời gian khởi hành: {currentData.time_start} {new Date(currentData.date_start).toLocaleDateString('en-GB').toString()}</p>
-            <p>Điểm khởi hành: {currentData.departure_city}</p>
-            <p>Điểm nhận vé: {currentData.depot_address}</p>
-            <p style={{ color: "#FF0000" }}>Tổng tiền: {currentData.total_price}</p>
+          <div className={styles["user-information"]}>
+            <p style={{ fontWeight: '600', fontSize: '1.7rem' }}>Thông tin khách hàng</p>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <p>Tên: {currentData.guestInfo.name}</p>
+              <p>Số điện thoại: {currentData.guestInfo.phoneNumber}</p>
+            </div>
+            <p>Thời gian đặt vé: {currentData.time} {currentData.date}</p>
           </div>
-          <div className={styles.right}>
-            <p>Số điện thoại: {currentData.guestInfo.phoneNumber}</p>
-            <p>Số lượng ghế: {currentData.number_of_seats}</p>
-            <p className={styles['chosen-seat']}>Số ghế: &nbsp;
-              {currentData.chosen_seats.map((value, index) => (
-                <p>{value} &nbsp;</p>
-              ))}</p>
-            <p>Điểm đến: {currentData.arrival_city}</p>
-            <p>Trạng thái: {currentData.stage}</p>
+          <div className={styles["ticket-information"]}>
+            <p style={{ fontWeight: '600', fontSize: '1.7rem' }}>Thông tin vé</p>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <p style={{ width: '18rem', fontWeight: '500' }}>Thời gian khởi hành:</p>
+              <p style={{}}>{currentData.time_start} {new Date(currentData.date_start).toLocaleDateString('en-GB').toString()}</p>
+            </div>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <p style={{ width: '18rem', fontWeight: '500' }}>Tuyến: </p>
+              <p style={{}}>{currentData.departure_city} &rarr; {currentData.arrival_city}</p>
+            </div>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <p style={{ minWidth: '18rem', fontWeight: '500' }}>Số ghế: </p>
+              <div style={{ width: '100%', display: "flex", alignItems: "center" }}>
+                {currentData.chosen_seats.map((value, index) => (
+                  <p style={{}} >{value} &nbsp;</p>
+                ))}
+              </div>
+            </div>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <p style={{ width: '18rem', fontWeight: '500' }}>Trạng thái: </p>
+              <p style={{ color: '#D2712B', fontWeight: '500' }} className={`${currentData.stage === 'Đã đặt' ? styles.green : ""} ${currentData.stage === 'Đã huỷ' ? styles.red : ""}`}>{currentData.stage}</p>
+            </div>
+            <div style={{ display: "flex" }}>
+              <p style={{ minWidth: '18rem', fontWeight: '500' }}>Điểm nhận vé:</p>
+              <p style={{ textAlign: 'left' }}>{currentData.depot_address}</p>
+            </div>
+          </div>
+          <div className={styles.bottom}>
+            <p style={{ color: "#FF0000", fontSize: '21px', fontWeight: '600' }}>Tổng tiền: {toPriceFormat(currentData.total_price)}đ</p>
+            <div style={{ display: 'flex', gap: '0.6rem' }}>
+              <button onClick={() => setDetail(false)} className={styles.closeIcon}>Đóng</button>
+              <button onClick={editData} className={styles.editBtn}>Sửa</button>
+            </div>
           </div>
         </div>
       </div>}

@@ -5,7 +5,7 @@
 }
 
 .wrapper > .place-choosing {
-    width: 75%;
+    width: 81.3%;
     height: 8rem;
     border-radius: 3px;
     margin: 3.6rem auto;
@@ -27,6 +27,7 @@ div.ticket-managing {
     right: 0;
     left: 0; 
     bottom: 0;
+    z-index: 12;
 }
 
 div.overlay {
@@ -37,6 +38,7 @@ div.overlay {
     bottom: 0;
     background-color: rgba(0,0,0,0.5);
     cursor: pointer;
+    z-index: 12;
 }
 
 
@@ -45,12 +47,14 @@ div.ticket-managing > div.crud-ticket-form {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
     width: 87rem;
     overflow: auto;
     background-color: white;
     border-radius: 12px;
     padding-bottom: 2rem;
+    z-index: 13;
 }
 
 div.ticket-managing > div.crud-ticket-form  > div.title {

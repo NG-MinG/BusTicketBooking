@@ -63,6 +63,7 @@
   /* padding-bottom: 4rem; */
   /* box-sizing: border-box; */
   /* background-color: yellow; */
+  /* padding-top: 2.4rem; */
 }
 
 
@@ -72,8 +73,8 @@ div.layout-seat > div.notes {
   /* background-color: red; */
   width: 50rem;
   margin: 0 auto;
-  margin-top: 2rem;
-  padding-bottom: 3rem;
+  margin-top: 1rem;
+  padding-bottom: 2rem;
 }
 
 div.layout-seat > div.notes > div.status {

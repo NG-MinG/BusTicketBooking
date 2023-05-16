@@ -8,7 +8,11 @@ import BusTypeIcon from "../assets/svg/sidebar/bustype.svg";
 import BusStationIcon from "../assets/svg/sidebar/busstation.svg";
 import BusRouteIcon from "../assets/svg/sidebar/busroute.svg";
 import Ticket from "../assets/svg/sidebar/ticket.svg";
+import { ReactComponent as UserProfileIcon } from '../assets/svg/Navbar/user.svg';
+import { ReactComponent as ChevronRight } from '../assets/svg/Navbar/chevronRight.svg';
 import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft, faChevronRight, faRotateRight } from "@fortawesome/free-solid-svg-icons";
 
 const AdminPage = () => {
   const sidebarData = [
@@ -56,11 +60,29 @@ const AdminPage = () => {
     if (location.pathname === "/admin/manage-ticket") navigate("/admin/manage-ticket/ticket")
   }, [location]);
 
+  const pageIndex = sidebarData.findIndex((el) => location.pathname.indexOf(el.path) > -1);
+
+  const mainPage = (pageIndex > -1) ? sidebarData[pageIndex] : null;
+  const subPage = subData.find(el => location.pathname === el.path);
+  const subDataPage = (pageIndex === sidebarData.length - 1 && subPage) ? subPage : null;
+
+  const titleArr = [''];
+  if (mainPage) titleArr.push(<span>{ mainPage.title }</span>);
+  if (subDataPage) {
+    titleArr.push(<ChevronRight width={13} />);
+    titleArr.push(<span>{subDataPage.title}</span>);
+  };
+
+  if (location.pathname.indexOf('admin/manage-ticket/ticket/details')> -1) {
+    titleArr.splice(0, titleArr.length);
+
+    titleArr.push(<span>Quản lý vé xe</span>);
+    titleArr.push(<ChevronRight width={13} />);
+    titleArr.push(<span>Chi tiết vé xe</span>);
+  }
+
   return (
     <div className={styles["container"]}>
-      <div className={styles["navbar"]}>
-
-      </div>
       <div className={styles["sidebar-container"]}>
         <div className={styles["menu-container"]}>
           {sidebarData.map((data, index) => (
@@ -99,7 +121,25 @@ const AdminPage = () => {
       </div>
       <div>
       </div>
-      <Outlet />
+      <div className={styles["main_content"]}>
+        <div className={styles["navbar"]}>
+          <div className={styles['controls']}>
+            <button type='button' onClick={() => navigate(-1)}><FontAwesomeIcon icon={faArrowLeft} /></button>
+            <button type='button' onClick={() => navigate(0)}><FontAwesomeIcon icon={faRotateRight} /></button>
+          </div>
+          <div className={styles["navbar_title"]}>
+            {titleArr}
+          </div>
+          <div className={styles['user_profile']}>
+            <UserProfileIcon width={40} />
+              <div>
+                <div className={styles['user_name']}>Nguyễn Văn An</div>
+                <div className={styles['user_role']}>Administrator</div>
+              </div>
+          </div>
+        </div>
+        <Outlet />
+      </div>
     </div>
   );
 };
