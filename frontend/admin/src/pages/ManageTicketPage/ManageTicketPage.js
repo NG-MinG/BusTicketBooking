@@ -135,6 +135,10 @@ const ManageTicketPage = () => {
                         date: isoDateString,
                     }))
                 } 
+                else dispatch(setCurrentTicketDetails({
+                    ...currentTicketDetails,
+                    date: '',
+                }))
             }
             else if (name === "time") {
                 const regex =/^\d{1,2}:\d{2}-\d{1,2}:\d{2}$/;
@@ -147,6 +151,11 @@ const ManageTicketPage = () => {
                         arrival_time: arrival_time
                     }))
                 }
+                else dispatch(setCurrentTicketDetails({
+                    ...currentTicketDetails,
+                    departure_time: '',
+                    arrival_time: ''
+                }))
             }
             else {
                 dispatch(setCurrentTicketDetails({
@@ -162,11 +171,32 @@ const ManageTicketPage = () => {
         let data = {...currentTicketDetails};
         if (data._id === '') delete data._id; // remove the id if it's empty, and let the backend processing do its thing (when creating a new ticket)
         const isEmptyProperty = Object.values(data).some(value => (value === ''));
-        //if data has any properties which have empty value
-        if (isEmptyProperty) { 
-            alert("Vui lòng điền đầy đủ thông tin trong form.");
+
+        // if date is not valid
+        if (data.date === '') {
+            alert("Vui lòng nhập đúng định dạng ngày (vd: 17-05-2023)");
+            console.log("data: " + data.date);
             return;
         }
+
+        // if time is not valid
+        if (data.departure_time === '' || data.arrival_time === '') {
+            alert("Vui lòng nhập đúng định dạng giờ của chuyến đi (vd: 5:30-7:30)");
+            return;
+        }
+
+        // if price is not valid
+        if (!/^(?!0+$)\d+(?:\.\d+)?$/.test(data.price.toString())) {
+            alert("Giá tiền phải là số dương không âm và không chứa kí tự đặc biệt.");
+            return;
+        }
+
+        //if data has any properties which have empty value
+        if (isEmptyProperty) { 
+            alert("Thông tin trong form không được bỏ trống.");
+            return;
+        }
+
         // if data is valid
         axios.post(`${process.env.REACT_APP_API_HOST}/admin/ticket-managing/create-ticket`, data).then((res) => {
             dispatch(setCurrentTicketDetails({}));
@@ -182,6 +212,25 @@ const ManageTicketPage = () => {
     const handleUpdateTicket = () => {
         let data = {...currentTicketDetails};
         const isEmptyProperty = Object.values(data).some(value => (value === ''));
+        // if date is not valid
+        if (data.date === '') {
+            alert("Vui lòng nhập đúng định dạng ngày (vd: 17-05-2023)");
+            console.log("data: " + data.date);
+            return;
+        }
+
+        // if time is not valid
+        if (data.departure_time === '' || data.arrival_time === '') {
+            alert("Vui lòng nhập đúng định dạng giờ của chuyến đi (vd: 5:30-7:30)");
+            return;
+        }
+
+        // if price is not valid
+        if (!/^(?!0+$)\d+(?:\.\d+)?$/.test(data.price.toString())) {
+            alert("Giá tiền phải là số dương không âm và không chứa kí tự đặc biệt.");
+            return;
+        }
+
         //if data has any properties which have empty value
         if (isEmptyProperty) { 
             alert("Vui lòng điền đầy đủ thông tin trong form.");
