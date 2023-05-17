@@ -25,17 +25,6 @@ ticketSchema.virtual('truncatedDate').get(function() {
     return this.date.toISOString().substring(0,10);
 })
 
-
-ticketSchema.index({
-    date: "text",
-    departure_depot: "text",
-    arrival_depot: "text",
-    bus_type: "text",
-    price: "text"
-},
-    {default_language: "none"}
-)
-
 const Ticket = mongoose.model('tickets', ticketSchema); 
 
 export default Ticket;
