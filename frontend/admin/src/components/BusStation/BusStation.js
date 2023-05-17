@@ -73,22 +73,31 @@ const BusStation = () => {
 
   const onEdit = (e) => {
     const bodyData = { ...station };
-    axios
-      .post(
-        process.env.REACT_APP_API_HOST + `/admin/editstation/${station._id}`,
-        bodyData
-      )
-      .then((res) => {
-        setStationData(res.data.data.station);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if(bodyData.location === '' || bodyData.name === '' || bodyData.address === '' || bodyData.phone === ''){
+      alert('Thông tin không hợp lệ')
+    }
+    else{
+      axios
+        .post(
+          process.env.REACT_APP_API_HOST + `/admin/editstation/${station._id}`,
+          bodyData
+        )
+        .then((res) => {
+          setStationData(res.data.data.station);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   const onCreate = (e) => {
     const bodyData = { ...station };
-    axios
+    if(bodyData.location === '' || bodyData.name === '' || bodyData.address === '' || bodyData.phone === ''){
+      alert('Thông tin không hợp lệ')
+    }
+    else{
+      axios
       .post(process.env.REACT_APP_API_HOST + `/admin/createstation`, bodyData)
       .then((res) => {
         setStationData(res.data.data.station);
@@ -96,6 +105,7 @@ const BusStation = () => {
       .catch((error) => {
         console.log(error);
       });
+    }
   };
 
   const onDelete = (data) => {
