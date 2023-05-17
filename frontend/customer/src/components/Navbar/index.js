@@ -23,6 +23,8 @@ const Navbar = () => {
         passwordConfirm: ''
     });
 
+    console.log(success);
+
     const closeForm = () => {
         setShowLogin(false);
         setStep(0);
@@ -45,7 +47,7 @@ const Navbar = () => {
     const isLogin = auth.isLogin();
 
     return <>
-        { !isLogin && showLogin && ((['login', 'register'].includes(success)) ? <SuccessForm closeForm={closeForm} setSuccess={setSuccess} type={success} /> : authStep[step]) }
+        { showLogin && ((['login', 'register'].includes(success)) ? <SuccessForm closeForm={closeForm} setSuccess={setSuccess} type={success} /> : authStep[step]) }
         <nav className={classes.navbar}>
             <NavLink to='/' className={`${classes.title} ${classes.link}`}>Bus Ticket Booking</NavLink>
 
@@ -79,7 +81,10 @@ const Navbar = () => {
                                 </div>
                                 <hr />
                                 <Link className={classes.link} to="/user-profile"><FontAwesomeIcon icon={faUser} /> <span>Edit profile</span></Link>
-                                <Link className={classes.link} onClick={auth.logout}><FontAwesomeIcon icon={faSignOut} /> <span>Sign out</span></Link>
+                                <Link className={classes.link} onClick={() => {
+                                    auth.logout();
+
+                                }} to='/'><FontAwesomeIcon icon={faSignOut} /> <span>Sign out</span></Link>
                             </div>
                         </div>
                     </div>
