@@ -22,6 +22,12 @@ export const GuestInfo = (props) => {
     const dispatch = useDispatch();
 
     const processContinueBtn = () => {
+        const isEmptyField = Object.values(formValues).some(value => value === '' || value === null);
+        if (isEmptyField) {
+            alert("Vui lòng nhập đầy đủ thông tin trong form.");
+            return;
+
+        }
         setNote(true);
     }
 
