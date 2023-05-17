@@ -1,7 +1,9 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import app from "./app.js";
-import { Server } from 'socket.io';
+// import { Server } from 'socket.io';
+import io from './socket.js';
+import bcrypt from 'bcryptjs';
 
 
 const port = process.env.PORT || 5000;
@@ -14,9 +16,13 @@ mongoose
         console.log('Connected to DB successfully');
     });
 
-const server = app.listen(port, () => {
+const server = app.listen(port, async () => {
     console.log(`App is running on port ${port}...`);
+    // console.log(await bcrypt.hash('11111111', 12));
 });
+
+// init socket
+io.init(server);
 
 process.on('unhandledRejection', (err) => {
     console.log('Unhandled Rejection. Shutting down...');
@@ -26,20 +32,20 @@ process.on('unhandledRejection', (err) => {
     });
 });
 
-export const io = new Server(server, {
-    cors: {
-        origin: "*"
-    }
-});
+// export const io = new Server(server, {
+//     cors: {
+//         origin: "*"
+//     }
+// });
 
 // io.on('connection', (socket) => {
-// console.log("socket connected")
-// socket.on('book-ticket', async (data) => {
-//     io.emit("book-ticket", data)
-// })
-// const onBookTicket = function (data) {
-//     io.emit("book-ticket", data);
-// };
+//     console.log("socket connected")
+//     socket.on('book-ticket', async (data) => {
+//         io.emit("book-ticket", data)
+//     })
+//     const onBookTicket = function (data) {
+//         io.emit("book-ticket", data);
+//     };
 // })
 
 // Import the functions you need from the SDKs you need
