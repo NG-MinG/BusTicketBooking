@@ -1,6 +1,7 @@
 import Location from "../models/locationModel.js";
 import Ticket from "../models/ticketModel.js";
 import Station from "../models/stationModel.js";
+import Trip from "../models/scheduleModel.js";
 import catchAsync from "../utils/catchAsync.js";
 import AppError from "../utils/appError.js";
 import TicketHistory from '../models/ticketHistoryModel.js';
@@ -21,6 +22,14 @@ const getStations = catchAsync(async(req,res,next) => {
         stations: stations,
     })
 })
+
+const getTrips = catchAsync(async(req,res,next) => {
+    const trips = await Trip.find();
+    res.status(200).json({
+        status: 'success',
+        trips: trips
+    })
+});
 
 const createTicket = catchAsync(async(req,res,next) => {
     const data = req.body;
@@ -72,4 +81,4 @@ const searchTicket = catchAsync(async(req,res,next) => {
     })
 })
 
-export {getLocations, getStations, createTicket, updateTicket, deleteTicket, searchTicket, getDetails};
+export {getLocations, getStations, getTrips, createTicket, updateTicket, deleteTicket, searchTicket, getDetails};

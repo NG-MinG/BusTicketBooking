@@ -36,21 +36,23 @@ const bookTicket = catchAsync(async (req, res, next) => {
     ticket.booked_seats = [...ticket.booked_seats, ...req.body.chosen_seats];
     await ticket.save();
 
-    const user = await User.findById(req.user.id)
     const newBooking = await TicketHistory.create({
         ...req.body,
-        "user_id": req.user.id,
+        "user_id": req.body.user_id,
         "bus_type": ticket.bus_type,
         "time_start": ticket.departure_time,
         "date_start": ticket.date,
         "stage": "Đang xử lí"
     })
+
+    if (req.body.user_id) {
+        const user = await User.findById(req.body.user_id)
+        user.myTicket.push(newBooking._id)
+        user.save()
+    }
     const socket = io.getIO();
     // using socket_io for displaying the ticket ordered in admin view dashboard
     socket.emit("book-ticket", newBooking);
-    user.myTicket.push(newBooking._id)
-    user.save()
-
     res.status(200).json({
         status: "success",
     })

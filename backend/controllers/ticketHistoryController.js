@@ -50,9 +50,11 @@ const deleteItem = catchAsync(async (req, res) => {
   const item = await TicketHistory.findById(req.body.id)
   await TicketHistory.deleteOne({ _id: req.body.id })
 
-  const user = await User.findById(item.user_id)
-  user.myTicket.splice(user.myTicket.indexOf(req.body.id.toString()), 1)
-  user.save()
+  if (item.user_id) {
+    const user = await User.findById(item.user_id)
+    user.myTicket.splice(user.myTicket.indexOf(req.body.id.toString()), 1)
+    user.save()
+  }
 
   const ticket = await Ticket.findById(item.ticket_id);
   ticket.booked_seats = ticket.booked_seats.filter(val => !item.chosen_seats.includes(val))
