@@ -4,7 +4,7 @@ import AppError from "../utils/appError.js";
 
 const getAnalyst = catchAsync(async (req, res, next) => {
 
-    const query = (req.query && req.query.q) ? { date: req.query.q } : { date: `${new Date().getDay()}/${new Date().getMonth()+1}/${new Date().getFullYear()}` };
+    const query = (req.query && req.query.q) ? { date: req.query.q } : { date: `${new Date().getDate()}/${new Date().getMonth()+1}/${new Date().getFullYear()}` };
     const listHistory = await ticketHistoryModel.find({...query, stage: { $in: ['Đã đặt', 'Đang xử lí'] } });
 
     const total_price = listHistory.reduce((total, history) => total + history.total_price, 0);
