@@ -162,15 +162,5 @@
                 "phone": "02993615 615 - 86 5555."
             }
         ]
-    },
-    {
-        "location": "TP.Hồ Chí Minh",
-        "stations": [
-            {
-                "name": "BX Miền Tây",
-                "address": "Số 395 đường Kinh Dương Vương, P.An Lạc, Q.Bình Tân, TP.HCM",
-                "phone": "0283.875.29.53 - 0283.875.12.52"
-            }
-        ]
     }
 ]

@@ -3,7 +3,7 @@ import slugify from 'slugify';
 import cheerio from 'cheerio';
 import fs from 'fs';
 
-const mientay = ['TP.Hồ Chí Minh', 'An Giang', 'Bạc Liêu', 'Bến Tre', 'Cà Mau', 'Cần Thơ', 'Đồng Tháp', 'Hậu Giang', 'Kiên Giang', 'Long An', 'Sóc Trăng', 'Tiền Giang', 'Trà Vinh', 'Vĩnh Long', 'Long Xuyên', 'Châu Đốc', 'Tân Châu', 'Chợ Mới', 'Tri Tôn', 'An Phú', 'Phú Tân', 'Bạc Liêu', 'Hồng Dân', 'Giá Rai', 'Đông Hải', 'Phước Long', 'Bến Tre', 'Ba Tri', 'Châu Thành', 'Giồng Trôm', 'Bình Đại', 'Thạnh Phú', 'Cà Mau', 'Đầm Dơi', 'Ngọc Hiển', 'Năm Căn', 'Phú Tân', 'U Minh', 'Cao Lãnh', 'Sa Đéc', 'Lai Vung', 'Tam Nông', 'Tháp Mười', 'Tân Hồng', 'Hồng Ngự', 'Vị Thanh', 'Ngã Bảy', 'Phụng Hiệp', 'Châu Thành A', 'Rạch Giá', 'Phú Quốc', 'Hà Tiên', 'An Biên', 'An Minh', 'Giồng Riềng', 'Gò Quao', 'Kiên Lương', 'Tân Hiệp', 'U Minh Thượng', 'Tân An', 'Kiến Tường', 'Tân Thạnh', 'Tân Trụ', 'Thạnh Hóa', 'Vĩnh Hưng', 'Bến Lức', 'Cần Đước', 'Cần Giuộc', 'Đức Hòa', 'Mộc Hóa', 'Tân Hưng', 'Tân Thành', 'Thủ Thừa', 'Sóc Trăng', 'Kế Sách', 'Mỹ Tú', 'Vĩnh Châu', 'Cù Lao Dung', 'Long Phú', 'Mỹ Xuyên', 'Thạnh Trị', 'Trần Đề', 'Mỹ Tho', 'Cai Lậy', 'Châu Thành', 'Tân Phú Đông', 'Cái Bè', 'Cai Lậy', 'Chợ Gạo', 'Gò Công', 'Tân Phước', 'Tân Phú', 'Màng Thít', 'Trà Vinh', 'Càng Long', 'Cầu Kè', 'Tiểu Cần', 'Cầu Ngang', 'Châu Thành', 'Duyên Hải', 'Vĩnh Long', 'Bình Minh', 'Long Hồ', 'Tam Bình', 'Trà Ôn', 'Vũng Liêm', 'Mang Thít', 'Cần Thơ', 'Phong Điền', 'Thốt Nốt', 'Vĩnh Thạnh', 'Cờ Đỏ'];
+const mientay = ['An Giang', 'Bạc Liêu', 'Bến Tre', 'Cà Mau', 'Cần Thơ', 'Đồng Tháp', 'Hậu Giang', 'Kiên Giang', 'Long An', 'Sóc Trăng', 'Tiền Giang', 'Trà Vinh', 'Vĩnh Long', 'Long Xuyên', 'Châu Đốc', 'Tân Châu', 'Chợ Mới', 'Tri Tôn', 'An Phú', 'Phú Tân', 'Bạc Liêu', 'Hồng Dân', 'Giá Rai', 'Đông Hải', 'Phước Long', 'Bến Tre', 'Ba Tri', 'Châu Thành', 'Giồng Trôm', 'Bình Đại', 'Thạnh Phú', 'Cà Mau', 'Đầm Dơi', 'Ngọc Hiển', 'Năm Căn', 'Phú Tân', 'U Minh', 'Cao Lãnh', 'Sa Đéc', 'Lai Vung', 'Tam Nông', 'Tháp Mười', 'Tân Hồng', 'Hồng Ngự', 'Vị Thanh', 'Ngã Bảy', 'Phụng Hiệp', 'Châu Thành A', 'Rạch Giá', 'Phú Quốc', 'Hà Tiên', 'An Biên', 'An Minh', 'Giồng Riềng', 'Gò Quao', 'Kiên Lương', 'Tân Hiệp', 'U Minh Thượng', 'Tân An', 'Kiến Tường', 'Tân Thạnh', 'Tân Trụ', 'Thạnh Hóa', 'Vĩnh Hưng', 'Bến Lức', 'Cần Đước', 'Cần Giuộc', 'Đức Hòa', 'Mộc Hóa', 'Tân Hưng', 'Tân Thành', 'Thủ Thừa', 'Sóc Trăng', 'Kế Sách', 'Mỹ Tú', 'Vĩnh Châu', 'Cù Lao Dung', 'Long Phú', 'Mỹ Xuyên', 'Thạnh Trị', 'Trần Đề', 'Mỹ Tho', 'Cai Lậy', 'Châu Thành', 'Tân Phú Đông', 'Cái Bè', 'Cai Lậy', 'Chợ Gạo', 'Gò Công', 'Tân Phước', 'Tân Phú', 'Màng Thít', 'Trà Vinh', 'Càng Long', 'Cầu Kè', 'Tiểu Cần', 'Cầu Ngang', 'Châu Thành', 'Duyên Hải', 'Vĩnh Long', 'Bình Minh', 'Long Hồ', 'Tam Bình', 'Trà Ôn', 'Vũng Liêm', 'Mang Thít', 'Cần Thơ', 'Phong Điền', 'Thốt Nốt', 'Vĩnh Thạnh', 'Cờ Đỏ'];
 const mientay_chuanhoa = mientay.map(item => item.toLowerCase());
 
 const BXe_json = fs.readFileSync('./stations.json', 'utf8');
@@ -95,7 +95,6 @@ const HcmDeparture = () => {
                                 const station = (b_xe_arr.stations.length === 1) ? b_xe_arr.stations[0] : b_xe_arr.stations.find(el => chuanhoa(b_xe).indexOf(chuanhoa(el.name.replaceAll('BX', '').trim())) !== -1 || chuanhoa(el.name).indexOf(chuanhoa(b_xe.replaceAll('sai gon', '').replaceAll('tp hcm', '').trim())) !== -1);
                                 
                                 const data = {
-                                    date: new Date(),
                                     departure_time: $(this).find('td')[0].children[0].data,
                                     arrival_time: $(this).find('.time-depart').text().trim(),
                                     departure_city: item.OriginName,
@@ -134,13 +133,13 @@ const HcmDeparture = () => {
 
         const [tickets, trips] = await getTicket(hcmTo_mientay);
 
-        fs.writeFileSync('./tickets_departure.json', JSON.stringify(tickets), 'utf8', (err)=>{
+        fs.writeFile('./tickets_departure.json', JSON.stringify(tickets), 'utf8', (err)=>{
             if(err){
                 console.log(err)
             }
         });
 
-        fs.writeFileSync('./trips_departure.json', JSON.stringify(trips), 'utf8', (err)=>{
+        fs.writeFile('./trips_departure.json', JSON.stringify(trips), 'utf8', (err)=>{
             if(err){
                 console.log(err)
             }
@@ -219,7 +218,6 @@ const HcmArrival = () => {
                             if (idx > 0 && $(this).find('td')[0].children[0].data.toLowerCase() !== 'giờ chạy') {
 
                                 const data = {
-                                    date: new Date(),
                                     departure_time: $(this).find('td')[0].children[0].data,
                                     arrival_time: $(this).find('.time-depart').text().trim(),
                                     departure_city: item.OriginName,
@@ -258,13 +256,13 @@ const HcmArrival = () => {
 
         const [tickets, trips] = await getTicket(hcmTo_mientay);
 
-        fs.writeFileSync('./tickets_arrival.json', JSON.stringify(tickets), 'utf8', (err)=>{
+        fs.writeFile('./tickets_arrival.json', JSON.stringify(tickets), 'utf8', (err)=>{
             if(err){
                 console.log(err)
             }
         });
 
-        fs.writeFileSync('./trips_arrival.json', JSON.stringify(trips), 'utf8', (err)=>{
+        fs.writeFile('./trips_arrival.json', JSON.stringify(trips), 'utf8', (err)=>{
             if(err){
                 console.log(err)
             }
@@ -409,12 +407,12 @@ const users = [
 
 // HcmArrival();
 
-const ticket_hcm = fs.readFileSync('./tickets_departure.json', 'utf8');
-const ticket_mientay = fs.readFileSync('./tickets_arrival.json', 'utf8');
+// const ticket_hcm = fs.readFileSync('./tickets_departure.json', 'utf8');
+// const ticket_mientay = fs.readFileSync('./tickets_arrival.json', 'utf8');
 
-const tickets = [...JSON.parse(ticket_hcm), ...JSON.parse(ticket_mientay)];
+// const tickets = [...JSON.parse(ticket_hcm), ...JSON.parse(ticket_mientay)];
 
-fs.writeFileSync('./tickets.json', JSON.stringify(tickets), 'utf8');
+// fs.writeFileSync('./tickets.json', JSON.stringify(tickets), 'utf8');
 
 // const trip_hcm = fs.readFileSync('./trips_departure.json', 'utf8');
 // const trip_mientay = fs.readFileSync('./trips_arrival.json', 'utf8');
