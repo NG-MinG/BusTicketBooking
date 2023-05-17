@@ -75,9 +75,6 @@ const AccountUser = () => {
           <a className={styles["search-button"]} onClick={onSearch}>
             <div>TÌM KIẾM </div>
           </a>
-          <a className={styles["filter-icon"]}>
-            <img src={FilterIcon} />
-          </a>
         </div>
       </div>
       <div className={styles["listAccount"]}>

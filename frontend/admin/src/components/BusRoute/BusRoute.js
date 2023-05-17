@@ -111,7 +111,11 @@ const BusRoute = () => {
   return (
     <div className={styles["a"]}>
       <div className={styles["header-container"]}>
-        <p>TUYẾN XE</p>
+        {/* <p>QUẢN LÝ TUYẾN XE</p> */}
+        <a className={styles["add-button"]} onClick={setCreateShow}>
+          <div>THÊM MỚI </div>
+          <img src={AddIcon} />
+        </a>
         <div className={styles["sub-header-container"]}>
         <input
             type="text"
@@ -122,9 +126,6 @@ const BusRoute = () => {
           ></input>
           <a className={styles["search-button"]} onClick={onSearch}>
             <div>TÌM KIẾM </div>
-          </a>
-          <a className={styles["filter-icon"]}>
-            <img src={FilterIcon} />
           </a>
         </div>
       </div>
@@ -269,12 +270,6 @@ const BusRoute = () => {
         </Modal>
       </div>
 
-      <div className={styles["foot-new"]}>
-        <a className={styles["add-button"]} onClick={setCreateShow}>
-          <div>THÊM MỚI </div>
-          <img src={AddIcon} />
-        </a>
-      </div>
 
       <Modal show={createShow} onHide={handleCreateClose}>
         <Modal.Header>
