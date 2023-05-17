@@ -1,6 +1,5 @@
 .a{
     margin: 4rem auto 0 auto ;
-    width: 82%;
 }
 
 .header-container{
@@ -69,7 +68,6 @@
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    margin-top: 2rem;
     display: flex;
     align-items: center;
     justify-content: space-around;

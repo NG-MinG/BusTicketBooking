@@ -11,8 +11,8 @@ const initialState = {
         arrival_city: "",
         ticket_type: 1,
         price: 0,
-        travel_time: 11760,
-        distance: 161000,
+        travel_time: 0,
+        distance: 0,
         departure_depot: "",
         arrival_depot: "",
         bus_type: "",
@@ -38,6 +38,8 @@ const ticketManagingSlice = createSlice({
             state.currentTicketDetails.arrival_depot = action.payload.arrival_depot || "";
             state.currentTicketDetails.bus_type = action.payload.bus_type || "";
             state.currentTicketDetails.total_seats = action.payload.total_seats || 0;
+            state.currentTicketDetails.travel_time = action.payload.travel_time || 0;
+            state.currentTicketDetails.distance = action.payload.distance || 0;
         },
         setTickets: (state, action) => {
             state.tickets = action.payload;

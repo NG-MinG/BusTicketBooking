@@ -34,10 +34,17 @@ const BusStation = () => {
     phone: "",
   });
 
+  const [searchData, setSearchData] = useState({
+    search: "",
+  });
+
+  const handleSearchChange = (e) => {
+    setSearchData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
   const handleChange = (e) => {
     setStation((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-  console.log(station);
 
   useEffect(() => {
     axios
@@ -51,9 +58,21 @@ const BusStation = () => {
       });
   }, []);
 
+  const onSearch = () => {
+  
+    axios
+      .get(process.env.REACT_APP_API_HOST + `/admin/searchstation?q=${searchData.search}`)
+      .then((res) => {
+        setStationData(res.data.data.station);
+        setLocationData(res.data.data.location);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const onEdit = (e) => {
     const bodyData = { ...station };
-    console.log(bodyData);
     axios
       .post(
         process.env.REACT_APP_API_HOST + `/admin/editstation/${station._id}`,
@@ -69,7 +88,6 @@ const BusStation = () => {
 
   const onCreate = (e) => {
     const bodyData = { ...station };
-    console.log(bodyData);
     axios
       .post(process.env.REACT_APP_API_HOST + `/admin/createstation`, bodyData)
       .then((res) => {
@@ -97,14 +115,21 @@ const BusStation = () => {
   return (
     <div className={styles["a"]}>
       <div className={styles["header-container"]}>
-        <p>TRẠM XE</p>
+        {/* <p>QUẢN LÝ TRẠM XE</p> */}
+        <a className={styles["add-button"]} onClick={setCreateShow}>
+          <div>THÊM MỚI </div>
+          <img src={AddIcon} />
+        </a>
         <div className={styles["sub-header-container"]}>
-          <input></input>
-          <a className={styles["search-button"]}>
+        <input
+            type="text"
+            name="search"
+            placeholder="Tìm kiếm"
+            required
+            onChange={handleSearchChange}
+          ></input>
+          <a className={styles["search-button"]} onClick={onSearch}>
             <div>TÌM KIẾM </div>
-          </a>
-          <a className={styles["filter-icon"]}>
-            <img src={FilterIcon} />
           </a>
         </div>
       </div>
@@ -227,12 +252,12 @@ const BusStation = () => {
         </Modal>
       </div>
 
-      <div className={styles["foot-new"]}>
+      {/* <div className={styles["foot-new"]}>
         <a className={styles["add-button"]} onClick={setCreateShow}>
           <div>THÊM MỚI </div>
           <img src={AddIcon} />
         </a>
-      </div>
+      </div> */}
 
       <Modal show={createShow} onHide={handleCreateClose}>
         <Modal.Header>
