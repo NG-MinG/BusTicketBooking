@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import calendar_bg from '../../assets/images/calendar/bg.jpg';
 
@@ -8,7 +8,7 @@ import DayRow from './DayRow';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
-const Calendar = () => {
+const Calendar = ({ onChange }) => {
     const [currentDate, setDate] = useState(new Date());
 
     const chunks = (a, size) =>
@@ -16,6 +16,10 @@ const Calendar = () => {
         new Array(Math.ceil(a.length / size)),
         (_, i) => a.slice(i * size, i * size + size)
     );
+
+    useEffect(() => {
+        onChange(`${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`);
+    }, [onChange, currentDate]);
 
     const makeDayList = (dayLength) => Array.from({ length: dayLength - 1 + 1, }, (_, i) => 1 + i );
     

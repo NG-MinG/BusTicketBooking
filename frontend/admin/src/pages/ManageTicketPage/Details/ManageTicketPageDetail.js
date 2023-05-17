@@ -65,7 +65,7 @@ const ManageTicketPageDetail = () => {
                             <th>Tổng tiền</th>
                         </thead>
                         <tbody>
-                            {ticketHistory && ticketHistory.map(el => (
+                            {ticketHistory && ticketHistory.length ? ticketHistory.map(el => (
                                 <tr key={el._id} className={(el._id.toString() === chooseTicket.id) ? classes.active_row : ''} onClick={() => {setChooseTicket({ id: el._id, name: el.guestInfo.name, choosenSeats: [...el.chosen_seats] })}}>
                                     <td>
                                         <div>{ el.time_start.split(':').join(' : ') }</div>
@@ -80,7 +80,7 @@ const ManageTicketPageDetail = () => {
                                         : <td className={classes.green_price}>+ { toPriceFormat(el.total_price) }đ</td>
                                     }
                                 </tr>
-                            ))}
+                            )) : <tr><td colSpan={4}>Không có dữ liệu</td></tr>}
                         </tbody>
                     </table>
                 </div>

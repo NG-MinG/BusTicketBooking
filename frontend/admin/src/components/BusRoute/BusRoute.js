@@ -34,6 +34,14 @@ const BusRoute = () => {
     distance: "",
   });
 
+  const [searchData, setSearchData] = useState({
+    search: "",
+  });
+
+  const handleSearchChange = (e) => {
+    setSearchData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
   const handleChange = (e) => {
     setTrip((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -52,7 +60,11 @@ const BusRoute = () => {
 
   const onEdit = (e) => {
     const bodyData = { ...trip };
-    axios
+    if(bodyData.departure_city === '' || bodyData.arrival_city === '' || bodyData.bus_type === '' || bodyData.duration === '' || bodyData.distance === ''){
+      alert('Thông tin không hợp lệ')
+    }
+    else{
+      axios
       .post(
         process.env.REACT_APP_API_HOST + `/admin/edittrip/${trip._id}`,
         bodyData
@@ -63,11 +75,17 @@ const BusRoute = () => {
       .catch((error) => {
         console.log(error);
       });
+    }
   };
 
   const onCreate = (e) => {
     const bodyData = { ...trip };
-    axios
+    console.log(bodyData.duration)
+    if(bodyData.departure_city === '' || bodyData.arrival_city === '' || bodyData.bus_type === '' || bodyData.duration === '' || bodyData.distance === ''){
+      alert('Thông tin không hợp lệ')
+    }
+    else{
+      axios
       .post(process.env.REACT_APP_API_HOST + `/admin/createtrip`, bodyData)
       .then((res) => {
         setTripData(res.data.data.trip);
@@ -75,6 +93,7 @@ const BusRoute = () => {
       .catch((error) => {
         console.log(error);
       });
+    }
   };
 
   const onDelete = (data) => {
@@ -88,17 +107,36 @@ const BusRoute = () => {
       });
   };
 
+  const onSearch = () => {
+    axios
+      .get(process.env.REACT_APP_API_HOST + `/admin/searchtrip?q=${searchData.search}`)
+      .then((res) => {
+        setTripData(res.data.data.trip);
+        setLocationData(res.data.data.location);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div className={styles["a"]}>
       <div className={styles["header-container"]}>
-        <p>TUYẾN XE</p>
+        {/* <p>QUẢN LÝ TUYẾN XE</p> */}
+        <a className={styles["add-button"]} onClick={setCreateShow}>
+          <div>THÊM MỚI </div>
+          <img src={AddIcon} />
+        </a>
         <div className={styles["sub-header-container"]}>
-          <input></input>
-          <a className={styles["search-button"]}>
+        <input
+            type="text"
+            name="search"
+            placeholder="Tìm kiếm"
+            required
+            onChange={handleSearchChange}
+          ></input>
+          <a className={styles["search-button"]} onClick={onSearch}>
             <div>TÌM KIẾM </div>
-          </a>
-          <a className={styles["filter-icon"]}>
-            <img src={FilterIcon} />
           </a>
         </div>
       </div>
@@ -190,7 +228,7 @@ const BusRoute = () => {
                 </select>
               </div>
               <div className={styles["modal-row-container"]}>
-                <div>Điểm đến</div>
+                <div>Loại xe</div>
                 <select name="bus_type" id="bus_type" onChange={handleChange}>
                   <option value="" selected disabled hidden>
                     {trip.bus_type}
@@ -203,7 +241,7 @@ const BusRoute = () => {
               <div className={styles["modal-row-container"]}>
                 <div>Thời gian</div>
                 <input
-                  type="text"
+                  type="number"
                   name="duration"
                   value={trip.duration}
                   required
@@ -213,7 +251,7 @@ const BusRoute = () => {
               <div className={styles["modal-row-container"]}>
                 <div>Khoảng cách</div>
                 <input
-                  type="text"
+                  type="number"
                   name="distance"
                   value={trip.distance}
                   required
@@ -243,12 +281,6 @@ const BusRoute = () => {
         </Modal>
       </div>
 
-      <div className={styles["foot-new"]}>
-        <a className={styles["add-button"]} onClick={setCreateShow}>
-          <div>THÊM MỚI </div>
-          <img src={AddIcon} />
-        </a>
-      </div>
 
       <Modal show={createShow} onHide={handleCreateClose}>
         <Modal.Header>
@@ -291,7 +323,7 @@ const BusRoute = () => {
               </select>
             </div>
             <div className={styles["modal-row-container"]}>
-              <div>Điểm đến</div>
+              <div>Loại xe</div>
               <select name="bus_type" id="bus_type" onChange={handleChange}>
                 <option value="" selected disabled hidden>
                   Chọn loại xe
@@ -304,7 +336,7 @@ const BusRoute = () => {
             <div className={styles["modal-row-container"]}>
               <div>Thời gian</div>
               <input
-                type="text"
+                type="number"
                 name="duration"
                 placeholder="Nhập thời gian di chuyển"
                 required
@@ -314,7 +346,7 @@ const BusRoute = () => {
             <div className={styles["modal-row-container"]}>
               <div>Khoảng cách</div>
               <input
-                type="text"
+                type="number"
                 name="distance"
                 placeholder="Nhập khoảng cách"
                 required
