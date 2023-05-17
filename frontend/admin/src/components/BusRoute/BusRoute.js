@@ -34,6 +34,14 @@ const BusRoute = () => {
     distance: "",
   });
 
+  const [searchData, setSearchData] = useState({
+    search: "",
+  });
+
+  const handleSearchChange = (e) => {
+    setSearchData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
   const handleChange = (e) => {
     setTrip((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -88,13 +96,31 @@ const BusRoute = () => {
       });
   };
 
+  const onSearch = () => {
+    axios
+      .get(process.env.REACT_APP_API_HOST + `/admin/searchtrip?q=${searchData.search}`)
+      .then((res) => {
+        setTripData(res.data.data.trip);
+        setLocationData(res.data.data.location);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div className={styles["a"]}>
       <div className={styles["header-container"]}>
         <p>TUYẾN XE</p>
         <div className={styles["sub-header-container"]}>
-          <input></input>
-          <a className={styles["search-button"]}>
+        <input
+            type="text"
+            name="search"
+            placeholder="Tìm kiếm"
+            required
+            onChange={handleSearchChange}
+          ></input>
+          <a className={styles["search-button"]} onClick={onSearch}>
             <div>TÌM KIẾM </div>
           </a>
           <a className={styles["filter-icon"]}>
