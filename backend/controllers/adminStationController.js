@@ -3,30 +3,6 @@ import catchAsync from '../utils/catchAsync.js';
 import Location from '../models/locationModel.js';
 import AppError from '../utils/appError.js';
 
-const getSearchStation = catchAsync(async (req, res) => {
-    const getStation = await Station.find({$text: {$search: req.query.q}});
-    const location = await Location.find();
-    const station = [];
-    for (let i = 0; i < getStation.length; i++) {
-        for (let j = 0; j < getStation[i].stations.length; j++) {
-            const detail = {
-                _id: getStation[i]._id,
-                oldlocation: getStation[i].location,
-                location: getStation[i].location,
-                oldname: getStation[i].stations[j].name,
-                name: getStation[i].stations[j].name,
-                address: getStation[i].stations[j].address,
-                phone: getStation[i].stations[j].phone,
-            };
-            station.push(detail);
-        }
-    }
-    res.status(200).json({
-        status: 'success',
-        data: { station, location },
-    });
-  })
-
 const getAllStation = catchAsync(async (req, res) => {
     const getStation = await Station.find();
     const location = await Location.find();
@@ -108,4 +84,4 @@ const editStation = catchAsync(async (req, res) => {
     getAllStation(req, res);
 });
 
-export { getSearchStation, getAllStation, editStation, createStation, deleteStation };
+export { getAllStation, editStation, createStation, deleteStation };

@@ -8,6 +8,7 @@ import userProfileRouter from "./routes/userProfileRoutes.js"
 import scheduleRouter from "./routes/scheduleRoutes.js"
 import stationRouter from "./routes/stationRoutes.js"
 import adminRouter from "./routes/adminRoutes.js"
+import analystRouter from "./routes/analystRoutes.js"
 import authRouter from './routes/authRoutes.js';
 import ticketBookingRouter from "./routes/ticketBookingRoutes.js";
 import ticketManagingRouter from "./routes/ticketManagingRoutes.js";
@@ -44,6 +45,7 @@ app.use('/bus/api/v1/tickets', ticketBookingRouter)
 
 app.use('/bus/api/v1/admin/ticket-managing', ticketManagingRouter);
 app.use('/bus/api/v1/admin', adminRouter);
+app.use('/bus/api/v1/admin/analyst', analystRouter);
 app.use('/bus/api/v1/admin/ticket-history', ticketHistoryRouter);
 
 app.use(globalErrorhandler);

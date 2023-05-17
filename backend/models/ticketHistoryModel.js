@@ -10,6 +10,8 @@ const ticketHistorySchema = new mongoose.Schema({
   date_start: Date,
   depot_address: String,
   payment_method: String,
+  user_id: String,
+  bus_type: String,
   number_of_seats: Number,
   chosen_seats: [String],
   total_price: Number,

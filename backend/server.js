@@ -4,7 +4,6 @@ import app from "./app.js";
 // import { Server } from 'socket.io';
 import io from './socket.js';
 import bcrypt from 'bcryptjs';
-import { Server } from 'socket.io';
 
 
 const port = process.env.PORT || 5000;
@@ -17,8 +16,9 @@ mongoose
         console.log('Connected to DB successfully');
     });
 
-const server = app.listen(port, () => {
+const server = app.listen(port, async () => {
     console.log(`App is running on port ${port}...`);
+    // console.log(await bcrypt.hash('11111111', 12));
 });
 
 // init socket
