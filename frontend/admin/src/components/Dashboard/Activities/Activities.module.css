@@ -48,9 +48,19 @@
     background-color: #12B886;
     color: white;
     font-weight: 600;
+    min-width: 12rem;
+    font-size: 1.4rem;
     border-radius: .5rem;
     padding: 1.3rem 2.5rem;
     line-height: 1em;
+}
+
+.activities > .main_content > .sub_item > .control > button.processing {
+    background-color: #D2712B;
+}
+
+.activities > .main_content > .sub_item > .control > button.canceled {
+    background-color: #C92A2A;
 }
 
 .activities .chart {
