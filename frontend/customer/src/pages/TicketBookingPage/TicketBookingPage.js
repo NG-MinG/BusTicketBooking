@@ -1,4 +1,4 @@
-import {useState} from "react"
+import {useEffect, useState} from "react"
     import { useSearchParams } from "react-router-dom"
 import ChooseRoute from "../../components/TicketBooking/ChooseRoute/ChooseRoute"
 import ConfirmRoute from "../../components/TicketBooking/ConfirmRoute/ConfirmRoute"
@@ -18,6 +18,10 @@ const TicketBookingPage = () => {
         stepFour: false
     })
     
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [process])
+
     const setStep = (newState) => {
         setProcess(pre => ({
             ...pre,
