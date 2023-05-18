@@ -29,7 +29,7 @@ export default function UserProfile() {
           <FontAwesomeIcon className={styles.icon} icon={faTicket} style={{ color: '#417DD8', fontSize: '2.8rem' }} />
           <p>Vé xe của tôi</p>
         </NavLink>
-        <NavLink onClick={() => { auth.logout(); navigate('/') }} className={styles.item}>
+        <NavLink onClick={() => { auth.logout(); }} to={'/'} className={styles.item}>
           <FontAwesomeIcon icon={faArrowLeft} style={{ color: '#417DD8', fontSize: '3.2rem' }} />
           <p>Đăng xuất</p>
         </NavLink>

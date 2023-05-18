@@ -7,13 +7,13 @@ import { toDateFormat, toPriceFormat } from "../../../../utilities/format";
 
 
 export default function MyTicketItem(props) {
-  const date = new Date()
+  // const date = new Date()
   const result1 = new Date(props.value.date_start).toLocaleDateString('en-GB');
-  var dateParts = result1.split("/");
+  // var dateParts = result1.split("/");
 
-  let dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+  // let dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
 
-  const [expire, setExpire] = useState(dateObject.getTime() < date.getTime());
+  // const [expire, setExpire] = useState(dateObject.getTime() < date.getTime());
 
   return (
     <div className={styles.MyTicketItem}>
