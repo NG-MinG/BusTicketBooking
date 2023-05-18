@@ -73,6 +73,7 @@ const SearchTicket = () => {
 
                 const departure_data = Array.from(new Set(res.data.data.schedules.map(el => el.departure_city.replace('. ', '.'))));
                 const arrival_data = Array.from(new Set(res.data.data.schedules.map(el => el.arrival_city.replace('. ', '.'))));
+                
                 list_location.current = Array.from(new Set([...departure_data, ...arrival_data]));
 
                 setLocationSuggest(list_location.current);
@@ -87,6 +88,11 @@ const SearchTicket = () => {
         const departureCity = ticketForm.current.departure_city.value;
         const arrivalCity = ticketForm.current.arrival_city.value;
         const date = ticketForm.current.departure_date.value;
+
+        if (new Date(date) < new Date(`${new Date().toISOString().split('T')[0]}T00:00:00.000Z`)) {
+            return alert('Ngày đi không hợp lệ');
+        }
+
         const ticketType = ticketForm.current.ticket_type.value;
         navigate(
             `/ticket-booking?departure_city=${departureCity}&arrival_city=${arrivalCity}&date=${date}&ticket_type=${ticketType}`
