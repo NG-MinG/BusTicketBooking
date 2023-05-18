@@ -35,6 +35,7 @@ const bookTicket = catchAsync(async (req, res, next) => {
     const ticket = await Ticket.findById(req.body.ticket_id);
     ticket.booked_seats = [...ticket.booked_seats, ...req.body.chosen_seats];
     await ticket.save();
+
     const newBooking = await TicketHistory.create({
         ...req.body,
         "user_id": req.body.user_id,
@@ -47,7 +48,7 @@ const bookTicket = catchAsync(async (req, res, next) => {
 
     if (req.body.user_id) {
         const user = await User.findById(req.body.user_id)
-        user.myTicket.push(newBooking._id)
+        user.myTicket.unshift(newBooking._id)
         user.save()
     }
     const socket = io.getIO();

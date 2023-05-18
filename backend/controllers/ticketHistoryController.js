@@ -4,8 +4,9 @@ import Ticket from "../models/ticketModel.js";
 import User from "../models/userModel.js";
 
 const getAll = catchAsync(async (req, res) => {
-  const ticketHistory = await TicketHistory.find()
+  const ticket_ = await TicketHistory.find()
   // console.log(ticketHistory)
+  const ticketHistory = ticket_.reverse()
   res.status(200).json({
     status: 'success',
     data: { ticketHistory }
@@ -17,11 +18,11 @@ const getBySearch = catchAsync(async (req, res) => {
   const ticket_history_filter = []
   const ticket_history = await TicketHistory.find()
   for (let i of ticket_history) {
-    const result1 = new Date(i.date).toLocaleDateString('en-GB');
+
     if (i.guestInfo.name.toLowerCase().includes(search) || i.guestInfo.phoneNumber.includes(search) || i.departure_city.toLowerCase().includes(search) || i.arrival_city.toLowerCase().includes(search)) {
       ticket_history_filter.push(i)
     }
-    else if (i.time.includes(search) || result1.toString().includes(search)) ticket_history_filter.push(i)
+    else if (i.time.includes(search) || i.date.toString().includes(search)) ticket_history_filter.push(i)
     else if (i.stage.toLowerCase().includes(search)) ticket_history_filter.push(i)
   }
   res.status(200).json({
