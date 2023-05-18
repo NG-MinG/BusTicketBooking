@@ -70,7 +70,8 @@ const Dashboard = () => {
       count[startDate] = 0;
       count[endDate] = 0
 
-      res.data.data.ticketHistory.forEach(el => {
+      const listHistory = res.data.data.ticketHistory.filter(el => el.stage !== 'Đã huỷ');
+      listHistory.forEach(el => {
         const cdate = toDateFormat(new Date(el.date.split('/').reverse().join('-')), '/');
         if (currentChart === 'price')
           count[cdate] = count[cdate] ? count[cdate] + el.total_price : el.total_price;
