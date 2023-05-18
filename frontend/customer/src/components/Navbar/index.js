@@ -80,11 +80,11 @@ const Navbar = () => {
                                     <span class="name">{ auth.getUserProfile().phone }</span>
                                 </div>
                                 <hr />
-                                <Link className={classes.link} to="/user-profile"><FontAwesomeIcon icon={faUser} /> <span>Edit profile</span></Link>
+                                <Link className={classes.link} to="/user-profile"><FontAwesomeIcon icon={faUser} /> <span>Thông tin cá nhân</span></Link>
                                 <Link className={classes.link} onClick={() => {
                                     auth.logout();
 
-                                }} to='/'><FontAwesomeIcon icon={faSignOut} /> <span>Sign out</span></Link>
+                                }} to='/'><FontAwesomeIcon icon={faSignOut} /> <span>Đăng xuất</span></Link>
                             </div>
                         </div>
                     </div>

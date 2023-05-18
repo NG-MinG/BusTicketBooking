@@ -1,12 +1,14 @@
 import React from 'react'
-import { BrowserRouter, NavLink, Outlet, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, NavLink, Outlet, Route, Routes, useNavigate } from 'react-router-dom'
 import styles from './UserProfile.module.css'
 import { faUser, faPenToSquare, faKey, faTicket, faClockRotateLeft, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { auth } from '../../utilities/storage'
 
 export default function UserProfile() {
 
   const chosen = ({ isActive }) => isActive ? `${styles.chosen} ${styles.item}` : styles.item
+  const navigate = useNavigate();
 
   return (
     <div className={styles['UserProfile']}>
@@ -27,7 +29,7 @@ export default function UserProfile() {
           <FontAwesomeIcon className={styles.icon} icon={faTicket} style={{ color: '#417DD8', fontSize: '2.8rem' }} />
           <p>Vé xe của tôi</p>
         </NavLink>
-        <NavLink className={styles.item}>
+        <NavLink onClick={() => { auth.logout(); navigate('/') }} className={styles.item}>
           <FontAwesomeIcon icon={faArrowLeft} style={{ color: '#417DD8', fontSize: '3.2rem' }} />
           <p>Đăng xuất</p>
         </NavLink>
