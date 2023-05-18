@@ -25,6 +25,11 @@ ticketSchema.virtual('truncatedDate').get(function() {
     return this.date.toISOString().substring(0,10);
 })
 
+ticketSchema.pre('save', function (next) {
+    this.reserved_seats = this.booked_seats.length;
+    next();
+});
+
 
 ticketSchema.index({
     date: "text",
