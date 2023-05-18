@@ -1,27 +1,27 @@
 [
     {
-        "departure_city": "TP. Hồ Chí Minh",
+        "departure_city": "TP.Hồ Chí Minh",
         "arrival_city": "Trà Ôn",
         "bus_type": "Giường",
         "duration": 11760,
         "distance": 161000
     },
     {
-        "departure_city": "TP. Hồ Chí Minh",
+        "departure_city": "TP.Hồ Chí Minh",
         "arrival_city": "Cần Thơ",
         "bus_type": "Limousine",
         "duration": 11520,
         "distance": 166000
     },
     {
-        "departure_city": "TP. Hồ Chí Minh",
+        "departure_city": "TP.Hồ Chí Minh",
         "arrival_city": "Vĩnh Châu",
         "bus_type": "Giường",
         "duration": 17460,
         "distance": 247000
     },
     {
-        "departure_city": "TP. Hồ Chí Minh",
+        "departure_city": "TP.Hồ Chí Minh",
         "arrival_city": "Cà Mau",
         "bus_type": "Giường",
         "duration": 19800,
@@ -169,7 +169,7 @@
     },
     {
         "departure_city": "Cà Mau",
-        "arrival_city": "TP. Hồ Chí Minh",
+        "arrival_city": "TP.Hồ Chí Minh",
         "bus_type": "Giường",
         "duration": 19800,
         "distance": 282000
@@ -183,7 +183,7 @@
     },
     {
         "departure_city": "Cần Thơ",
-        "arrival_city": "TP. Hồ Chí Minh",
+        "arrival_city": "TP.Hồ Chí Minh",
         "bus_type": "Limousine",
         "duration": 11520,
         "distance": 166000
@@ -260,7 +260,7 @@
     },
     {
         "departure_city": "Trà Ôn",
-        "arrival_city": "TP. Hồ Chí Minh",
+        "arrival_city": "TP.Hồ Chí Minh",
         "bus_type": "Giường",
         "duration": 11760,
         "distance": 161000
@@ -274,7 +274,7 @@
     },
     {
         "departure_city": "Tri Tôn",
-        "arrival_city": "TP. Hồ Chí Minh",
+        "arrival_city": "TP.Hồ Chí Minh",
         "bus_type": "Giường",
         "duration": 17940,
         "distance": 232000
@@ -288,7 +288,7 @@
     },
     {
         "departure_city": "Vĩnh Châu",
-        "arrival_city": "TP. Hồ Chí Minh",
+        "arrival_city": "TP.Hồ Chí Minh",
         "bus_type": "Giường",
         "duration": 17460,
         "distance": 247000
