@@ -111,7 +111,7 @@ export default function ManageTicketOrderEdit() {
           </div>
         </div>
         <button className={styles.save} onClick={handleSave}>Lưu</button>
-        {message.length > 0 && <p style={{ color: '#51cf66', marginTop: '1rem' }}>Successfully!</p>}
+        {message.length > 0 && <p style={{ color: '#51cf66', marginTop: '1rem' }}>Lưu thành công!</p>}
       </div>
 
     </div>

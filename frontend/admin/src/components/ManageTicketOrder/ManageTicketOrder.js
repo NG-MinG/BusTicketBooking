@@ -27,7 +27,7 @@ const ManageTicketOrder = () => {
 
   useEffect(() => {
     socket.on("book-ticket", (data) => {
-      setTicketHistory(prev => [...prev, data])
+      setTicketHistory(prev => [data, ...prev])
     });
   }, [])
 
