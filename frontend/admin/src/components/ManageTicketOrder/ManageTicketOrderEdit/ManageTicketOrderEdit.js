@@ -56,20 +56,24 @@ export default function ManageTicketOrderEdit() {
   const [message, setMessage] = useState('')
 
   const handleSave = () => {
-    const ticket_update = {
-      id: information._id,
-      guestInfo: information.guestInfo,
-      chosen_seats: choosingSeats
+    if (information.guestInfo.name.length === 0 || information.guestInfo.phoneNumber.length === 0) {
+      alert('Hãy điền đầy đủ thông tin!')
     }
-    axios.patch(process.env.REACT_APP_API_HOST + '/admin/ticket-history/update', ticket_update).then((res) => {
-      console.log("successfully!")
-      setMessage("Successfully!")
-    }).catch(error => {
-      console.log(error)
-    })
+    else {
+      const ticket_update = {
+        id: information._id,
+        guestInfo: information.guestInfo,
+        chosen_seats: choosingSeats
+      }
+      axios.patch(process.env.REACT_APP_API_HOST + '/admin/ticket-history/update', ticket_update).then((res) => {
+        console.log("successfully!")
+        setMessage("Successfully!")
+        if (choosingSeats.length === 0) navigate("/admin/manage-ticket/ticket-order")
+      }).catch(error => {
+        console.log(error)
+      })
+    }
   }
-
-
 
   return (
     <div className={styles.ManageTicketOrderEdit}>

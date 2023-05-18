@@ -141,7 +141,7 @@ const ManageTicketOrder = () => {
             <p style={{ color: "#FF0000", fontSize: '21px', fontWeight: '600' }}>Tổng tiền: {toPriceFormat(currentData.total_price)}đ</p>
             <div style={{ display: 'flex', gap: '0.6rem' }}>
               <button onClick={() => setDetail(false)} className={styles.closeIcon}>Đóng</button>
-              <button onClick={editData} className={styles.editBtn}>Sửa</button>
+              {currentData.stage !== 'Đã huỷ' && <button onClick={editData} className={styles.editBtn}>Sửa</button>}
             </div>
           </div>
         </div>
