@@ -48,7 +48,7 @@ export default function ManageTicketOrderItem(props) {
       <p>{props.value.time} {props.value.date}</p>
       <button onClick={handleStage} className={`${stage === 'Đã đặt' ? styles.green : ""} ${stage === 'Đã huỷ' ? styles.red : ""}`}>{stage}</button>
       <FontAwesomeIcon onClick={() => props.showDetail(props.value.id)} className={styles.icon} icon={faEye} style={{ color: '#1F84BD' }} />
-      <FontAwesomeIcon onClick={editData} className={styles.icon} icon={faPenToSquare} style={{ color: '#1F84BD' }} />
+      {stage !== 'Đã huỷ' && <FontAwesomeIcon onClick={editData} className={styles.icon} icon={faPenToSquare} style={{ color: '#1F84BD' }} />}
       <FontAwesomeIcon onClick={() => props.deleteItem(props.value.id)} className={styles.icon} icon={faTrashCan} style={{ color: '#FB6C6C' }} />
     </div>
   )
