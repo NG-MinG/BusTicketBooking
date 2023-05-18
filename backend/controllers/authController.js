@@ -45,9 +45,11 @@ const login = catchAsync(async (req, res, next) => {
     if (!user || !(await user.correctPassword(password, user.password)) || !user.active) {
         return next(new AppError('Tài khoản hoặc mật khẩu không chính xác', 401));
     }
+    
+    if (req.body.action === 'admin_login' && user.role !== 'admin') 
+        return next(new AppError('Tài khoản hoặc mật khẩu không chính xác', 401));
 
     const token = signToken(user._id);
-
 
     const userInfo = {
         user,
