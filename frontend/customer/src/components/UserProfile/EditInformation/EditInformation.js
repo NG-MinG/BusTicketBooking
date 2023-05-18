@@ -67,7 +67,7 @@ export default function EditInformation() {
         <img alt="" src={user_avatart} />
       </div>
       <button type='submit'>Lưu</button>
-      {nameError.length > 0 ? <p className={styles['error']}>{nameError}</p> : <p className={styles['success']}>Successfully!</p>}
+      {nameError.length > 0 ? <p className={styles['error']}>{nameError}</p> : <p className={styles['success']}>Lưu thành công!</p>}
     </form>
   )
 }

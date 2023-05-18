@@ -70,13 +70,13 @@ export default function Schedule() {
             <p>Đi từ TP.Hồ Chí Minh đến</p>
             <div className={styles.fromHCM}>
               {data.map((value, index) => (
-                value.departure_city === "TP.Hồ Chí Minh" && <ScheduleItem key={index} diem={value.arrival_city} value={value} />
+                value.departure_city === "TP.Hồ Chí Minh" && <ScheduleItem key={index} type={"from"} diem={value.arrival_city} value={value} />
               ))}
             </div>
             <p>Đi đến TP.Hồ Chí Minh từ</p>
             <div className={styles.toHCM}>
               {data.map((value, index) => (
-                value.arrival_city === "TP.Hồ Chí Minh" && <ScheduleItem key={index} diem={value.departure_city} value={value} />
+                value.arrival_city === "TP.Hồ Chí Minh" && <ScheduleItem key={index} type={"to"} diem={value.departure_city} value={value} />
               ))}
             </div>
           </div>

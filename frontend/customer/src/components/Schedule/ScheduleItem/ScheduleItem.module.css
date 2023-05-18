@@ -36,7 +36,8 @@
   margin-left: 3rem;
   cursor: pointer;
   transition: all 0.3s;
-  font-weight: 600;
+  font-weight: 500;
+  font-family: "Montserrat"
 }
 
 .ScheduleItem button:hover{
