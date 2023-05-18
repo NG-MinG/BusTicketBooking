@@ -138,10 +138,27 @@
     font-size: 1.2rem;
     font-weight: 700;
     margin-left: 1rem; 
+    text-transform: capitalize;
 }
 
 .container .navbar > .user_profile .user_role {
     font-size: 1rem;
     font-weight: 600;
     color: #296EAD;
+    text-transform: capitalize;
+}
+
+.container .navbar > .signout_btn {
+    border: none;
+    background-color: #296EAD;
+    color: white;
+    font-size: 2rem;
+    border-radius: .5rem;
+    padding: 1.3rem 1.85rem;
+    margin-left: -2rem;
+    transition: all .25s ease-in-out;
+}
+
+.container .navbar > .signout_btn:hover {
+    background-color: #1a4b79;
 }
