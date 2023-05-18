@@ -12,7 +12,8 @@ import { ReactComponent as UserProfileIcon } from '../assets/svg/Navbar/user.svg
 import { ReactComponent as ChevronRight } from '../assets/svg/Navbar/chevronRight.svg';
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft, faChevronRight, faRotateRight } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faChevronRight, faRotateRight, faSignOut } from "@fortawesome/free-solid-svg-icons";
+import { auth } from "../utils/storage";
 
 const AdminPage = () => {
   const sidebarData = [
@@ -133,10 +134,14 @@ const AdminPage = () => {
           <div className={styles['user_profile']}>
             <UserProfileIcon width={40} />
               <div>
-                <div className={styles['user_name']}>Nguyễn Văn An</div>
-                <div className={styles['user_role']}>Administrator</div>
+                <div className={styles['user_name']}>{ auth.getUserProfile().fullname }</div>
+                <div className={styles['user_role']}>{ auth.getUserProfile().role }</div>
               </div>
           </div>
+          <button onClick={() => {
+            auth.logout();
+            navigate('/admin/login');
+          }} className={styles.signout_btn}><FontAwesomeIcon icon={faSignOut} /></button>
         </div>
         <Outlet />
       </div>
