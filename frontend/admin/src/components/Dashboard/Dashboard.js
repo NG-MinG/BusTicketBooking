@@ -76,7 +76,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <div className={classes.dashboard_section}>
+      <div className={classes.dashboard_section} style={{alignItems: 'flex-end'}}>
         <Activities />
         <Chart options={options} series={series} type="area" height={350} width={710} />
       </div>
