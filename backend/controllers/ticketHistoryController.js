@@ -40,6 +40,12 @@ const updateStage = catchAsync(async (req, res) => {
     const ticket = await Ticket.findById(ticketHistory.ticket_id);
     ticket.booked_seats = ticket.booked_seats.filter(val => !ticketHistory.chosen_seats.includes(val))
     ticket.save()
+
+    if (ticketHistory.user_id) {
+      const user = await User.findById(ticketHistory.user_id)
+      user.myTicket.splice(user.myTicket.indexOf(req.body.id.toString()), 1)
+      user.save()
+    }
   }
   res.status(200).json({
     status: 'success',
@@ -81,19 +87,30 @@ const getTicketSeat = catchAsync(async (req, res) => {
 
 const update = catchAsync(async (req, res) => {
   const ticket_history = await TicketHistory.findById(req.body.id)
-
   const ticket = await Ticket.findById(ticket_history.ticket_id);
-  ticket.booked_seats = ticket.booked_seats.filter(val => !ticket_history.chosen_seats.includes(val))
-  ticket.booked_seats = [...ticket.booked_seats, ...req.body.chosen_seats]
-  ticket.save()
 
-  // console.log(ticket.booked_seats)
+  if (req.body.chosen_seats.length > 0) {
+    ticket.booked_seats = ticket.booked_seats.filter(val => !ticket_history.chosen_seats.includes(val))
+    ticket.booked_seats = [...ticket.booked_seats, ...req.body.chosen_seats]
+    ticket.save()
 
-  ticket_history.chosen_seats = req.body.chosen_seats
-  ticket_history.number_of_seats = req.body.chosen_seats.length
-  ticket_history.guestInfo = req.body.guestInfo
-  ticket_history.total_price = req.body.chosen_seats.length * ticket.price
-  ticket_history.save()
+    // console.log(ticket.booked_seats)
+
+    ticket_history.chosen_seats = req.body.chosen_seats
+    ticket_history.number_of_seats = req.body.chosen_seats.length
+    ticket_history.guestInfo = req.body.guestInfo
+    ticket_history.total_price = req.body.chosen_seats.length * ticket.price
+    ticket_history.save()
+  } else {
+    await TicketHistory.deleteOne({ _id: req.body.id })
+    if (ticket_history.user_id) {
+      const user = await User.findById(ticket_history.user_id)
+      user.myTicket.splice(user.myTicket.indexOf(req.body.id.toString()), 1)
+      user.save()
+    }
+    ticket.booked_seats = ticket.booked_seats.filter(val => !ticket_history.chosen_seats.includes(val))
+    ticket.save()
+  }
 
 
   res.status(200).json({

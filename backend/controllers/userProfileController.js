@@ -94,6 +94,8 @@ const getMyTicket = catchAsync(async (req, res) => {
   const user = await User.findById(req.user.id)
   const myTicket = []
 
+  // console.log(user)
+
   for (let i of user.myTicket) {
     const ticket = await TicketHistory.findById(i)
     // if (ticket && ticket.stage === "Đã đặt") 

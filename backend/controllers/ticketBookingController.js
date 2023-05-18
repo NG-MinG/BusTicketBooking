@@ -44,6 +44,7 @@ const bookTicket = catchAsync(async (req, res, next) => {
         "stage": "Đang xử lí"
     })
 
+
     if (req.body.user_id) {
         const user = await User.findById(req.body.user_id)
         user.myTicket.push(newBooking._id)
