@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import classes from './Navbar.module.css';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import Button from '../Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhone, faSignOut, faUser } from '@fortawesome/free-solid-svg-icons';
@@ -37,6 +37,8 @@ const Navbar = () => {
         setStep(prev => prev + 1);
     };
 
+    const navigate = useNavigate();
+
     // Step 0: Login / Register
     // Step 2: OTPRegister
     const authStep = [
@@ -61,7 +63,7 @@ const Navbar = () => {
             <div className={classes.foot}>
                 { !isLogin ? 
                     <>
-                    <Button className={classes.contact_btn} outline>
+                    <Button className={classes.contact_btn} outline onClick={() => navigate('/contact')}>
                         <FontAwesomeIcon className={classes.phoneIcon} icon={faPhone} />
                         <span>Liên hệ</span>
                     </Button>
