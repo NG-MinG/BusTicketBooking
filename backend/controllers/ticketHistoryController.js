@@ -64,8 +64,10 @@ const deleteItem = catchAsync(async (req, res) => {
   }
 
   const ticket = await Ticket.findById(item.ticket_id);
-  ticket.booked_seats = ticket.booked_seats.filter(val => !item.chosen_seats.includes(val))
-  ticket.save()
+  if (ticket) {
+    ticket.booked_seats = ticket.booked_seats.filter(val => !item.chosen_seats.includes(val))
+    ticket.save()
+  }
 
   res.status(200).json({
     status: 'success',
