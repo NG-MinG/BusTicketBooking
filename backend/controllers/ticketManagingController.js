@@ -44,7 +44,10 @@ const createTicket = catchAsync(async (req, res, next) => {
 const updateTicket = catchAsync(async (req, res, next) => {
     const ticket_id = req.params.id;
     // console.log("req.body: ", req.body);
-    const updatedTicket = await Ticket.findByIdAndUpdate(ticket_id, req.body, { new: true })
+    delete req.body.reserved_seats;
+    delete req.body.booked_seats;
+    delete req.body.id;
+    const updatedTicket = await Ticket.findByIdAndUpdate(ticket_id, req.body)
     res.status(200).json({
         status: "success",
         updatedTicket: updatedTicket
